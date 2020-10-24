@@ -12,5 +12,6 @@
 </head>
 <body>
         <p>Hello PlayTime project voor PR4 !</p>
+        <img src="images/clever.jpg">
 </body>
 </html>
