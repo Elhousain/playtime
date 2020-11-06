@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="form-group d-inline-block">
                                     <input type="submit" name="submit" class="btn btn-info btn-md" value="Login">
-                                    <a href="#" class="text-info" style="color: white">Registreren</a>
+                                    <a href="registratie" class="text-info" style="color: white">Registreren</a>
                                 </div>
                             </form>
                         </div>

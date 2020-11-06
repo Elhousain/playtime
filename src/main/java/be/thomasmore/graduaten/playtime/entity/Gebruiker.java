@@ -2,14 +2,14 @@ package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-
+        import java.util.List;
 
 @Entity
 public class Gebruiker {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String voornaam;
     private String achternaam;
     private Date geboortedatum;
@@ -25,6 +25,20 @@ public class Gebruiker {
 
     public Gebruiker() {
     }
+
+    public Gebruiker(String voornaam, String achternaam,  String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
+        //this.id = id;
+        this.voornaam = voornaam;
+        this.achternaam = achternaam;
+        //this.geboortedatum = geboortedatum;
+        this.email = email;
+        this.paswoord = paswoord;
+        this.telefoon = telefoon;
+        this.woonplaats = woonplaats;
+        this.postcode = postcode;
+        this.straat = straat;
+        this.huisnummer = huisnummer;
+    } //Elhousain: Hebben we deze constructor nodig? Ik had em toegevoegd, omda k denk dat we em nodig hebbe
 
     public void setID(Long id) {this.id = id;}
 
@@ -114,5 +128,10 @@ public class Gebruiker {
 
     public void setHuisnummer(String huisnummer) {
         this.huisnummer = huisnummer;
+    }
+
+    @Override
+    public String toString() {
+        return voornaam +" " + achternaam;
     }
 }
