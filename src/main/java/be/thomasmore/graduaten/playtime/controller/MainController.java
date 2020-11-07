@@ -2,6 +2,9 @@ package be.thomasmore.graduaten.playtime.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
+
 
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
+
 
 @Controller
 public class MainController {
@@ -63,7 +68,14 @@ public class MainController {
     public String dataAddGebruiker(HttpServletRequest request) {
         String voornaam = request.getParameter("voornaam");
         String achternaam = request.getParameter("achternaam");
-        //Date geboortedatum = (Date) request.getParameter("geboortedatum");
+
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
+
+                //request.getParameter("geboortedatum");
+
         String email = request.getParameter("email");
         String paswoord = request.getParameter("paswoord");
         String telefoon = request.getParameter("telefoon");
@@ -73,7 +85,7 @@ public class MainController {
         String huisnummer = request.getParameter("huisnummer");
 
 
-        Gebruiker gebruiker = new Gebruiker(voornaam,achternaam,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer);
+        Gebruiker gebruiker = new Gebruiker(voornaam,achternaam,geboortedatum,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer);
         gebruikerService.addGebruiker(gebruiker);
         return "index";
     }

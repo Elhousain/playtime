@@ -2,7 +2,8 @@ package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-        import java.util.List;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Gebruiker {
@@ -12,7 +13,8 @@ public class Gebruiker {
     private Long id;
     private String voornaam;
     private String achternaam;
-    private Date geboortedatum;
+    private LocalDate geboortedatum;
+    //private Date geboortedatum;
     private String email;
     private String paswoord;
     private String telefoon;
@@ -26,11 +28,11 @@ public class Gebruiker {
     public Gebruiker() {
     }
 
-    public Gebruiker(String voornaam, String achternaam,  String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
+    public Gebruiker(String voornaam, String achternaam, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
         //this.id = id;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
-        //this.geboortedatum = geboortedatum;
+        this.geboortedatum = geboortedatum;
         this.email = email;
         this.paswoord = paswoord;
         this.telefoon = telefoon;
@@ -40,15 +42,13 @@ public class Gebruiker {
         this.huisnummer = huisnummer;
     } //Elhousain: Hebben we deze constructor nodig? Ik had em toegevoegd, omda k denk dat we em nodig hebbe
 
-    public void setID(Long id) {this.id = id;}
+    public void setId(Long id) {this.id = id;}
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+
 
     public String getVoornaam() {
         return voornaam;
@@ -66,11 +66,11 @@ public class Gebruiker {
         this.achternaam = achternaam;
     }
 
-    public Date getGeboortedatum() {
+    public LocalDate getGeboortedatum() {
         return geboortedatum;
     }
 
-    public void setGeboortedatum(Date geboortedatum) {
+    public void setGeboortedatum(LocalDate geboortedatum) {
         this.geboortedatum = geboortedatum;
     }
 

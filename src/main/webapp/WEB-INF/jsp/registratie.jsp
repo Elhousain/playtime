@@ -1,3 +1,5 @@
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
+<%@ page import="java.util.List" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -70,6 +72,8 @@
         <div class="container">
 
 
+
+
             <form action="/data-add-gebruiker" method="post">
 
                 <div class="row col-md-12">
@@ -85,8 +89,16 @@
                     </div>
                     <div class="form-group col-4">
                         <label class="form-control-label" for="geboortedatum">Geboortedatum</label>
-                        <input type="date" class="form-control" id="geboortedatum" name="geboortedatum">
+                        <input type="date" class="form-control" placeholder="dd-mm-yyyy" id="geboortedatum" name="geboortedatum">
                     </div>
+
+
+
+
+
+
+
+
 
                 </div>
 
@@ -135,13 +147,13 @@
                 <div class="row col-md-12">
 
                     <div class="form-group col-6">
-                        <label for="inputEmail">Email-adres</label>
-                        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="inputEmail">
+                        <label for="email">Email-adres</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
 
                     </div>
                     <div class="form-group col-6">
-                        <label class="form-control-label" for="inputPassword">Wachtwoord</label>
-                        <input type="password" class="form-control" id="inputPassword" name="inputPassword">
+                        <label class="form-control-label" for="paswoord">Wachtwoord</label>
+                        <input type="password" class="form-control" id="paswoord" name="paswoord">
                     </div>
 
                 </div>
@@ -159,6 +171,7 @@
 
 
         </div>
+
 
 
 
