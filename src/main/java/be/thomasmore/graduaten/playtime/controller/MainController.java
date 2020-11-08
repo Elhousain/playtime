@@ -71,10 +71,10 @@ public class MainController {
 
 
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));*/
 
-                //request.getParameter("geboortedatum");
+        LocalDate geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
 
         String email = request.getParameter("email");
         String paswoord = request.getParameter("paswoord");
