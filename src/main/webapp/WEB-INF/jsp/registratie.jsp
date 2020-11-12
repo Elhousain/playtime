@@ -20,13 +20,16 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb5-">
                 <li>
-                    <a href="#">Kaartspel</a>
+                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht</a>
                 </li>
                 <li>
-                    <a href="#">Dobbelspel</a>
+                    <a href="#">Dobbelspel (1)</a>
                 </li>
                 <li>
-                    <a href="#">Tegelspel</a>
+                    <a href="#">Bordspel (2)</a>
+                </li>
+                <li>
+                    <a href="#">Kaartspel (3)</a>
                 </li>
             </ul>
 
@@ -74,7 +77,7 @@
 
 
 
-            <form action="/data-add-gebruiker" method="post">
+            <form action="${pageContext.request.contextPath}/data-add-gebruiker" method="post">
 
                 <div class="row col-md-12">
 

@@ -25,17 +25,9 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb-5">
                 <li>
-                    <a href="/overzicht">Overzicht</a>
+                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht</a>
                 </li>
-                <li>
-                    <a href="#">Dobbelspel (1)</a>
-                </li>
-                <li>
-                    <a href="#">Bordspel (2)</a>
-                </li>
-                <li>
-                    <a href="#">Kaartspel (3)</a>
-                </li>
+
             </ul>
 
             <div class="footer">
@@ -83,8 +75,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg" >
-                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                    <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                    <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
                                 </svg>
                             </a>
                         </li>
