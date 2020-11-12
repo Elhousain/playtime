@@ -1,0 +1,16 @@
+[
+  {
+    "abbr": "AL",
+    "name": "Alabama",
+    "capital": "Montgomery",
+    "lat": "32.361538",
+    "long": "-86.279118"
+  },
+  {
+    "abbr": "AK",
+    "name": "Alaska",
+    "capital": "Juneau",
+    "lat": "58.301935",
+    "long": "-134.419740"
+  }
+]

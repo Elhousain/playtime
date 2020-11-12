@@ -1,10 +1,11 @@
-<%--
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %><%--
   Created by IntelliJ IDEA.
   User: elhousain.farah
   Date: 19/10/2020
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,13 +25,16 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb-5">
                 <li>
-                    <a href="#">Kaartspel</a>
+                    <a href="/overzicht">Overzicht</a>
                 </li>
                 <li>
-                    <a href="#">Dobbelspel</a>
+                    <a href="#">Dobbelspel (1)</a>
                 </li>
                 <li>
-                    <a href="#">Tegelspel</a>
+                    <a href="#">Bordspel (2)</a>
+                </li>
+                <li>
+                    <a href="#">Kaartspel (3)</a>
                 </li>
             </ul>
 
@@ -117,10 +121,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
 <script src="js/jquery.min.js"></script>
