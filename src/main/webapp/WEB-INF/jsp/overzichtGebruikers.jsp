@@ -5,14 +5,14 @@
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!doctype html>
 <html lang="en">
 <head>
-    <title>PLAYTIME - Overzicht spellen</title>
+    <title>PLAYTIME - Overzicht Gebruikers</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -103,23 +103,21 @@
                 </div>
             </nav>
             <!--#endregion-->
-            <!--#region Bordenspel groepen-->
+            <!--#region Gebruikers groepen-->
             <div class="container">
                 <h1>
-                    Overzicht spellen
+                    Overzicht gebruikers
                 </h1>
                 <%
-                    List<Spel> spellen = (List<Spel>) request.getAttribute("spellen");
-                    for (Spel spel: spellen) {
+                    List<Gebruiker> gebruikers = (List<Gebruiker>) request.getAttribute("gebruikers");
+                    for (Gebruiker gebruiker: gebruikers) {
                         out.print
                                 (
-                                        "<div class=flex-item><div class=row><div class=col-lg-3><img class=farah src="
-                                                +spel.getFoto()+
-                                                "></div> <div class=col-lg-6 pt><h5>"
-                                                +spel.getNaam()+
-                                                "</h5><a data-toggle=collapse href=#"+spel.getNaam()+" role=button aria-expanded=false aria-controls=collapseExample>infoFarah</a><p><div class=collapse id="+spel.getNaam()+"><div class=card card-body>"+spel.getBeschrijving()+"</div></div> </p></div><div class=col-lg-3><h5>Prijs</h5><p>"
-                                                +spel.getPrijs()+
-                                                "€</p><input type=button  class=btn-primary value=huren onclick=menu('"+spel.getNaam()+"',"+spel.getPrijs()+")><input type=button class=btn-info value=kopen onclick=test()></div></div></div>"
+                                        "<div class=flex-item><div class=row><div class=col-lg-1></div> <div class=col-lg-6 pt><h5>"
+                                                +gebruiker.getVoornaam()+" "+gebruiker.getAchternaam()+" ("+gebruiker.getGeboortedatum()+")"+
+                                                "</h5><a data-toggle=collapse href=#"+gebruiker.getVoornaam()+" role=button aria-expanded=false aria-controls=collapseExample>Extra info</a><p><div class=collapse id="+gebruiker.getVoornaam()+"><div class=card card-body>"+gebruiker.getEmail()+"</div><div class=card card-body>"+"Adres: "+gebruiker.getWoonplaats()+" "+gebruiker.getStraat()+"</div></div> </p></div><div class=col-lg-3><p>"
+                                                +"ID: "+gebruiker.getId()+
+                                                "</p></div></div></div>"
                                 );
                     }
                 %>
@@ -127,67 +125,7 @@
             <!--endregion-->
         </div>
     </div>
-    <div class="todoList">
-        <div class="cover-img" >
-            <div class="cover-inner">
-                <img src="${pageContext.request.contextPath}/images/winkelwagen.png">
-            </div>
-        </div>
-        <p class="content pl-lg-2">SPEL BESTELLEN:</p>
 
-        <ul >
-            <li>
-
-                <div class="todos row">
-                    <span class="col-lg-4">CATAN</span>
-                    <i class="col-lg-1" >
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-1">10</p>
-                    <i class="col-lg-1">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-3">30,21 €</p>
-                    <i>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-                        </svg>
-                    </i>
-                </div>
-            </li>
-            <li>
-
-                <div class="todos row">
-                    <span class="col-lg-4">CATAN</span>
-                    <i class="col-lg-1" >
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                        </svg>
-                    </i>
-                    <p class="col-lg-1">10</p>
-                    <i class="col-lg-1">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-3">30,21 €</p>
-                    <i>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-                        </svg>
-                    </i>
-                </div>
-            </li>
-
-        </ul>
-
-    </div>
 </div>
 
 

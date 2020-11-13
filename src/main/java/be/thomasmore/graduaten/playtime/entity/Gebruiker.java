@@ -13,6 +13,7 @@ public class Gebruiker {
     private Long id;
     private String voornaam;
     private String achternaam;
+
     private LocalDate geboortedatum;
     //private Date geboortedatum;
     private String email;

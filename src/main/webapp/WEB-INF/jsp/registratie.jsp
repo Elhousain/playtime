@@ -20,7 +20,8 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb5-">
                 <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht</a>
+                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
+                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
                 </li>
                 <li>
                     <a href="#">Dobbelspel (1)</a>

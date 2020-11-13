@@ -45,6 +45,15 @@ public class MainController {
         return "overzichtSpellen";
     }
 
+    @RequestMapping("/overzichtGebruikers")
+    public String overzichtGebruikers(Model model) {
+        List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
+        model.addAttribute("gebruikers", gebruikers);
+        return "overzichtGebruikers";
+    }
+
+
+
 
     @RequestMapping("/registratie")
     public String registratie(){
