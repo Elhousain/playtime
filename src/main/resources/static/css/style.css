@@ -8408,3 +8408,15 @@ a[data-toggle="collapse"] {
 }
 
 
+.itemgebruiker{
+  height: 70px;
+  width: 70px;
+  font-size: 9px;
+
+}
+
+.itemgebruiker img
+{
+  width:100%;
+  height:100%;
+}

@@ -13,7 +13,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>PLAYTIME</title>
+    <title>PLAYTIME - Overzicht Spellen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -33,7 +33,8 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb-5">
                 <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht</a>
+                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spellen</a>
+                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
                 </li>
                 <li >
                     <a href="#">Dobbelspel (1)</a>

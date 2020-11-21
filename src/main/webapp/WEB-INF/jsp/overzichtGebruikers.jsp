@@ -14,17 +14,14 @@
 <head>
     <title>PLAYTIME - Overzicht Gebruikers</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-
-
-
-
 </head>
 <body>
 
@@ -104,24 +101,61 @@
             </nav>
             <!--#endregion-->
             <!--#region Gebruikers groepen-->
-            <div class="container">
+
                 <h1>
                     Overzicht gebruikers
                 </h1>
+
+
+            <div class="flex-container">
+
+
                 <%
                     List<Gebruiker> gebruikers = (List<Gebruiker>) request.getAttribute("gebruikers");
+
+
                     for (Gebruiker gebruiker: gebruikers) {
                         out.print
                                 (
-                                        "<div class=flex-item><div class=row><div class=col-lg-1></div> <div class=col-lg-6 pt><h5>"
-                                                +gebruiker.getVoornaam()+" "+gebruiker.getAchternaam()+" ("+gebruiker.getGeboortedatum()+")"+
-                                                "</h5><a data-toggle=collapse href=#"+gebruiker.getVoornaam()+" role=button aria-expanded=false aria-controls=collapseExample>Extra info</a><p><div class=collapse id="+gebruiker.getVoornaam()+"><div class=card card-body>"+gebruiker.getEmail()+"</div><div class=card card-body>"+"Adres: "+gebruiker.getWoonplaats()+" "+gebruiker.getStraat()+"</div></div> </p></div><div class=col-lg-3><p>"
-                                                +"ID: "+gebruiker.getId()+
-                                                "</p></div></div></div>"
+
+                                        "<div class=flex-item>" +
+                                                "<div >" +
+                                                "<h5>"
+                                                +gebruiker.getVoornaam()+ " " + gebruiker.getAchternaam()+ " - ID: "+gebruiker.getId()+
+                                                "</h5>"+
+
+                                                "<h7>" +gebruiker.getEmail()+ "</h7>"+
+
+
+                                                "</div>"
+                                                +
+                                                "<div >" +
+                                                "<a data-toggle=collapse href=#"+gebruiker.getVoornaam()+" role=button aria-expanded=false aria-controls=collapseExample>" +
+                                                "details" +
+                                                "</a>" +
+                                                "<div class=collapse id="+gebruiker.getVoornaam()+">" +
+
+                                                "<div class=box>"+
+
+                                                "<div class=itemgebruiker> <img src=/images/telefoon.png >" +gebruiker.getTelefoon()+"</div>"+
+                                                "<div class=itemgebruiker> <img src=/images/adres.png >" +gebruiker.getWoonplaats()+" "+gebruiker.getPostcode()+"<br>"+gebruiker.getStraat()+" "+gebruiker.getHuisnummer()+"</div>"+
+                                                "<div class=itemgebruiker> <img src=/images/datum.png >" +gebruiker.getGeboortedatum()+"</div>"+
+
+                                                "</div>" +
+                                                "</div>" +
+                                                "</div>" +
+
+
+                                                "</div>"
+
                                 );
                     }
                 %>
+
+
             </div>
+
+
             <!--endregion-->
         </div>
     </div>
