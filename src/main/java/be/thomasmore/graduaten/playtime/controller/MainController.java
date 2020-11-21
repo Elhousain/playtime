@@ -2,23 +2,17 @@ package be.thomasmore.graduaten.playtime.controller;
 
 
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
+import be.thomasmore.graduaten.playtime.entity.Spel;
+import be.thomasmore.graduaten.playtime.service.GebruikerService;
+import be.thomasmore.graduaten.playtime.service.SpelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
-
-import be.thomasmore.graduaten.playtime.service.GebruikerService;
-
-import be.thomasmore.graduaten.playtime.entity.Spel;
-import be.thomasmore.graduaten.playtime.service.SpelService;
-
-
-
 
 
 @Controller

@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: elhousain.farah
@@ -12,19 +13,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>PLAYTIME - Overzicht spellen</title>
+    <title>PLAYTIME</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-
-
-
-
 </head>
 <body>
 
@@ -35,10 +33,9 @@
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
             <ul class="list-unstyled components mb-5">
                 <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
-                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
+                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht</a>
                 </li>
-                <li>
+                <li >
                     <a href="#">Dobbelspel (1)</a>
                 </li>
                 <li>
@@ -98,173 +95,202 @@
                                     </svg>
                                 </a>
                             </li>
+                            <li class="nav-item">
+
+                                <a class="nav-link" data-toggle=collapse href="#shopcar" role=button aria-expanded=false aria-controls=collapseExample>
+                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+                                        <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                                    </svg>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <!--#endregion-->
             <!--#region Bordenspel groepen-->
-            <div class="container">
-                <h1>
-                    Overzicht spellen
-                </h1>
+
+            <h1>
+                Overzicht spellen
+            </h1>
+
+            <div class="flex-container">
+
+
                 <%
                     List<Spel> spellen = (List<Spel>) request.getAttribute("spellen");
+
+
                     for (Spel spel: spellen) {
                         out.print
                                 (
-                                        "<div class=flex-item><div class=row><div class=col-lg-3><img class=farah src="
-                                                +spel.getFoto()+
-                                                "></div> <div class=col-lg-6 pt><h5>"
+
+                                        "<div class=flex-item>" +
+                                                "<div >" +
+                                                "<h5>"
                                                 +spel.getNaam()+
-                                                "</h5><a data-toggle=collapse href=#"+spel.getNaam()+" role=button aria-expanded=false aria-controls=collapseExample>infoFarah</a><p><div class=collapse id="+spel.getNaam()+"><div class=card card-body>"+spel.getBeschrijving()+"</div></div> </p></div><div class=col-lg-3><h5>Prijs</h5><p>"
-                                                +spel.getPrijs()+
-                                                "€</p><input type=button  class=btn-primary value=huren onclick=menu('"+spel.getNaam()+"',"+spel.getPrijs()+")><input type=button class=btn-info value=kopen onclick=test()></div></div></div>"
+                                                "</h5>"+
+                                                "<img class=farah src=" +spel.getFoto()+">" +
+                                                "</div>"+
+                                                "<div class=m-2>" +
+                                                /*"<h5>Prijs</h5>" +"<p>" +spel.getPrijs()+ "€</p>" + */
+                                                "<input type=button  class=btn-primary value=huren onclick=men()>" +
+                                                "<input type=button class=btn-info value=kopen onclick=car('"+spel.getId()+"','"+spel.getFoto()+"','"+spel.getNaam()+"','"+spel.getPrijs()+"')>" +
+                                                "</div class=m-2>"+
+
+                                                "<a data-toggle=collapse href=#"+spel.getNaam()+" role=button aria-expanded=false aria-controls=collapseExample>" +
+                                                "details" +
+                                                "</a>" +
+                                                "<div class=collapse id="+spel.getNaam()+">" +
+                                                "<div class=card>"+spel.getBeschrijving()+
+                                                "<div class=box>"+
+                                                "<div class=item> <img src=/images/pngegg.png >" +spel.getMin_spelers()+"-"+spel.getMax_spelers()+ "</div>"+
+                                                "<div class=minleeftijd>" +spel.getMin_leeftijd()+"+</div>"+
+                                                "<div class=item> <img src=/images/taal.png >" +spel.getTaal()+ "</div>"+
+                                                "<div class=item> <img src=/images/uitgever.png >" +spel.getUitgever()+"</div>"+
+                                                "<div class=item> <img src=/images/euro.png >" +spel.getPrijs()+"</div>"+
+                                                "</div>" +
+                                                "</div>" +
+                                                "</div>" +
+
+                                                "</div>"
+
                                 );
                     }
                 %>
+
+
             </div>
-            <!--endregion-->
-        </div>
-    </div>
-    <div class="todoList">
-        <div class="cover-img" >
-            <div class="cover-inner">
-                <img src="${pageContext.request.contextPath}/images/winkelwagen.png">
+            <div class="winkelmand collapse" id="shopcar">
+                <div class="p-2 onderlijn">WINKELMANDJE</div>
+                <ul id="webcar" type="none">
+
+                </ul>
+                <ul type="none">
+                    <li>
+                        <div class="row onderlijn">
+                            <a class="col-sm-7 m-auto" ></a>
+                            <a class="col-sm-2 m-auto"   > TOTAAL </a>
+                            <a class="col-sm-2 m-auto" id="subtotaal" > 0</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="keuze" >
+                    <input type=button  class="btn-primary btn-block" value="verder winkelen" onclick="men()">
+                    <input type=button class="btn-info btn-block" value="kassa" onclick="kopen()">
+                </div>
+
             </div>
         </div>
-        <p class="content pl-lg-2">SPEL BESTELLEN:</p>
 
-        <ul >
-            <li>
-
-                <div class="todos row">
-                    <span class="col-lg-4">CATAN</span>
-                    <i class="col-lg-1" >
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-1">10</p>
-                    <i class="col-lg-1">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-3">30,21 €</p>
-                    <i>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-                        </svg>
-                    </i>
-                </div>
-            </li>
-            <li>
-
-                <div class="todos row">
-                    <span class="col-lg-4">CATAN</span>
-                    <i class="col-lg-1" >
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                        </svg>
-                    </i>
-                    <p class="col-lg-1">10</p>
-                    <i class="col-lg-1">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"></path>
-                        </svg>
-                    </i>
-                    <p class="col-lg-3">30,21 €</p>
-                    <i>
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-                        </svg>
-                    </i>
-                </div>
-            </li>
-
-        </ul>
 
     </div>
-</div>
-
+    <!--endregion-->
 
 </div>
 
 <script>
-    const submitForm = document.querySelector('.add');
-    const addButton = document.querySelector('.add-todo');
-    const todoList = document.querySelector('.todos');
-    const list = document.querySelectorAll('.todos li');
+    function car(id,picture,name,price)
+    {
+        var _id=document.getElementById("webcar"),
+            _li1=document.createElement('li'),
+            _div1=document.createElement('div'),
+            _a1=document.createElement('a'),
+            _img1=document.createElement('img'),
+            _span1=document.createElement('span'),
+            _btn1=document.createElement('button'),
+            _span2=document.createElement('span'),
+            _btn2=document.createElement('button'),
+            _a2=document.createElement('a');
 
-    let listLenght = list.lenght;
+        var _delete=document.createTextNode("X"),
+            _naam=document.createTextNode(name),
+            _plus=document.createTextNode("+"),
+            _aantal=document.createTextNode("1"),
+            _min=document.createTextNode("-"),
+            _totaal=document.createTextNode(price);
 
-    const generateTempalate = (todo) => {
+        _li1.setAttribute("class","kader onderlijn")
+        _div1.setAttribute("class","row")
 
-        const html = `<li>
-                  <input type="checkbox" id="todo_${listLenght}">
-                  <label for="todo_${listLenght}">
-                    <span class="check"></span>
-                    ${todo}
-                  </label>
-                  <i class="far fa-trash-alt delete"></i>
-                </li>`
-        todoList.innerHTML += html;
-    };
+        _a1.appendChild(_delete);
+        _a1.setAttribute("class","col-sm-1 m-auto")
 
-    function addTodos(e) {
-        e.preventDefault();
-        const todo = submitForm.add.value.trim();
-        if (todo.length) {
-            listLenght = listLenght + 1;
-            generateTempalate(todo);
-            submitForm.reset();
-        }
+        _img1.setAttribute("src",picture);
+        _img1.setAttribute("class","afb col-sm-2 m-auto")
+        _img1.setAttribute("id",id)
+
+        _span1.setAttribute("class","col-sm-4 m-auto")
+        _span1.appendChild(_naam);
+
+        _btn1.setAttribute("class","knop m-auto")
+        _btn1.appendChild(_plus);
+
+        _span2.setAttribute("class","m-auto")
+        _span2.appendChild(_aantal);
+
+        _btn2.setAttribute("class","knop m-auto")
+        _btn2.appendChild(_min);
+
+        _a2.setAttribute("class","col-sm-2 m-auto")
+        _a2.appendChild(_totaal);
+
+        _li1.appendChild(_div1);
+        _div1.appendChild(_a1);
+        _div1.appendChild(_img1);
+        _div1.appendChild(_span1);
+        _div1.appendChild(_btn1);
+        _div1.appendChild(_span2);
+        _div1.appendChild(_btn2);
+        _div1.appendChild(_a2);
+        _id.appendChild(_li1)
+
+
+
     }
 
-    submitForm.addEventListener('submit', addTodos);
-    addButton.addEventListener('click', addTodos);
 
-    function deleteTodos(e) {
-        if (e.target.classList.contains('delete')) {
-            e.target.parentElement.remove();
-        }
+    function huur(naam,prijs) {
+        var geld;
+        geld = prijs*1.15
+        alert(naam +" kost "+ geld.toFixed(2)+" €");
+
     }
+    function kopen(naam,prijs) {
+        var geld;
+        geld = prijs
+        alert(naam +" kost "+geld+" €");
 
-    todoList.addEventListener('click', deleteTodos);
+    }
+    var geld = 0;
+    var bedrag = 20;
 
-</script>
 
-<script>
+    function tellen(bereken) {
 
-    function myfunction(naam) {
-        switch(naam) {
-            case "1":
-                alert("De Kolonisten Van Catan");
-                break;
-            case "2":
-                alert("Clever");
-                break;
-            case "3":
-                alert("Smallworld");
-                break;
-            case "4":
-                alert("Monopoly");
-                break;
-            default:
-                alert("js");
+        if(bereken=="plus")
+        {
+            geld = geld+1;
         }
+
+        if(bereken=="min"&&geld>0)
+        {
+            geld = geld-1;
+
+        }
+        document.getElementById("aantal").innerHTML = geld;
+        document.getElementById("totaal").innerHTML = geld*bedrag;
+
     }
 
 </script>
 
 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/popper.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>
