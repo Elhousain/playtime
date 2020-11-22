@@ -13,7 +13,7 @@ public class Gebruiker {
     private Long id;
     private String voornaam;
     private String achternaam;
-
+    private String rol;
     private LocalDate geboortedatum;
     //private Date geboortedatum;
     private String email;
@@ -129,6 +129,14 @@ public class Gebruiker {
 
     public void setHuisnummer(String huisnummer) {
         this.huisnummer = huisnummer;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     @Override

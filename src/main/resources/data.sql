@@ -52,7 +52,7 @@ id                  int             not null AUTO_INCREMENT,
 voornaam            varchar(20)     not null,
 achternaam          varchar(30)     not null,
 geboortedatum       datetime        null,
-admin               bool            null,
+rol                 varchar(10)     null,
 email               varchar(40)     not null,
 paswoord            varchar(40)     not null,
 telefoon            varchar(20)     null,
@@ -112,12 +112,12 @@ values ( 'Smallworld', 'images/smallworld.jpg', '45.00', 'Kies een volk en betre
 insert into spel(naam, foto, prijs, beschrijving, categorie, min_spelers, max_spelers, min_leeftijd, taal, uitgever, status, voorraad_huur, voorraad_koop)
 values ( 'Monopoly', 'images/monopoly.jpg', '30.00', ' De ingrediënten om te winnen zijn natuurlijk tactiek, maar ook een beetje geluk. Het doel van het spel is om groot te worden door straten te kopen, huizen en hotels te bouwen. Heb je altijd al rijk willen worden? Het kan met Monopoly! Koop le Meir in Antwerpen of de Nieuwstraat in Brussel. Bij veel mensen zal dit spel nostalgie opwekken, maar het is ook nog steeds een fantastisch spel om voor de eerste keer te spelen. Met het vingerhoedje, de laars, de oldtimer, de kruiwagen, het schip, de hoed, het hondje en een kat als pionnen. Voor een sneller spel kan je ook de geluksdobbelsteen gebruiken, naast de normale dobbelsteen. Je hebt dan kans om de bus of MR. Monopoly te dobbelen, hiermee kan je je sneller een weg over het bord banen.', '2', '2', '8', '8', '1', '3', '1', '0', '0' );
 
-insert into gebruiker(voornaam, achternaam, geboortedatum, admin, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
-values ( 'Elhousain', 'Farah', '1989-04-17', 'true', 'r0797083@student.thomasmore.be', 'test', '014444444', 'Beringen', '3580', 'Hoogstraat', '32' );
-insert into gebruiker(voornaam, achternaam, geboortedatum, admin, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
-values ( 'Bulent', 'Arslan', '1989-08-23', 'true', 'r0792355@student.thomasmore.be', 'test', '0433333333', 'Beringen', '3580', 'Laagstraat', '40' );
-insert into gebruiker(voornaam, achternaam, geboortedatum, admin, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
-values ( 'Tom', 'Scheyltjens', '1989-03-18', 'false', 's0200162@thomasmore.student.be', 'test', '0472743607', 'Vosselaar', '2350', 'Grootheidestraat', '23' );
+insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
+values ( 'Elhousain', 'Farah', '1989-04-17', 'ROLE_ADMIN', 'r0797083@student.thomasmore.be', 'test', '014444444', 'Beringen', '3580', 'Hoogstraat', '32' );
+insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
+values ( 'Bulent', 'Arslan', '1989-08-23', 'ROLE_ADMIN', 'r0792355@student.thomasmore.be', 'test', '0433333333', 'Beringen', '3580', 'Laagstraat', '40' );
+insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
+values ( 'Tom', 'Scheyltjens', '1989-03-18', 'ROLE_USER', 's0200162@thomasmore.student.be', 'test', '0472743607', 'Vosselaar', '2350', 'Grootheidestraat', '23' );
 
 insert into gebruikerbordspel(spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
 values ( '1', '3', '2020-11-01', 'true', 'true', '1' );
