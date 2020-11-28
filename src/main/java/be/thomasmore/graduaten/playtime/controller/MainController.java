@@ -48,6 +48,14 @@ public class MainController {
         model.addAttribute("spellen", spellen);
         return "overzichtSpellen";
     }
+
+    @RequestMapping("/overzichtGebruikers")
+    public String overzichtGebruikers(Model model){
+        List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
+        model.addAttribute("gebruikers", gebruikers);
+        return "overzichtGebruikers";
+    }
+
     @RequestMapping("/overzichtTalen")
     public String overzichtTalen(Model model) {
         List<Taal> talen = taalService.getTalen();
