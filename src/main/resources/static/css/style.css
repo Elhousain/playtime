@@ -467,6 +467,7 @@ pre code {
 
 .container-fluid {
   width: 100%;
+  position: relative;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -479,7 +480,11 @@ pre code {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin-right: -15px;
-  margin-left: -15px; }
+  margin-left: -15px;
+  padding: 3px;
+
+}
+
 
 .no-gutters {
   margin-right: 0;
@@ -3776,11 +3781,11 @@ input[type="button"].btn-block {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-width: 0;
+  min-width: 250px;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  /*border: 1px solid rgba(0, 0, 0, 0.125);*/
   border-radius: 0.25rem;
   margin: 10px;
   padding: 2px;
@@ -8219,6 +8224,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 300px;
   max-width: 300px;
+  height: 2000px;
   background: #1d1919;
   color: #fff;
   -webkit-transition: all 0.3s;
@@ -8312,7 +8318,7 @@ a[data-toggle="collapse"] {
   height: 30px;
   width: 30px;
   font-size: 14px;
-  text-align: center;
+
 
 }
 
@@ -8361,20 +8367,21 @@ a[data-toggle="collapse"] {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
   border-radius: 0 15px 0 15px;
-
 }
 .plaats{
   position: absolute;
 
+
 }
 
 .winkelmand{
-  position:absolute;
-  top: 100px;
-  left: 900px;
+  position:fixed;
+  top: 150px;
+  right:60px;
   width: 600px;
   height: 400px;
   background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .kader{
 
@@ -8406,6 +8413,203 @@ a[data-toggle="collapse"] {
   margin: 0;
   border-bottom: 2px solid #EBECEE;
 }
+
+
+-------
+  /* Code By Webdevtrick (https://webdevtrick.com) */
+body {
+  background: #f3f3f3;
+  padding: 30px 20px;
+}
+
+.dashboard-cards {
+  position: relative;
+  padding-bottom: 50px;
+  margin: 0 !important;
+}
+
+.dashboard-cards .card {
+
+  background: #ffffff;
+  display: inline-block;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  padding: 0 !important;
+  justify-content: space-around;
+  position: relative;
+  z-index: 1;
+  width: calc(30.0% - 10px);
+  height: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+}
+
+.dashboard-cards .card:hover {
+  box-shadow: 0 15px 10px -10px rgba(31, 31, 31, 0.5);
+  transition: all 0.3s ease;
+}
+
+.dashboard-cards .card .card-title {
+  background: #ffffff;
+  padding: 20px 15px;
+  position: relative;
+  z-index: 0;
+}
+
+.dashboard-cards .card .card-title h2 {
+  font-size: 24px;
+  letter-spacing: -0.05em;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-cards .card .card-title h2 small {
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+  letter-spacing: -0.025em;
+}
+
+.dashboard-cards .card .card-description {
+  position: relative;
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+  padding: 10px 15px 0 15px;
+}
+
+.dashboard-cards .card .card-actions {
+  box-shadow: 0 2px 0px 0 rgba(0, 0, 0, 0.075);
+  padding: 10px;
+  text-align: center;
+}
+
+.dashboard-cards .card .card-flap {
+  background: #d9d9d9;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+.dashboard-cards .card .flap1 {
+  transition: all 0.3s 0.3s ease-out;
+  z-index: -1;
+}
+
+.dashboard-cards .card .flap2 {
+  transition: all 0.3s 0s ease-out;
+  z-index: -2;
+}
+
+.dashboard-cards.showing .card {
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-transform: scale(0.88);
+  transform: scale(0.88);
+}
+
+.dashboard-cards .no-touch .dashboard-cards.showing .card:hover {
+  opacity: 0.94;
+  -webkit-transform: scale(0.92);
+  transform: scale(0.92);
+}
+
+.dashboard-cards .card.d-card-show {
+  opacity: 1 !important;
+  -webkit-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
+
+.dashboard-cards .card.d-card-show .card-flap {
+  background: #ffffff;
+  -webkit-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+
+.dashboard-cards .card.d-card-show .flap1 {
+  transition: all 0.3s 0s ease-out;
+}
+
+.dashboard-cards .card.d-card-show .flap2 {
+  transition: all 0.3s 0.2s ease-out;
+}
+
+.dashboard-cards .card .task-count {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 22px;
+  right: 10px;
+  background: #ecf0f1;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 100%;
+  color: #333333;
+  font-weight: 600;
+  transition: all .2s ease;
+}
+
+.dashboard-cards .task-list {
+  padding: 0 !important;
+}
+
+.dashboard-cards .task-list li {
+  padding: 10px 0;
+  padding-left: 10px;
+  margin: 3px 0;
+  list-style-type: none;
+  border-bottom: 1px solid #e9ebed;
+  border-left: 3px solid #ff3a3a;
+  transition: all .2s ease;
+}
+
+.dashboard-cards .task-list li:hover {
+  background: #ecf0f1;
+  transition: all .2s ease;
+}
+
+.dashboard-cards .task-list li span {
+  float: right;
+
+  color: #ff3a3a;
+  margin-right: 5px;
+}
+
+.dashboard-cards .task-list li img {
+  float: left;
+  width:30px;
+  height:30px;
+}
+
+.dashboard-cards.showing .card.d-card-show .task-count {
+  color: #ffffff;
+  background: #ff3a3a;
+  transition: all .2s ease;
+}
+
+.dashboard-cards .card-actions .btn {
+  color: #333;
+}
+
+.dashboard-cards .card-actions .btn:hover {
+  color: #ff3a3a;
+}
+@media (max-width:750px) {
+  .dashboard-cards .card {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+.achtergrond{
+  background-color: white;
+}
+
 
 
 .itemgebruiker{

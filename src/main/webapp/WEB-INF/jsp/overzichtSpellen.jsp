@@ -8,7 +8,10 @@
 --%>
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
 <%@ page import="java.util.List" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Uitgever" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.sql.*"%>
 
 <!doctype html>
 <html lang="en">
@@ -19,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 
@@ -27,7 +31,7 @@
 <body>
 
 <div class="wrapper d-flex align-items-stretch">
-    <!--#region Navigatie-->
+    <!--#region Linksepaneel-->
     <nav id="sidebar">
         <div class="p-4 pt-5">
             <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
@@ -65,7 +69,7 @@
     </nav>
     <!--#endregion-->
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="position: relative">
         <div id="content" class="p-4 p-md-5">
             <!--#region Header-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -111,187 +115,215 @@
             </nav>
             <!--#endregion-->
             <!--#region Bordenspel groepen-->
-
             <h1>
                 Overzicht spellen
             </h1>
 
-            <div class="flex-container">
-
-
+            <div class="row dashboard-cards">
                 <%
                     List<Spel> spellen = (List<Spel>) request.getAttribute("spellen");
+                    List<Taal> talen = (List<Taal>)request.getAttribute("talen") ;
+                    List<Uitgever> uitgevers = (List<Uitgever>) request.getAttribute("uitgevers");
+
+
 
 
                     for (Spel spel: spellen) {
+                        double huurPrijs=spel.getPrijs()*0.75;
                         out.print
                                 (
 
-                                        "<div class=flex-item>" +
-                                                "<div >" +
-                                                "<h5>"
-                                                +spel.getNaam()+
-                                                "</h5>"+
-                                                "<img class=farah src=" +spel.getFoto()+">" +
+                                        "<div class=card style=z-index: 10;>"+
+                                                "<div class=card-title>"+
+                                                    "<h5>"
+                                                        +spel.getNaam()+
+                                                    "</h5>"+
+                                                    "<img class=farah src=" +spel.getFoto()+">" +
                                                 "</div>"+
-                                                "<div class=m-2>" +
-                                                /*"<h5>Prijs</h5>" +"<p>" +spel.getPrijs()+ "€</p>" + */
-                                                "<input type=button  class=btn-primary value=huren onclick=men()>" +
-                                                "<input type=button class=btn-info value=kopen onclick=car('"+spel.getId()+"','"+spel.getFoto()+"','"+spel.getNaam()+"','"+spel.getPrijs()+"')>" +
-                                                "</div class=m-2>"+
 
-                                                "<a data-toggle=collapse href=#"+spel.getNaam()+" role=button aria-expanded=false aria-controls=collapseExample>" +
-                                                "details" +
-                                                "</a>" +
-                                                "<div class=collapse id="+spel.getNaam()+">" +
-                                                "<div class=card>"+spel.getBeschrijving()+
-                                                "<div class=box>"+
-                                                "<div class=item> <img src=/images/pngegg.png >" +spel.getMin_spelers()+"-"+spel.getMax_spelers()+ "</div>"+
-                                                "<div class=minleeftijd>" +spel.getMin_leeftijd()+"+</div>"+
-                                                "<div class=item> <img src=/images/taal.png >" +spel.getTaal()+ "</div>"+
-                                                "<div class=item> <img src=/images/uitgever.png >" +spel.getUitgever()+"</div>"+
-                                                "<div class=item> <img src=/images/euro.png >" +spel.getPrijs()+"</div>"+
-                                                "</div>" +
-                                                "</div>" +
+                                                "<div class=achtergrond>" +
+                                                    "<div class=row>" +
+                                                        "<div class=col-sm-6>" +
+                                                            "<p>" +huurPrijs+ " €</p>"+
+                                                            "<input type=button  class=btn-primary value=huren onclick=men()>" +
+                                                        "</div>" +
+                                                        "<div class=col-sm-6>" +
+                                                            "<p>" +spel.getPrijs()+ " €</p>"+
+                                                            "<input type=button class=btn-info value=kopen onclick=car('"+spel.getId()+"','"+spel.getFoto()+"','"+spel.getNaam()+"','"+spel.getPrijs()+"')>"+
+                                                        "</div>" +
+
+                                                "<a id=tonen class=m-auto> details" +
+                                                "</a>"+
+
+                                                    "</div>" +
                                                 "</div>" +
 
-                                                "</div>"
+                                                "<div class=card-flap>"+
+                                                    "<div class=card-description>"+
+                                                        "<div class=onderlijn>"+spel.getBeschrijving()+"</div>"+
+                                                    "<ul class=task-list>"+
+                                                        "<li>"+
+                                                             "<img class=img-thumbnail src=/images/pngegg.png > Spelers tussen " +spel.getMin_spelers()+" en "+spel.getMax_spelers()+
+                                                        "</li>"+
+                                                        "<li>"+
+                                                            "<div class=minleeftijd>" +spel.getMin_leeftijd()+
+                                                        "</li>"+
+                                                        "<li>"+
 
-                                );
+                                                            "<img src=/images/taal.png > <p id=taal></p>"+
+                                                        "</li>"+
+                                                        "<li>"+
+                                                            "<img src=/images/uitgever.png > <p id=uitgever></p>" +
+                                                        "</li>"+
+                                                        "<li>"+
+                                                            "<img src=/images/euro.png >" +spel.getPrijs()+" €"+
+                                                        "</li>"+
+                                                    "</ul>"+
+                                                "</div>"+
+                                        "</div>"+
+                                "</div>"
+                        );
                     }
                 %>
 
 
             </div>
-            <div class="winkelmand collapse" id="shopcar">
-                <div class="p-2 onderlijn">WINKELMANDJE</div>
-                <ul id="webcar" type="none">
+                <div class="winkelmand collapse" id="shopcar">
+                    <div class="p-2 onderlijn">WINKELMANDJE</div>
+                    <ul id="webcar" type="none">
 
-                </ul>
-                <ul type="none">
-                    <li>
-                        <div class="row onderlijn">
-                            <a class="col-sm-7 m-auto" ></a>
-                            <a class="col-sm-2 m-auto"   > TOTAAL </a>
-                            <a class="col-sm-2 m-auto" id="subtotaal" > 0</a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="keuze" >
-                    <input type=button  class="btn-primary btn-block" value="verder winkelen" onclick="men()">
-                    <input type=button class="btn-info btn-block" value="kassa" onclick="kopen()">
+                    </ul>
+                    <ul type="none">
+                        <li>
+                            <div class="row onderlijn">
+                                <a class="col-sm-7 m-auto" ></a>
+                                <a class="col-sm-2 m-auto"   > TOTAAL </a>
+                                <a class="col-sm-2 m-auto" id="subtotaal" > 0</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="keuze" >
+                        <input type=button  class="btn-primary btn-block" value="verder winkelen" onclick="men()">
+                        <input type=button class="btn-info btn-block" value="kassa" onclick="kopen()">
+                    </div>
                 </div>
-
-            </div>
         </div>
-
-
+        <!--endregion-->
     </div>
-    <!--endregion-->
-
 </div>
 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+    </script><script  src="function.js"></script>
+    <script>
+        function car(id,picture,name,price,language,publisher)
+        {
+            var _id=document.getElementById("webcar"),
+                _li1=document.createElement('li'),
+                _div1=document.createElement('div'),
+                _a1=document.createElement('a'),
+                _img1=document.createElement('img'),
+                _span1=document.createElement('span'),
+                _btn1=document.createElement('button'),
+                _span2=document.createElement('span'),
+                _btn2=document.createElement('button'),
+                _a2=document.createElement('a');
+
+            var _delete=document.createTextNode("X"),
+                _naam=document.createTextNode(name),
+                _plus=document.createTextNode("+"),
+                _aantal=document.createTextNode("1"),
+                _min=document.createTextNode("-"),
+                _totaal=document.createTextNode(price),
+                _taal=document.createTextNode(language),
+                _uitgever=document.createTextNode(publisher);
+
+            _li1.setAttribute("class","kader onderlijn")
+            _div1.setAttribute("class","row")
+
+            _a1.appendChild(_delete);
+            _a1.setAttribute("class","col-sm-1 m-auto")
+
+            _img1.setAttribute("src",picture);
+            _img1.setAttribute("class","afb col-sm-2 m-auto")
+            _img1.setAttribute("id",id)
+
+            _span1.setAttribute("class","col-sm-4 m-auto")
+            _span1.appendChild(_naam);
+
+            _btn1.setAttribute("class","knop m-auto")
+            _btn1.appendChild(_plus);
+
+            _span2.setAttribute("class","m-auto")
+            _span2.appendChild(_aantal);
+
+            _btn2.setAttribute("class","knop m-auto")
+            _btn2.appendChild(_min);
+
+            _a2.setAttribute("class","col-sm-2 m-auto")
+            _a2.appendChild(_totaal);
+
+            _li1.appendChild(_div1);
+            _div1.appendChild(_a1);
+            _div1.appendChild(_img1);
+            _div1.appendChild(_span1);
+            _div1.appendChild(_btn1);
+            _div1.appendChild(_span2);
+            _div1.appendChild(_btn2);
+            _div1.appendChild(_a2);
+            _id.appendChild(_li1)
+
+        }
+
+
+        function huur(naam,prijs) {
+            var geld;
+            geld = prijs*1.15
+            alert(naam +" kost "+ geld.toFixed(2)+" €");
+
+        }
+        function kopen(naam,prijs) {
+            var geld;
+            geld = prijs
+            alert(naam +" kost "+geld+" €");
+
+        }
+        var geld = 0;
+        var bedrag = 20;
+
+
+        function tellen(bereken) {
+
+            if(bereken=="plus")
+            {
+                geld = geld+1;
+            }
+
+            if(bereken=="min"&&geld>0)
+            {
+                geld = geld-1;
+
+            }
+        }
+
+    </script>
+
 <script>
-    function car(id,picture,name,price)
+    var zindex = 10;
+
+    $(document).on('click','#tonen',function()
     {
-        var _id=document.getElementById("webcar"),
-            _li1=document.createElement('li'),
-            _div1=document.createElement('div'),
-            _a1=document.createElement('a'),
-            _img1=document.createElement('img'),
-            _span1=document.createElement('span'),
-            _btn1=document.createElement('button'),
-            _span2=document.createElement('span'),
-            _btn2=document.createElement('button'),
-            _a2=document.createElement('a');
-
-        var _delete=document.createTextNode("X"),
-            _naam=document.createTextNode(name),
-            _plus=document.createTextNode("+"),
-            _aantal=document.createTextNode("1"),
-            _min=document.createTextNode("-"),
-            _totaal=document.createTextNode(price);
-
-        _li1.setAttribute("class","kader onderlijn")
-        _div1.setAttribute("class","row")
-
-        _a1.appendChild(_delete);
-        _a1.setAttribute("class","col-sm-1 m-auto")
-
-        _img1.setAttribute("src",picture);
-        _img1.setAttribute("class","afb col-sm-2 m-auto")
-        _img1.setAttribute("id",id)
-
-        _span1.setAttribute("class","col-sm-4 m-auto")
-        _span1.appendChild(_naam);
-
-        _btn1.setAttribute("class","knop m-auto")
-        _btn1.appendChild(_plus);
-
-        _span2.setAttribute("class","m-auto")
-        _span2.appendChild(_aantal);
-
-        _btn2.setAttribute("class","knop m-auto")
-        _btn2.appendChild(_min);
-
-        _a2.setAttribute("class","col-sm-2 m-auto")
-        _a2.appendChild(_totaal);
-
-        _li1.appendChild(_div1);
-        _div1.appendChild(_a1);
-        _div1.appendChild(_img1);
-        _div1.appendChild(_span1);
-        _div1.appendChild(_btn1);
-        _div1.appendChild(_span2);
-        _div1.appendChild(_btn2);
-        _div1.appendChild(_a2);
-        _id.appendChild(_li1)
+        zindex++;
+        let card =  $(this).closest('.card')
+        if(card.hasClass('d-card-show')) card.removeClass('d-card-show')
+        else card.addClass('d-card-show').css({zIndex:zindex})
+    })
 
 
-
-    }
-
-
-    function huur(naam,prijs) {
-        var geld;
-        geld = prijs*1.15
-        alert(naam +" kost "+ geld.toFixed(2)+" €");
-
-    }
-    function kopen(naam,prijs) {
-        var geld;
-        geld = prijs
-        alert(naam +" kost "+geld+" €");
-
-    }
-    var geld = 0;
-    var bedrag = 20;
-
-
-    function tellen(bereken) {
-
-        if(bereken=="plus")
-        {
-            geld = geld+1;
-        }
-
-        if(bereken=="min"&&geld>0)
-        {
-            geld = geld-1;
-
-        }
-        document.getElementById("aantal").innerHTML = geld;
-        document.getElementById("totaal").innerHTML = geld*bedrag;
-
-    }
 
 </script>
-
-
-
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/popper.js"></script>
-<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/popper.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
 </body>
 </html>

@@ -104,7 +104,7 @@ insert into categorie(beschrijving)
 values ( 'kaartspel' );
 
 insert into spel(naam, foto, prijs, beschrijving, categorie, min_spelers, max_spelers, min_leeftijd, taal, uitgever, status, voorraad_huur, voorraad_koop)
-values ('De Kolonisten Van Catan', 'images/catan.jpg', '41.00', 'De spelers proberen elk zo lucratief mogelijk het eiland ‘Catan’ te koloniseren door er straten, dorpen en steden op te plaatsen. Wie als eerste de noodzakelijke 10 zegepunten kan verzamelen, wint.', '3', '3', '4', '13', '1', '1', '3', '4', '10');
+values ('Catan', 'images/catan.jpg', '41.00', 'De spelers proberen elk zo lucratief mogelijk het eiland ‘Catan’ te koloniseren door er straten, dorpen en steden op te plaatsen. Wie als eerste de noodzakelijke 10 zegepunten kan verzamelen, wint.', '3', '3', '4', '13', '1', '1', '3', '4', '10');
 insert into spel(naam, foto, prijs, beschrijving, categorie, min_spelers, max_spelers, min_leeftijd, taal, uitgever, status, voorraad_huur, voorraad_koop)
 values ('Clever', 'images/clever.jpg', '15.00', 'Tactisch dobbelspel voor het hele gezin. Dobbel en vul één van je geworpen dobbelstenen in de bijbehorende categorie in. Elke categorie levert op een andere manier punten op. Kies slim en let goed op de overgebleven dobbelstenen. Je moet namelijk elke dobbelsteen met een lager resultaat op het zilveren dienblad aan de andere spelers serveren. Die kunnen daardoor wellicht ook belangrijke punten scoren.', '1', '1', '4', '5', '1', '1', '3', '2', '7');
 insert into spel(naam, foto, prijs, beschrijving, categorie, min_spelers, max_spelers, min_leeftijd, taal, uitgever, status, voorraad_huur, voorraad_koop)

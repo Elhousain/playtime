@@ -3,8 +3,12 @@ package be.thomasmore.graduaten.playtime.controller;
 
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.entity.Spel;
+import be.thomasmore.graduaten.playtime.entity.Taal;
+import be.thomasmore.graduaten.playtime.entity.Uitgever;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
 import be.thomasmore.graduaten.playtime.service.SpelService;
+import be.thomasmore.graduaten.playtime.service.TaalService;
+import be.thomasmore.graduaten.playtime.service.UitgeverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,22 +36,30 @@ public class MainController {
     @Autowired
     SpelService spelService;
 
+    @Autowired
+    TaalService taalService;
+
+    @Autowired
+    UitgeverService uitgeverService;
+
     @RequestMapping("/overzichtSpellen")
     public String overzichtSpellen(Model model) {
         List<Spel> spellen = spelService.getSpellen();
         model.addAttribute("spellen", spellen);
         return "overzichtSpellen";
     }
-
-    @RequestMapping("/overzichtGebruikers")
-    public String overzichtGebruikers(Model model) {
-        List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
-        model.addAttribute("gebruikers", gebruikers);
-        return "overzichtGebruikers";
+    @RequestMapping("/overzichtTalen")
+    public String overzichtTalen(Model model) {
+        List<Taal> talen = taalService.getTalen();
+        model.addAttribute("talen", talen);
+        return "overzichtTalen";
     }
-
-
-
+    @RequestMapping("/overzichtUitgevers")
+    public String overzichtUitgevers(Model model) {
+        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
+        model.addAttribute("uitgevers", uitgevers);
+        return "overzichtUitgevers";
+    }
 
     @RequestMapping("/registratie")
     public String registratie(){
