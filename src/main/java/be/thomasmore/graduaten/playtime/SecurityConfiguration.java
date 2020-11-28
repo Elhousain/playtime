@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    MyUserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -28,6 +28,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/overzichtSpellen").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
                 .and().formLogin();
+        http.authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll();
+        //nodig om h2-console te bereiken
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
     }
 
     @Bean
