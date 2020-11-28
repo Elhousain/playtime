@@ -8,9 +8,21 @@ import java.util.List;
 @Entity
 public class Gebruiker {
 
+    public static final String VOORNAAM = "Voornaam";
+    public static final String ACHTERNAAM = "Familienaam";
+    public static final String EMAIL = "E-mailadres";
+    public static final String PASWOORD = "Wachtwoord";
+    public static final String GEBOORTEDATUM = "Geboortedatum";
+    public static final String WOONPLAATS = "Gemeente";
+    public static final String POSTCODE = "Postcode";
+    public static final String STRAAT = "Straat";
+    public static final String HUISNUMMER = "Huisnummer";
+
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String voornaam;
     private String achternaam;
     private String rol;
@@ -29,10 +41,11 @@ public class Gebruiker {
     public Gebruiker() {
     }
 
-    public Gebruiker(String voornaam, String achternaam, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
+    public Gebruiker(String voornaam, String achternaam, String rol, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
         //this.id = id;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
+        this.rol=rol;
         this.geboortedatum = geboortedatum;
         this.email = email;
         this.paswoord = paswoord;

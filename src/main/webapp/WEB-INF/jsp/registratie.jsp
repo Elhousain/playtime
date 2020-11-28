@@ -1,4 +1,5 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.List" %>
 <!doctype html>
 <html lang="en">
@@ -13,6 +14,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
+
+<%
+    HashMap<String, String> values = (HashMap<String, String>) request.getAttribute("values");
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
+%>
 
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
@@ -78,22 +84,56 @@
 
 
 
-            <form action="${pageContext.request.contextPath}/data-add-gebruiker" method="post">
+            <form action="/data-add-gebruiker" method="post">
 
                 <div class="row col-md-12">
 
 
                     <div class="form-group col-4">
-                        <label class="form-control-label" for="voornaam">Voornaam</label>
-                        <input type="text" class="form-control" id="voornaam" name="voornaam">
+
+
+                            <label class="form-control-label" for="<%=Gebruiker.VOORNAAM%>"><%=Gebruiker.VOORNAAM%></label>
+                            <input class="form-control" type="text" id="<%=Gebruiker.VOORNAAM%>" name="<%=Gebruiker.VOORNAAM%>" value="<%=values.get(Gebruiker.VOORNAAM)%>">
+
+                            <%
+                            if (errors.containsKey(Gebruiker.VOORNAAM)) {
+                            out.print("<span style='color: red;'>" + errors.get(Gebruiker.VOORNAAM) + "</span>");
+                            }
+                            %>
+
+
+
+                    </div>
+
+                    <div class="form-group col-4">
+
+                        <label class="form-control-label" for="<%=Gebruiker.ACHTERNAAM%>"><%=Gebruiker.ACHTERNAAM%></label>
+                        <input class="form-control" type="text" id="<%=Gebruiker.ACHTERNAAM%>" name="<%=Gebruiker.ACHTERNAAM%>" value="<%=values.get(Gebruiker.ACHTERNAAM)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.ACHTERNAAM)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.ACHTERNAAM) + "</span>");
+                            }
+                        %>
+
+
+
                     </div>
                     <div class="form-group col-4">
-                        <label class="form-control-label" for="achternaam">Familienaam</label>
-                        <input type="text" class="form-control" id="achternaam" name="achternaam">
-                    </div>
-                    <div class="form-group col-4">
-                        <label class="form-control-label" for="geboortedatum">Geboortedatum</label>
-                        <input type="date" class="form-control" placeholder="dd-mm-yyyy" id="geboortedatum" name="geboortedatum">
+
+
+                        <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
+                        <input class="form-control" type="date" id="<%=Gebruiker.GEBOORTEDATUM%>" placeholder="dd-mm-yyyy" name="<%=Gebruiker.GEBOORTEDATUM%>" value="<%=values.get(Gebruiker.GEBOORTEDATUM)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.GEBOORTEDATUM)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.GEBOORTEDATUM) + "</span>");
+                            }
+                        %>
+
+
+
+
                     </div>
 
 
@@ -110,13 +150,25 @@
                 <div class="row col-md-12">
 
                     <div class="form-group col-6">
-                        <label class="form-control-label" for="straat">Straat</label>
-                        <input type="text" class="form-control" id="straat" name="straat">
+                        <label class="form-control-label" for="<%=Gebruiker.STRAAT%>"><%=Gebruiker.STRAAT%></label>
+                        <input class="form-control" type="text" id="<%=Gebruiker.STRAAT%>" name="<%=Gebruiker.STRAAT%>" value="<%=values.get(Gebruiker.STRAAT)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.STRAAT)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.STRAAT) + "</span>");
+                            }
+                        %>
                     </div>
 
                     <div class="form-group col-2">
-                        <label class="form-control-label" for="huisnummer">Huisnummer</label>
-                        <input type="text" class="form-control" id="huisnummer" name="huisnummer">
+                        <label class="form-control-label" for="<%=Gebruiker.HUISNUMMER%>"><%=Gebruiker.HUISNUMMER%></label>
+                        <input class="form-control" type="number" id="<%=Gebruiker.HUISNUMMER%>" name="<%=Gebruiker.HUISNUMMER%>" value="<%=values.get(Gebruiker.HUISNUMMER)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.HUISNUMMER)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.HUISNUMMER) + "</span>");
+                            }
+                        %>
                     </div>
 
                 </div>
@@ -124,12 +176,24 @@
                 <div class="row col-md-12">
 
                     <div class="form-group col-6">
-                        <label class="form-control-label" for="woonplaats">Gemeente</label>
-                        <input type="text" class="form-control" id="woonplaats" name="woonplaats">
+                        <label class="form-control-label" for="<%=Gebruiker.WOONPLAATS%>"><%=Gebruiker.WOONPLAATS%></label>
+                        <input class="form-control" type="text" id="<%=Gebruiker.WOONPLAATS%>" name="<%=Gebruiker.WOONPLAATS%>" value="<%=values.get(Gebruiker.WOONPLAATS)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.WOONPLAATS)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.WOONPLAATS) + "</span>");
+                            }
+                        %>
                     </div>
                     <div class="form-group col-2">
-                        <label class="form-control-label" for="postcode">Postcode</label>
-                        <input type="text" class="form-control" id="postcode" name="postcode">
+                        <label class="form-control-label" for="<%=Gebruiker.POSTCODE%>"><%=Gebruiker.POSTCODE%></label>
+                        <input class="form-control" type="number" id="<%=Gebruiker.POSTCODE%>" name="<%=Gebruiker.POSTCODE%>" value="<%=values.get(Gebruiker.POSTCODE)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.POSTCODE)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.POSTCODE) + "</span>");
+                            }
+                        %>
                     </div>
 
                 </div>
@@ -139,7 +203,10 @@
 
                     <div class="form-group col-6">
                         <label class="form-control-label" for="telefoon">Telefoon</label>
-                        <input type="text" class="form-control" id="telefoon" name="telefoon">
+                        <input type="number" class="form-control" id="telefoon" name="telefoon">
+
+
+
                     </div>
 
                 </div>
@@ -151,13 +218,28 @@
                 <div class="row col-md-12">
 
                     <div class="form-group col-6">
-                        <label for="email">Email-adres</label>
-                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+
+                        <label for="<%=Gebruiker.EMAIL%>"><%=Gebruiker.EMAIL%></label>
+                        <input type="text" id="<%=Gebruiker.EMAIL%>" name="<%=Gebruiker.EMAIL%>" value="<%=values.get(Gebruiker.EMAIL)%>">
+                        <%
+                            if (errors.containsKey(Gebruiker.EMAIL)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.EMAIL) + "</span>");
+                            }
+                        %>
+
+
+
 
                     </div>
                     <div class="form-group col-6">
-                        <label class="form-control-label" for="paswoord">Wachtwoord</label>
-                        <input type="password" class="form-control" id="paswoord" name="paswoord">
+                        <label class="form-control-label" for="<%=Gebruiker.PASWOORD%>"><%=Gebruiker.PASWOORD%></label>
+                        <input class="form-control" type="password" id="<%=Gebruiker.PASWOORD%>" name="<%=Gebruiker.PASWOORD%>" value="<%=values.get(Gebruiker.PASWOORD)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.PASWOORD)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.PASWOORD) + "</span>");
+                            }
+                        %>
                     </div>
 
                 </div>
