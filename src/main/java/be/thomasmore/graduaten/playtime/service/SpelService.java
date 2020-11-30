@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface SpelService {
     Spel getSpelById(Long id);
+
     List<Spel> getSpellen();
+
     Spel addSpel(Spel spel);
+
+    public void deleteSpel(Long id);
+
+
 }

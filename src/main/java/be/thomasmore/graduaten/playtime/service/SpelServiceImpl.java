@@ -28,5 +28,7 @@ public class SpelServiceImpl implements SpelService  {
         return spelRepository.save(spel);
     }
 
-
+    @Override
+    public void deleteSpel(Long id) { spelRepository.deleteById((long) id);
+    }
 }
