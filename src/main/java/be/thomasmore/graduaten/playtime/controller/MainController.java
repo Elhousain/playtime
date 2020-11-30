@@ -50,6 +50,10 @@ public class MainController {
     public String overzichtSpellen(Model model) {
         List<Spel> spellen = spelService.getSpellen();
         model.addAttribute("spellen", spellen);
+        List<Taal> talen = taalService.getTalen();
+        model.addAttribute("talen", talen);
+        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
+        model.addAttribute("uitgevers", uitgevers);
         return "overzichtSpellen";
     }
 
@@ -60,18 +64,6 @@ public class MainController {
         return "overzichtGebruikers";
     }
 
-    @RequestMapping("/overzichtTalen")
-    public String overzichtTalen(Model model) {
-        List<Taal> talen = taalService.getTalen();
-        model.addAttribute("talen", talen);
-        return "overzichtTalen";
-    }
-    @RequestMapping("/overzichtUitgevers")
-    public String overzichtUitgevers(Model model) {
-        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
-        model.addAttribute("uitgevers", uitgevers);
-        return "overzichtUitgevers";
-    }
 
    /* @RequestMapping("/registratie")
     public String registratie(){

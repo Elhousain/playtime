@@ -1,3 +1,4 @@
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -8323,10 +8324,10 @@ a[data-toggle="collapse"] {
 }
 
 .item img
- {
-   width:100%;
-   height:100%;
- }
+{
+  width:100%;
+  height:100%;
+}
 
 @media screen and (max-width: 990px) {
   .flex-container {
@@ -8380,7 +8381,7 @@ a[data-toggle="collapse"] {
   top: 150px;
   right:60px;
   width: 600px;
-  height: 400px;
+  height: auto;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -8625,3 +8626,17 @@ body {
   width:100%;
   height:100%;
 }
+
+#bestelling
+{
+  position: relative;
+  top: -45px;
+  left: 25px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  color: white;
+  text-align: center;
+}
+
