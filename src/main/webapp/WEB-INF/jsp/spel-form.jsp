@@ -1,4 +1,5 @@
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
+<%@ page import="java.util.List" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.*" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -46,8 +47,15 @@
                         <label class="form-control-label" for="beschrijving">Beschrijving</label>
                         <input type="text" class="form-control" id="beschrijving" name="beschrijving">
 
-                        <label class="form-control-label" for="categorie">Categorie</label>
-                        <input type="text" class="form-control" id="categorie" name="categorie">
+                        <label for="categorie">Categorie</label>
+                        <select name="categorie" id="categorie">
+                        <%
+                            List<Categorie> categorien = (List<Categorie>)request.getAttribute("categorien");
+                            for (Categorie categorie:categorien){
+                                out.print("<option value=" + categorie.getId() + ">" + categorie.getBeschrijving() + "</option>");
+                            }
+                        %>
+                        </select>
 
                         <label class="form-control-label" for="min_spelers">Minimum Spelers</label>
                         <input type="text" class="form-control" id="min_spelers" name="min_spelers">
@@ -58,14 +66,35 @@
                         <label class="form-control-label" for="min_leeftijd">Minimum leeftijd</label>
                         <input type="text" class="form-control" id="min_leeftijd" name="min_leeftijd">
 
-                        <label class="form-control-label" for="taal">Taal</label>
-                        <input type="text" class="form-control" id="taal" name="taal">
+                        <label for="taal">Taal</label>
+                        <select name="taal" id="taal">
+                        <%
+                            List<Taal> talen = (List<Taal>)request.getAttribute("talen");
+                            for (Taal taal:talen){
+                                out.print("<option value=" + taal.getId() + ">" + taal.getBeschrijving() + "</option>");
+                            }
+                        %>
+                        </select>
 
-                        <label class="form-control-label" for="uitgever">Uitgever</label>
-                        <input type="text" class="form-control" id="uitgever" name="uitgever">
+                        <label for="uitgever">Uitgever</label>
+                        <select name="uitgever" id="uitgever">
+                        <%
+                             List<Uitgever> uitgevers = (List<Uitgever>)request.getAttribute("uitgevers");
+                             for (Uitgever uitgever:uitgevers){
+                                 out.print("<option value=" + uitgever.getId() + ">" + uitgever.getBeschrijving() + "</option>");
+                             }
+                        %>
+                        </select>
 
-                        <label class="form-control-label" for="status">Status</label>
-                        <input type="text" class="form-control" id="status" name="status">
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                        <%
+                            List<Status> statussen = (List<Status>)request.getAttribute("statussen");
+                            for (Status status:statussen){
+                                out.print("<option value=" + status.getId() + ">" + status.getBeschrijving() + "</option>");
+                            }
+                        %>
+                        </select>
 
                         <label class="form-control-label" for="voorraad_huur">Voorraad huur</label>
                         <input type="text" class="form-control" id="voorraad_huur" name="voorraad_huur">

@@ -1,7 +1,7 @@
 package be.thomasmore.graduaten.playtime.controller;
 
-import be.thomasmore.graduaten.playtime.entity.Spel;
-import be.thomasmore.graduaten.playtime.service.SpelService;
+import be.thomasmore.graduaten.playtime.entity.*;
+import be.thomasmore.graduaten.playtime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,10 @@ import java.util.List;
 public class SpelController {
 
     @Autowired SpelService spelService;
+    @Autowired TaalService taalService;
+    @Autowired UitgeverService uitgeverService;
+    @Autowired CategorieService categorieService;
+    @Autowired StatusService statusService;
 
     @GetMapping ("/list")
     public String lijstSpellen (Model model){
@@ -27,6 +31,14 @@ public class SpelController {
     public String showFormForAdd(Model model){
         Spel spel = new Spel();
         model.addAttribute("spel", spel);
+        List<Taal> talen = taalService.getTalen();
+        model.addAttribute("talen", talen);
+        List<Categorie> categorien = categorieService.getCategorien();
+        model.addAttribute("categorien", categorien);
+        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
+        model.addAttribute("uitgevers", uitgevers);
+        List<Status> statussen = statusService.getStatussen();
+        model.addAttribute("statussen", statussen);
         return "spel-form";
     }
 
