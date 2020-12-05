@@ -125,6 +125,16 @@
             </h1>
 
 
+<div class="row dashboard-cards">
+
+
+    <div class=card style=z-index:10>
+        <h5>
+        +gebruiker.getVoornaam()+ " " + gebruiker.getAchternaam()+ " - ID: "+gebruiker.getId()+
+        </h5>
+    </div>
+
+</div>
 
             <div class="row dashboard-cards">
 

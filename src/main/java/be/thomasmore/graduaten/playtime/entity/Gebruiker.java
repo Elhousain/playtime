@@ -17,6 +17,7 @@ public class Gebruiker {
     public static final String POSTCODE = "Postcode";
     public static final String STRAAT = "Straat";
     public static final String HUISNUMMER = "Huisnummer";
+    public static final String TELEFOON = "Telefoon";
 
 
     @Id

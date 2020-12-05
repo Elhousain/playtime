@@ -27,4 +27,8 @@ public class GebruikerServiceImpl implements GebruikerService {
     public Gebruiker addGebruiker(Gebruiker gebruiker) {
         return gebruikerRepository.save(gebruiker);
     }
+
+    @Override
+    public void deleteGebruiker(Long id) { gebruikerRepository.deleteById((long) id);
+    }
 }

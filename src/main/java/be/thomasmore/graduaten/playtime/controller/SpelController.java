@@ -52,6 +52,14 @@ public class SpelController {
     public String showFormForUpdate(@RequestParam("spelId") int id, Model model) {
         Spel spel = spelService.getSpelById((long) id);
         model.addAttribute("spel", spel);
+        List<Taal> talen = taalService.getTalen();
+        model.addAttribute("talen", talen);
+        List<Categorie> categorien = categorieService.getCategorien();
+        model.addAttribute("categorien", categorien);
+        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
+        model.addAttribute("uitgevers", uitgevers);
+        List<Status> statussen = statusService.getStatussen();
+        model.addAttribute("statussen", statussen);
         return "spel-form";
     }
 

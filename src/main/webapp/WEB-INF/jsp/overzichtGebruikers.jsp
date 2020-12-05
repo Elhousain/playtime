@@ -107,53 +107,61 @@
                 </h1>
 
 
-            <div class="flex-container">
-
+            <div class="row dashboard-cards">
 
                 <%
                     List<Gebruiker> gebruikers = (List<Gebruiker>) request.getAttribute("gebruikers");
 
 
-                    for (Gebruiker gebruiker: gebruikers) {
+
+                    for (Gebruiker gebruiker:gebruikers)
+                    {
                         out.print
                                 (
 
-                                        "<div class=flex-item>" +
-                                                "<div >" +
-                                                "<h5>"
-                                                +gebruiker.getVoornaam()+ " " + gebruiker.getAchternaam()+ " - ID: "+gebruiker.getId()+
-                                                "</h5>"+
+                                        "<div class=card style=z-index: 10;>"+
+                                                "<div class=card-title>"+
+                                                    "<h5>"
+                                                        +gebruiker.getVoornaam()+ " " + gebruiker.getAchternaam()+ " - ID: "+gebruiker.getId()+
+                                                    "</h5>"+
+                                                    "<h7>"
+                                                        +gebruiker.getEmail()+
+                                                    "</h7>"+
+                                                "</div>"+
+                                                "<div class=achtergrond>" +
 
-                                                "<h7>" +gebruiker.getEmail()+ "</h7>"+
-
-
-                                                "</div>"
-                                                +
-                                                "<div >" +
-                                                "<a data-toggle=collapse href=#"+gebruiker.getVoornaam()+" role=button aria-expanded=false aria-controls=collapseExample>" +
-                                                "details" +
-                                                "</a>" +
-                                                "<div class=collapse id="+gebruiker.getVoornaam()+">" +
-
-                                                "<div class=box>"+
-
-                                                "<div class=itemgebruiker> <img src=/images/telefoon.png >" +gebruiker.getTelefoon()+"</div>"+
-                                                "<div class=itemgebruiker> <img src=/images/adres.png >" +gebruiker.getWoonplaats()+" "+gebruiker.getPostcode()+"<br>"+gebruiker.getStraat()+" "+gebruiker.getHuisnummer()+"</div>"+
-                                                "<div class=itemgebruiker> <img src=/images/datum.png >" +gebruiker.getGeboortedatum()+"</div>"+
-
-                                                "</div>" +
-                                                "</div>" +
+                                                "<a id=tonen class=m-auto> details" +
+                                                "</a>"+
                                                 "</div>" +
 
+                                                "<div class=card-flap>"+
+                                                    "<div class=card-description>"+
+                                                        "<div class=onderlijn></div>"+
+                                                        "<ul class=task-list>"+
+                                                            "<li>"+
+                                                                "<img class=img-thumbnail src=/images/telefoon.png > "+gebruiker.getTelefoon()+
+                                                            "</li>"+
+                                                            "<li>"+
+                                                                "<img src=/images/adres.png>" +gebruiker.getWoonplaats()+" "+gebruiker.getPostcode()+"<br>"+gebruiker.getStraat()+" "+gebruiker.getHuisnummer()+
+                                                            "</li>"+
+                                                            "<li>"+
+                                                                "<img src=/images/datum.png >"+
 
-                                                "</div>"
-
-                                );
+                                                                "<p>"+gebruiker.getGeboortedatum()+"</p>" +
+                                                            "</li>"+
+                                                        "</ul>"+
+                                                    "</div>"+
+                                                "</div>"+
+                                        "</div>"
+                        );
                     }
                 %>
 
 
             </div>
+
+
+
 
 
             <!--endregion-->
@@ -210,26 +218,15 @@
 </script>
 
 <script>
+    var zindex = 10;
 
-    function myfunction(naam) {
-        switch(naam) {
-            case "1":
-                alert("De Kolonisten Van Catan");
-                break;
-            case "2":
-                alert("Clever");
-                break;
-            case "3":
-                alert("Smallworld");
-                break;
-            case "4":
-                alert("Monopoly");
-                break;
-            default:
-                alert("js");
-        }
-    }
-
+    $(document).on('click','#tonen',function()
+    {
+        zindex++;
+        let card =  $(this).closest('.card')
+        if(card.hasClass('d-card-show')) card.removeClass('d-card-show')
+        else card.addClass('d-card-show').css({zIndex:zindex})
+    })
 </script>
 
 

@@ -47,6 +47,11 @@
         </div>
     </nav>
 
+
+
+
+
+
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
 
@@ -162,7 +167,7 @@
 
                     <div class="form-group col-2">
                         <label class="form-control-label" for="<%=Gebruiker.HUISNUMMER%>"><%=Gebruiker.HUISNUMMER%></label>
-                        <input class="form-control" type="number" id="<%=Gebruiker.HUISNUMMER%>" name="<%=Gebruiker.HUISNUMMER%>" value="<%=values.get(Gebruiker.HUISNUMMER)%>">
+                        <input class="form-control" type="number"  min="1" id="<%=Gebruiker.HUISNUMMER%>" name="<%=Gebruiker.HUISNUMMER%>" value="<%=values.get(Gebruiker.HUISNUMMER)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.HUISNUMMER)) {
@@ -187,7 +192,7 @@
                     </div>
                     <div class="form-group col-2">
                         <label class="form-control-label" for="<%=Gebruiker.POSTCODE%>"><%=Gebruiker.POSTCODE%></label>
-                        <input class="form-control" type="number" id="<%=Gebruiker.POSTCODE%>" name="<%=Gebruiker.POSTCODE%>" value="<%=values.get(Gebruiker.POSTCODE)%>">
+                        <input class="form-control" type="number" min="999" id="<%=Gebruiker.POSTCODE%>" name="<%=Gebruiker.POSTCODE%>" value="<%=values.get(Gebruiker.POSTCODE)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.POSTCODE)) {
@@ -202,8 +207,14 @@
                 <div class="row col-md-12">
 
                     <div class="form-group col-6">
-                        <label class="form-control-label" for="telefoon">Telefoon</label>
-                        <input type="number" class="form-control" id="telefoon" name="telefoon">
+                        <label class="form-control-label" for="<%=Gebruiker.TELEFOON%>"><%=Gebruiker.TELEFOON%></label>
+                        <input class="form-control" type="tel"  id="<%=Gebruiker.TELEFOON%>" name="<%=Gebruiker.TELEFOON%>" value="<%=values.get(Gebruiker.TELEFOON)%>">
+
+                        <%
+                            if (errors.containsKey(Gebruiker.TELEFOON)) {
+                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.TELEFOON) + "</span>");
+                            }
+                        %>
 
 
 
@@ -219,8 +230,8 @@
 
                     <div class="form-group col-6">
 
-                        <label for="<%=Gebruiker.EMAIL%>"><%=Gebruiker.EMAIL%></label>
-                        <input type="text" id="<%=Gebruiker.EMAIL%>" name="<%=Gebruiker.EMAIL%>" value="<%=values.get(Gebruiker.EMAIL)%>">
+                        <label class="form-control-label" for="<%=Gebruiker.EMAIL%>"><%=Gebruiker.EMAIL%></label>
+                        <input class="form-control" type="text" id="<%=Gebruiker.EMAIL%>" name="<%=Gebruiker.EMAIL%>" value="<%=values.get(Gebruiker.EMAIL)%>">
                         <%
                             if (errors.containsKey(Gebruiker.EMAIL)) {
                                 out.print("<span style='color: red;'>" + errors.get(Gebruiker.EMAIL) + "</span>");
@@ -254,13 +265,7 @@
 
 
             </form>
-
-
         </div>
-
-
-
-
     </div>
 </div>
 

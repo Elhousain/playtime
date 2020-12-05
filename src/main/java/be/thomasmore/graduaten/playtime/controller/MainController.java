@@ -78,6 +78,7 @@ public class MainController {
         values.put(Gebruiker.VOORNAAM, "");
        values.put(Gebruiker.ACHTERNAAM, "");
         values.put(Gebruiker.EMAIL, "");
+        values.put(Gebruiker.TELEFOON, "");
         values.put(Gebruiker.GEBOORTEDATUM, "");
         values.put(Gebruiker.STRAAT, "");
         values.put(Gebruiker.PASWOORD, "");
@@ -141,28 +142,7 @@ public class MainController {
             {
                 errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
             }
-        else{
-            geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
-        }
 
-
-
-
-
-
-
-        /*if (geboortedatumstring.isEmpty())
-        {
-            errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
-        }
-        else{
-            geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
-
-            if (geboortedatum.compareTo(vandaag) > 0)
-            {
-                errors.put(Gebruiker.GEBOORTEDATUM, "De geboortedatum kan niet in de toekomst vallen.");
-            }
-        }*/
 
 
 
@@ -192,7 +172,12 @@ public class MainController {
 
 
 
-        String telefoon = request.getParameter("telefoon");
+        //Validatie Telefoon
+        String telefoon = request.getParameter(Gebruiker.TELEFOON);
+        values.put(Gebruiker.TELEFOON, telefoon);
+        if (telefoon.isEmpty()) {
+            errors.put(Gebruiker.TELEFOON, "Gelieve een telefoonnummer in te vullen.");
+        }
 
 
         //Validatie Woonplaats
