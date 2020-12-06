@@ -11,6 +11,9 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
+
 
 <!doctype html>
 <html lang="en">
@@ -105,7 +108,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle=collapse href="#shopcar" role=button aria-expanded=false aria-controls=collapseExample>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/overzichtWinkelwagen" role=button aria-expanded=false aria-controls=collapseExample>
                                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
                                         <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
@@ -161,7 +164,7 @@
                                                 "<div class=row>" +
                                                 "<div class=col-sm-6>" +
                                                 "<p>"+huurPrijs+" €</p>"+
-                                                "<input type=button  class=btn-primary value=huren onclick=men()>" +
+                                                "<input type=button  class=btn-primary value=huren onclick=rekeopn()>" +
                                                 "</div>" +
                                                 "<div class=col-sm-6>" +
                                                 "<p>" +spel.getPrijs()+ " €</p>"+
@@ -217,7 +220,7 @@
             </div>
             <div class="winkelmand collapse" id="shopcar">
                 <div class="p-2 onderlijn">WINKELMANDJE</div>
-                <ul id="webcar" type="none">
+                <ul type="none">
 
                 </ul>
                 <ul type="none">
@@ -241,184 +244,9 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
 </script><script  src="function.js"></script>
-<script>
-    var getal=0;
-    function car(id,picture,name,price)
-    {
-
-        var _id=document.getElementById("webcar"),
-            _li1=document.createElement('li'),
-            _div1=document.createElement('div'),
-            _a1=document.createElement('a'),
-            _img1=document.createElement('img'),
-            _span1=document.createElement('span'),
-            _btn1=document.createElement('button'),
-            _span2=document.createElement('span'),
-            _btn2=document.createElement('button'),
-            _a2=document.createElement('a');
-
-        var _delete=document.createTextNode("X"),
-            _naam=document.createTextNode(name),
-            _plus=document.createTextNode("+"),
-            _aantal=document.createTextNode("1"),
-            _min=document.createTextNode("-"),
-            _totaal=document.createTextNode(price);
-
-
-        _li1.setAttribute("class","kader onderlijn");
-        _div1.setAttribute("class","row");
-
-        _a1.appendChild(_delete);
-        _a1.setAttribute("class","col-sm-1 m-auto");
-
-        _img1.setAttribute("src",picture);
-        _img1.setAttribute("class","afb col-sm-2 m-auto");
-        _img1.setAttribute("id",id)
-
-        _span1.setAttribute("class","col-sm-4 m-auto");
-        _span1.appendChild(_naam);
-
-        _btn1.setAttribute("class","knop m-auto");
-        _btn1.setAttribute("id",id+"_plus");
-        _btn1.setAttribute('onclick','reken(id,plus)');
-
-        _btn1.appendChild(_plus);
-
-        _span2.setAttribute("id",id+"_aantal");
-        _span2.setAttribute("class","m-auto");
-        _span2.appendChild(_aantal);
-
-        _btn2.setAttribute("class","knop m-auto");
-       // _btn2.setAttribute("id",id+"_min");
-       // _btn1.setAttribute('onclick','reken('+id+',"min")');
-        _btn2.appendChild(_min);
-
-        _a2.setAttribute("class","col-sm-2 m-auto");
-        _a2.appendChild(_totaal);
-
-        _li1.appendChild(_div1);
-        _div1.appendChild(_a1);
-        _div1.appendChild(_img1);
-        _div1.appendChild(_span1);
-        _div1.appendChild(_btn1);
-        _div1.appendChild(_span2);
-        _div1.appendChild(_btn2);
-        _div1.appendChild(_a2);
-var sw=0;
-        if (getal===0)
-        {
-            _id.appendChild(_li1);
-            getal=1
-        }
-        else
-            {
-
-                var  items = document.querySelectorAll("#webcar li"),
-                    tab = [], index;
-                    kab = [], index;
-
-
-                for(var i = 0; i < items.length; i++){
-                    tab.push(items[i].innerHTML);
-                    //alert("Er bestaat al "+items.length+" product bulent");
-                    //hele string
-                        var split1 = items[i].innerHTML;
-                        //var split1 = _li1.innerHTML;
-                    //haal ID uit string
-                        var id_pm1=split1.split('id="').pop().split('">')[0];
-                    //haal Aantal uit string
-                        var aantal_pr1=split1.split('class="m-auto">').pop().split('<')[0];
-                         //alert("Product id="+id_pm1+"en aantal="+aantal_pr1);
-
-                    //alert(items[i].innerHTML +" tabPush voor");
-                    for(var a = 0; a < items.length; a++){
-                        kab.push(items[a].innerHTML);
-
-                        //hele string
-                        var split3 = items[i].innerHTML;
-                        var split2 = _li1.innerHTML;
-                        //alert(split2);
-                        //haal ID uit string
-                        var id_pm2=split2.split('id="').pop().split('">')[0];
-                        //haal Aantal uit string
-                        var IDaantal_pm2=split2.split('<span id="').pop().split('" class="m-auto">')[0];
-                        var aantal_pm3=split3.split('class="m-auto">').pop().split('<')[0];
-
-                        //alert("Product id="+id_pm2+"en aantal="+aantal_pr2);
-
-
-                        if (id_pm1===id_pm2)
-                        {
-                            sw=1;
-                            var x=parseInt(aantal_pm3);
-                            x=x+1;
-                            document.getElementById(IDaantal_pm2).innerHTML = x;
-                            refreshArray();
-                        }
-                    }
-                }
-            }
-if (sw===0)
-{
-    //alert("nieuw product is toegevoed");
-    _id.appendChild(_li1);
-}
-else
-    {
-        //alert("deze product bestaat al en word niet toegevoegd");
-    }
-
-
-        function refreshArray()
-        {
-            // clear array
-            tab.length = 0;
-            items = document.querySelectorAll("#list li");
-            // fill array
-            for(var i = 0; i < items.length; i++){
-                tab.push(items[i].innerHTML);
-            }
-        }
-
-    }
-
-
-    function huur(naam,prijs) {
-        var geld;
-        geld = prijs*1.15
-        alert(naam +" kost "+ geld.toFixed(2)+" €");
-
-    }
-    function kopen(naam,prijs) {
-        var geld;
-        geld = prijs
-        alert(naam +" kost "+geld+" €");
-
-    }
-    var geld = 0;
-    var bedrag = 20;
-
-
-    function reken(idbtn,soort) {
-
-        if(soort=="plus")
-        {
-            geld = geld+1;
-            alert("+")
-        }
-
-        if(soor=="min"&&geld>0)
-        {
-            geld = geld-1;
-            alert("-")
-        }
-    }
-
-</script>
 
 <script>
     var zindex = 10;
-
     $(document).on('click','#tonen',function()
     {
         zindex++;
@@ -426,8 +254,13 @@ else
         if(card.hasClass('d-card-show')) card.removeClass('d-card-show')
         else card.addClass('d-card-show').css({zIndex:zindex})
     })
-</script>
+</script><!--details tonen-->
+<script>
+    function mand(id,picture,name,price)
+    {
 
+    }
+</script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

@@ -36,7 +36,11 @@ public class MainController {
         return "index";
 
     }
-
+    @RequestMapping("/overzichtWinkelwagen")
+    public String overzichtWinkelwagen()
+    {
+        return "overzichtWinkelwagen";
+    }
     @Autowired
     SpelService spelService;
 

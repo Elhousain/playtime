@@ -8402,31 +8402,45 @@ a[data-toggle="collapse"] {
 }
 .afb {
   position: relative;
-  width: 20%;
-  padding-right: 15px;
-  padding-left: 15px;
+  width: 120px;
+  height: 120px;
+  padding: 15px;
   margin: auto;
-  height: auto;
+
 }
+
 
 .knop
 {
-  position: relative;
-  width: 20px;
-  height: auto;
-  border: none;
-  background-color: #E0E7ED;
-  border-radius: 5px;
-  text-align: center;
-  margin: auto;
+  height: 25px;
+  width: 25px;
+  margin: 10px;
+  background: none;
 }
+.cirkel
+{
+  border: 1px solid #d6d6d6;
+  border-radius: 50%;
+}
+.knop:hover
+{
+  background-color: #80bdff;
+  color: white;
+}
+
 .onderlijn
 {
   width: 100%;
-  margin: 0;
   border-bottom: 2px solid #EBECEE;
+  margin-bottom: 10px;
 }
 
+.onderlijnTop
+{
+  width: 100%;
+  margin: 0;
+  border-top: 2px solid #EBECEE;
+}
 
 -------
   /* Code By Webdevtrick (https://webdevtrick.com) */
@@ -8619,7 +8633,8 @@ body {
   }
 }
 
-.achtergrond{
+.achtergrond
+{
   background-color: white;
 }
 
@@ -8649,5 +8664,111 @@ body {
   background-color: green;
   color: white;
   text-align: center;
+}
+.containerMand {
+  text-align: center !important;
+  width: 700px;
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  box-shadow: 0 15px 30px -5px rgba(31, 31, 31, 0.5);
+  background-color: white;
+
+}
+.parent{
+  position: relative;
+}
+.centerUitlijnen
+{
+  display: flex;
+  justify-content: space-around;
+}
+.centerUitlijnen1
+{
+  display: flex;
+  justify-content: space-around;
+}
+.langsElkaar
+{
+  display: inline-block;
+  justify-content: flex-end;
+}
+.delete.wissenRow
+{
+  margin-top: 50px;
+}
+@media (max-width: 992px) {
+  .containerand {
+    max-width: 350px; } }
+
+@media (max-width: 665px) {
+  .containerMand
+  {
+    max-width: 350px;
+  }
+  .centerUitlijnen
+  {
+    display: inline;
+  }
+
+  .delete.wissenRow
+  {
+    margin: auto;
+  }
+  .afb {
+    padding: 2px;
+  }
+
+}
+
+.plaats
+{
+position: relative;
+  display: inline-block;
+}
+
+.dashboard-kards {
+  position: relative;
+  padding-bottom: 50px;
+  margin: 0 !important;
+  min-width: 500px;
+}
+.delete{
+  position: relative;
+  text-align: center;
+  align-items: center;
+  height: 25px;
+  width: 25px;
+  background: none;
+}
+
+.delete.wissenCol
+{
+  margin: auto;
+}
+.delete:hover
+{
+  background-color: red;
+  color: white;
+}
+
+
+.dashboard-kards .kard {
+
+  background: #ffffff;
+  display: inline-block;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  padding: 0 !important;
+  justify-content: space-around;
+  position: relative;
+  z-index: 1;
+  width: calc(60.0% - 10px);
+  height: auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+
+
 }
 
