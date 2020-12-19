@@ -141,7 +141,7 @@ public class MainController {
         //Validatie Geboortedatum
         String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
         values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
-        LocalDate geboortedatum = null;
+        Date geboortedatum = null;
         if (geboortedatumString.isEmpty())
             {
                 errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
@@ -223,7 +223,7 @@ public class MainController {
         if (errors.isEmpty()) {
 
 
-            gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, geboortedatum,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
+            gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, (java.sql.Date) geboortedatum,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
             return "index";
         } else {
             model.addAttribute("values", values);

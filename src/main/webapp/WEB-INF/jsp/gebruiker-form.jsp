@@ -14,7 +14,7 @@
 </head>
 <body>
 <%
-    Gebruiker gebruiker = (Gebruiker) request.getAttribute(Gebruiker.GEBRUIKER);
+    Gebruiker gebruiker = (Gebruiker)request.getAttribute(Gebruiker.NAME);
     if (gebruiker.getVoornaam()==null){
         gebruiker.setVoornaam("");
         gebruiker.setAchternaam("");
@@ -23,6 +23,7 @@
         gebruiker.setStraat("");
         gebruiker.setTelefoon("");
         gebruiker.setWoonplaats("");
+        gebruiker.setPostcode("");
     }
 %>
 

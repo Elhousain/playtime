@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 public class Gebruiker {
-
+    public static final String NAME = "gebruiker";
     public static final String GEBRUIKER = "Gebruiker";
     public static final String VOORNAAM = "Voornaam";
     public static final String ACHTERNAAM = "Familienaam";
@@ -28,7 +28,7 @@ public class Gebruiker {
     private String voornaam;
     private String achternaam;
     private String rol;
-    private LocalDate geboortedatum;
+    private Date geboortedatum;
     //private Date geboortedatum;
     private String email;
     private String paswoord;
@@ -43,7 +43,7 @@ public class Gebruiker {
     public Gebruiker() {
     }
 
-    public Gebruiker(String voornaam, String achternaam, String rol, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
+    public Gebruiker(String voornaam, String achternaam, String rol, Date geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
         //this.id = id;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
@@ -82,11 +82,11 @@ public class Gebruiker {
         this.achternaam = achternaam;
     }
 
-    public LocalDate getGeboortedatum() {
+    public Date getGeboortedatum() {
         return geboortedatum;
     }
 
-    public void setGeboortedatum(LocalDate geboortedatum) {
+    public void setGeboortedatum(Date geboortedatum) {
         this.geboortedatum = geboortedatum;
     }
 

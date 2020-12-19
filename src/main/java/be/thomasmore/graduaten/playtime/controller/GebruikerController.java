@@ -33,6 +33,8 @@ public class GebruikerController {
 
     @PostMapping("/saveGebruiker")
     public String saveGebruiker(@ModelAttribute("gebruiker")Gebruiker gebruiker){
+       gebruiker.setRol("ROLE_USER");
+
         gebruikerService.addGebruiker(gebruiker);
         return "redirect:/gebruiker/list";
     }
