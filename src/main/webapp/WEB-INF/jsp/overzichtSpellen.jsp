@@ -143,77 +143,61 @@
 
                 <%
                     List<Spel> spellen = (List<Spel>) request.getAttribute("spellen");
-                    List<Taal> talen = (List<Taal>)request.getAttribute("talen") ;
-                    List<Uitgever> uitgevers = (List<Uitgever>) request.getAttribute("uitgevers");
 
 
-                    for (Spel spel:spellen)
-                    {
-                        double huurPrijs=spel.getPrijs()*0.75;
+                    for (Spel spel:spellen) {
+                        double huurPrijs = spel.getPrijs() * 0.5;
                         out.print
                                 (
 
-                                        "<div class=card style=z-index: 10;>"+
-                                                "<div class=card-title>"+
+                                        "<div class=card style=z-index: 10;>" +
+                                                "<div class=card-title>" +
                                                 "<h5>"
-                                                +spel.getNaam()+
-                                                "</h5>"+
-                                                "<img class=farah src=" +spel.getFoto()+">" +
-                                                "</div>"+
+                                                + spel.getNaam() +
+                                                "</h5>" +
+                                                "<img class=farah src=" + spel.getFoto() + ">" +
+                                                "</div>" +
                                                 "<div class=achtergrond>" +
                                                 "<div class=row>" +
                                                 "<div class=col-sm-6>" +
-                                                "<p>"+huurPrijs+" €</p>"+
+                                                "<p>" + huurPrijs + " €</p>" +
                                                 "<input type=button  class=btn-primary value=huren onclick=rekeopn()>" +
                                                 "</div>" +
                                                 "<div class=col-sm-6>" +
-                                                "<p>" +spel.getPrijs()+ " €</p>"+
-                                                "<input type=button class=btn-info value=kopen onclick=car('"+spel.getId()+"','"+spel.getFoto()+"','"+spel.getNaam()+"','"+spel.getPrijs()+"')>"+
+                                                "<p>" + spel.getPrijs() + " €</p>" +
+                                                "<input type=button class=btn-info value=kopen onclick=car('" + spel.getId() + "','" + spel.getFoto() + "','" + spel.getNaam() + "','" + spel.getPrijs() + "')>" +
                                                 "</div>" +
 
                                                 "<a id=tonen class=m-auto> details" +
-                                                "</a>"+
+                                                "</a>" +
                                                 "</div>" +
                                                 "</div>" +
 
-                                                "<div class=card-flap>"+
-                                                "<div class=card-description>"+
-                                                "<div class=onderlijn>"+spel.getBeschrijving()+"</div>"+
-                                                "<ul class=task-list>"+
-                                                "<li>"+
-                                                "<img class=img-thumbnail src=/images/pngegg.png > Spelers tussen " +spel.getMin_spelers()+" en "+spel.getMax_spelers()+
-                                                "</li>"+
-                                                "<li>"+
-                                                "<img src=/images/age.png>" +spel.getMin_leeftijd()+
-                                                "</li>"+
-                                                "<li>"+
-                                                "<img src=/images/taal.png >");
-                        for (Taal taal:talen)
-                        {
-                            if (spel.getTaal()==taal.getId())
-                                out.print
-                                        ("<p>" + taal.getBeschrijving() + "</p>");
-                            continue;
-                        }
-                        out.print
-                                ("</li>"+
-                                        "<li>"+
-                                        "<img src=/images/uitgever.png >");
-                        for (Uitgever uitgever:uitgevers)
-                        {
-                            if (spel.getUitgever()==uitgever.getId())
-                                out.print
-                                        ("<p>" + uitgever.getBeschrijving() + "</p>");
-                            continue;
-                        }
-                        out.print   ( "<p id=uitgever></p>" +
-                                "</li>"+
-                                "</ul>"+
-                                "</div>"+
-                                "</div>"+
-                                "</div>"
-                        );
+                                                "<div class=card-flap>" +
+                                                "<div class=card-description>" +
+                                                "<div class=onderlijn>" + spel.getBeschrijving() + "</div>" +
+                                                "<ul class=task-list>" +
+                                                "<li>" +
+                                                "<img class=img-thumbnail src=/images/pngegg.png > Spelers tussen " + spel.getMin_spelers() + " en " + spel.getMax_spelers() +
+                                                "</li>" +
+                                                "<li>" +
+                                                "<img src=/images/age.png>" + spel.getMin_leeftijd() +
+                                                "</li>" +
+                                                "<li>" +
+                                                "<img src=/images/taal.png >" +
+                                                "<p>" + spel.getTaal().getBeschrijving() + "</p>" +
+                                                "</li>" +
+                                                "<li>" +
+                                                "<img src=/images/uitgever.png >" +
+                                                "<p>" + spel.getUitgever().getBeschrijving() + "</p>" +
+                                                "<p id=uitgever></p>" +
+                                                "</li>" +
+                                                "</ul>" +
+                                                "</div>" +
+                                                "</div>" +
+                                                "</div>");
                     }
+
                 %>
 
 

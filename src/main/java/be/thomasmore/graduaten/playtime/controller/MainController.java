@@ -54,10 +54,6 @@ public class MainController {
     public String overzichtSpellen(Model model) {
         List<Spel> spellen = spelService.getSpellen();
         model.addAttribute("spellen", spellen);
-        List<Taal> talen = taalService.getTalen();
-        model.addAttribute("talen", talen);
-        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
-        model.addAttribute("uitgevers", uitgevers);
         return "overzichtSpellen";
     }
 
