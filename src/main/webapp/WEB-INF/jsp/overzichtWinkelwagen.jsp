@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: elhousain.farah
@@ -11,7 +12,7 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,12 +22,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
     <style>
         li{cursor: pointer}
     </style>
@@ -110,79 +107,72 @@
             <!--#endregion-->
             <!--#region Bordenspel groepen-->
             <h1>
-                Winkelwagen overzicht
+                Overzicht
             </h1>
 
             <div class="containerMand" >
+                <div>
+                    <h2>Winkelwagen</h2>
 
-                <ul id="webkar" class="ml-1" type="none">
-                    <li class="onderlijn">
-                        <div class="centerUitlijnen">
-                            <div class="delete cirkel wissenRow">
-                                <a>X</a>
-                            </div>
-                            <div class="text-center">
-                                <img class="afb "src="/images/catan.jpg">
-                            </div>
-                            <div class="centerUitlijnen1">
-                                <div class="mr-5">
-                                    <p class="mb-1 mt-2"> 40,20 €</p>
-                                    <p class="mb-1 mt-1"> kopen </p>
-                                    <button class="knop cirkel">-</button>
-                                    <button class="knop cirkel">+</button>
-                                </div>
-                                <div>
-                                    <p class="mb-1 mt-2"> 40,20 € </p>
-                                    <p class="mb-1 mt-1"> huren </p>
-                                    <button class="knop cirkel">-</button>
-                                    <button class="knop cirkel">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="onderlijn">
-                        <div class="centerUitlijnen">
-                            <div class="delete cirkel wissenRow">
-                                <a>X</a>
-                            </div>
-                            <div class="text-center">
-                                <img class="afb "src="/images/catan.jpg">
-                            </div>
-                            <div class="centerUitlijnen1">
-                                <div class="mr-5">
-                                    <p class="mb-1 mt-2"> 40,20 €</p>
-                                    <p class="mb-1 mt-1"> kopen </p>
-                                    <button class="knop cirkel">-</button>
-                                    <button class="knop cirkel">+</button>
-                                </div>
-                                <div>
-                                    <p class="mb-1 mt-2"> 40,20 € </p>
-                                    <p class="mb-1 mt-1"> huren </p>
-                                    <button class="knop cirkel">-</button>
-                                    <button class="knop cirkel">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul type="none">
-                    <li>
-                        <div class="onderlijn">
-                            <a class="m-auto"></a>
-                            <a class="m-auto"> TOTAAL </a>
+                    <table width="100%" >
+                        <tr bgcolor="#CCCCCC">
+                            <td>Wissen</td>
+                            <td>Afbeelding</td>
+                            <td>Bestelling </td>
+                            <td>Total</td>
 
-                            <a class="m-auto" id="subtotaal" >&nbsp; 0</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="keuze mt-5" >
-                            <input type=button  class="btn-primary btn-block" value="verder winkelen" onclick="men()">
-                            <input type=button class="btn-info btn-block " value="kassa" onclick="kopen()">
-                        </div>
-                    </li>
-                </ul>
+                        </tr>
+                        <jsp:useBean id="cart" scope="session" type="be.thomasmore.graduaten.playtime.entity.CartBean"/>
+
+                        <c:if test="${cart.lineItemCount == 0}">
+                            <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
+                        </c:if>
+
+                        <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
+                            <form name="item" method="POST" action="/overzichtWinkelwagen">
+                                <tr>
+                                    <td>
+                                        <input class="delete cirkel wissenRow m-auto" type="submit" name="action" value="X">
+                                    </td>
+                                    <td>
+                                        <img class="afb "src="${cartItem.afbeelding}">
+                                    </td>
+                                    <td class="langsElkaar">
+                                        <div class="blocks" >
+                                            <p>${cartItem.titel}</p>
+                                            €<c:out value="${(cartItem.prijs)}"/>
+                                            <input style="width: 20%" type='number' name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                        </div>
+                                    </td>
+                                    <td>€<c:out value="${cartItem.totaal}"/></td>
+                                    <td>
+                                        <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
+                                        <input type="submit" name="action" value="Update">
+                                    </td>
+
+                                </tr>
+                            </form>
+                        </c:forEach>
+                        <!--Total-->
+                        <tr>
+
+                            <td colspan="3"> </td>
+                            <td>Subtotal: €<c:out value="${cart.total}"/></td>
+                        </tr>
+
+                    </table><div class="keuze mt-5" >
+                    <a   class="btn-primary btn-block" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
+                    <a   class="btn-info btn-block" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
 
 
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                    </div>
+
+                </div>
+                </div>
             </div>
         </div>
     </div>

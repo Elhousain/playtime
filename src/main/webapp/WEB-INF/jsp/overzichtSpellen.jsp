@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: elhousain.farah
@@ -38,6 +39,13 @@
 <body>
 
 <div class="wrapper d-flex align-items-stretch">
+
+
+
+
+
+
+
     <!--#region Linksepaneel-->
     <nav id="sidebar">
         <div class="p-4 pt-5">
@@ -127,108 +135,83 @@
                 Overzicht spellen
             </h1>
 
-
-<div class="row dashboard-cards">
-
-
-    <div class=card style=z-index:10>
-        <h5>
-        +gebruiker.getVoornaam()+ " " + gebruiker.getAchternaam()+ " - ID: "+gebruiker.getId()+
-        </h5>
-    </div>
-
-</div>
-
             <div class="row dashboard-cards">
+                <c:forEach  items="${spellen}" var="spel">
+                    <div class=card>
 
-                <%
-                    List<Spel> spellen = (List<Spel>) request.getAttribute("spellen");
-
-
-                    for (Spel spel:spellen) {
-                        double huurPrijs = spel.getPrijs() * 0.5;
-                        out.print
-                                (
-
-                                        "<div class=card style=z-index: 10;>" +
-                                                "<div class=card-title>" +
-                                                "<h5>"
-                                                + spel.getNaam() +
-                                                "</h5>" +
-                                                "<img class=farah src=" + spel.getFoto() + ">" +
-                                                "</div>" +
-                                                "<div class=achtergrond>" +
-                                                "<div class=row>" +
-                                                "<div class=col-sm-6>" +
-                                                "<p>" + huurPrijs + " €</p>" +
-                                                "<input type=button  class=btn-primary value=huren onclick=rekeopn()>" +
-                                                "</div>" +
-                                                "<div class=col-sm-6>" +
-                                                "<p>" + spel.getPrijs() + " €</p>" +
-                                                "<input type=button class=btn-info value=kopen onclick=car('" + spel.getId() + "','" + spel.getFoto() + "','" + spel.getNaam() + "','" + spel.getPrijs() + "')>" +
-                                                "</div>" +
-
-                                                "<a id=tonen class=m-auto> details" +
-                                                "</a>" +
-                                                "</div>" +
-                                                "</div>" +
-
-                                                "<div class=card-flap>" +
-                                                "<div class=card-description>" +
-                                                "<div class=onderlijn>" + spel.getBeschrijving() + "</div>" +
-                                                "<ul class=task-list>" +
-                                                "<li>" +
-                                                "<img class=img-thumbnail src=/images/pngegg.png > Spelers tussen " + spel.getMin_spelers() + " en " + spel.getMax_spelers() +
-                                                "</li>" +
-                                                "<li>" +
-                                                "<img src=/images/age.png>" + spel.getMin_leeftijd() +
-                                                "</li>" +
-                                                "<li>" +
-                                                "<img src=/images/taal.png >" +
-                                                "<p>" + spel.getTaal().getBeschrijving() + "</p>" +
-                                                "</li>" +
-                                                "<li>" +
-                                                "<img src=/images/uitgever.png >" +
-                                                "<p>" + spel.getUitgever().getBeschrijving() + "</p>" +
-                                                "<p id=uitgever></p>" +
-                                                "</li>" +
-                                                "</ul>" +
-                                                "</div>" +
-                                                "</div>" +
-                                                "</div>");
-                    }
-
-                %>
-
-
-            </div>
-            <div class="winkelmand collapse" id="shopcar">
-                <div class="p-2 onderlijn">WINKELMANDJE</div>
-                <ul type="none">
-
-                </ul>
-                <ul type="none">
-                    <li>
-                        <div class="row onderlijn">
-                            <a class="col-sm-7 m-auto" ></a>
-                            <a class="col-sm-2 m-auto"> TOTAAL </a>
-                            <a class="col-sm-2 m-auto" id="subtotaal" > 0</a>
+                        <div class=card-title>
+                            <h5> ${spel.naam}</h5>
+                            <img class=farah src="${spel.foto}">
                         </div>
-                    </li>
-                </ul>
-                <div class="keuze" >
-                    <input type=button  class="btn-primary btn-block" value="verder winkelen" onclick="men()">
-                    <input type=button class="btn-info btn-block" value="kassa" onclick="kopen()">
-                </div>
+                        <div class=achtergrond>
+                            <div class=row>
+                                <div class=col-sm-6>
+                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/overzichtWinkelwagen">
+                                        <input type="hidden" name="id" value="${spel.id}"><br/>
+                                        <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
+                                        <input type="hidden" name="titel" value="kopen"><br/>
+                                        <input type="hidden" name="aantal" value="1"><br/>
+                                        <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs*.75} €</p>
+                                        <input type="submit" name="action" value="Kopen" class="btn-primary btn-block w-75 m-auto">
+                                    </form>
+                                </div>
+
+
+                                <div class=col-sm-6>
+                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/overzichtWinkelwagen">
+                                        <input type="hidden" name="id" value="${spel.id}"><br/>
+                                        <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
+                                        <input type="hidden" name="titel" value="huren"><br/>
+                                        <input type="hidden" name="aantal" value="1"><br/>
+                                        <input type="hidden" name="prijs" value="${spel.prijs/5}"><p>${spel.prijs/5} €</p>
+                                        <input type="submit" name="action" value="Huren" class="btn-info btn-block w-75 m-auto">
+                                    </form>
+                                </div>
+                                <a id=tonen class=m-auto> details</a>
+                            </div>
+                        </div>
+
+                        <div class=card-flap>
+                            <div class=card-description>
+                                <div class=onderlijn>${spel.beschrijving}</div>
+                                <ul class=task-list>
+                                    <li>
+                                        <img class=img-thumbnail src=/images/pngegg.png > Spelers tussen ${spel.min_spelers} en ${spel.max_spelers}
+                                    </li>
+                                    <li>
+                                        <img src=/images/age.png>${spel.min_leeftijd}
+                                    </li>
+                                    <li>
+                                        <img src=/images/taal.png >
+                                        <c:forEach items="${talen}" var="taal">
+                                            <c:if test="${spel.taal==taal.id}">
+                                                <p>${taal.beschrijving}</p>
+
+                                            </c:if>
+                                        </c:forEach>
+                                    </li>
+                                    <li>
+                                        <img src=/images/uitgever.png >
+                                        <c:forEach items="${uitgevers}" var="uitgever">
+                                            <c:if test="${spel.uitgever==uitgever.id}">
+                                                <p>${uitgever.beschrijving}</p>
+                                            </c:if>
+                                        </c:forEach>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </c:forEach>
             </div>
+
         </div>
         <!--endregion-->
     </div>
 </div>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
-</script><script  src="function.js"></script>
-
 <script>
     var zindex = 10;
     $(document).on('click','#tonen',function()
@@ -239,13 +222,8 @@
         else card.addClass('d-card-show').css({zIndex:zindex})
     })
 </script><!--details tonen-->
-<script>
-    function mand(id,picture,name,price)
-    {
-
-    }
-</script>
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'>
+    <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/main.js"></script>

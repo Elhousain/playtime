@@ -1,10 +1,7 @@
 package be.thomasmore.graduaten.playtime.controller;
 
 
-import be.thomasmore.graduaten.playtime.entity.Gebruiker;
-import be.thomasmore.graduaten.playtime.entity.Spel;
-import be.thomasmore.graduaten.playtime.entity.Taal;
-import be.thomasmore.graduaten.playtime.entity.Uitgever;
+import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
 import be.thomasmore.graduaten.playtime.service.SpelService;
 import be.thomasmore.graduaten.playtime.service.TaalService;
@@ -14,7 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 import java.util.Calendar;
@@ -37,10 +38,86 @@ public class MainController {
 
     }
     @RequestMapping("/overzichtWinkelwagen")
-    public String overzichtWinkelwagen()
+    public String overzichtWinkelwagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        return "overzichtWinkelwagen";
+        String iAction = request.getParameter("action");
+
+        if (iAction != null && !iAction.equals("")) {
+            switch (iAction) {
+                case "Kopen":
+                    addToCart(request);
+                    break;
+                case "Huren":
+                    addToCart(request);
+                    break;
+                case "Update":
+                    updateCart(request);
+                    break;
+                case "X":
+                    deleteCart(request);
+                    break;
+            }
+        }
+
+        return "/overzichtWinkelwagen";
     }
+    protected void deleteCart(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        String iSTT = request.getParameter("stt");
+        CartBean cartBean = null;
+
+        Object iObject = session.getAttribute("cart");
+        if (iObject != null) {
+            cartBean = (CartBean) iObject;
+        } else {
+            cartBean = new CartBean();
+        }
+        cartBean.deleteCart(iSTT);
+    }
+
+    protected void updateCart(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        String iQuantity = request.getParameter("aantal");
+        String iSTT = request.getParameter("stt");
+
+        CartBean cartBean = null;
+
+        Object objCartBean = session.getAttribute("cart");
+        if (objCartBean != null) {
+            cartBean = (CartBean) objCartBean;
+        } else {
+            cartBean = new CartBean();
+        }
+        cartBean.updateCart(iSTT, iQuantity);
+    }
+
+    protected void addToCart(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        String iId = request.getParameter("id");
+        String iAfbeelding = request.getParameter("afbeelding");
+        String iPrijs = request.getParameter("prijs");
+        String iAantal = request.getParameter("aantal");
+        String iTitel = request.getParameter("titel");
+
+        CartBean cartBean = null;
+
+        Object objCartBean = session.getAttribute("cart");
+
+        if (objCartBean != null) {
+            cartBean = (CartBean) objCartBean;
+        } else {
+            cartBean = new CartBean();
+            session.setAttribute("cart", cartBean);
+        }
+
+        cartBean.addCart(iId,iAfbeelding, iPrijs, iAantal,iTitel);
+
+
+    }
+
     @Autowired
     SpelService spelService;
 
