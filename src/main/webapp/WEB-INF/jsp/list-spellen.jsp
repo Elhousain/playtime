@@ -1,22 +1,21 @@
 <%--
   Created by IntelliJ IDEA.
-  User: tomsc
-  Date: 28/11/2020
-  Time: 11:23
+  User: elhousain.farah
+  Date: 19/10/2020
+  Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
 <head>
-    <title>CRUD Spellen</title>
+    <title>PLAYTIME</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -89,56 +88,54 @@
         </nav>
         <!--#endregion -->
 
-        <div id="crud">
+        <div class="row-col-md-12" >
             <h3 class="text-center">Create, Read, Update, Delete Spellen</h3>
             <div class="container">
 
                 <input type="button" value="Add Spel"
                        onclick="window.location.href='showForm'; return false;"
-                       class="btn btn-info" /> <br />
+                       class="btn-info" /> <br />
                 <br />
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="panel-title">Customer List</div>
-                    </div>
-                    <div class="panel-body">
+                <div class="heading-section">Spel List</div>
 
-                        <table class="table table-striped table-bordered">
-                            <tr>
-                                <th>Naam</th>
-                                <th>Prijs</th>
-                                <th>Categorie</th>
-                                <th>Action</th>
-                            </tr>
 
-                            <c:forEach var="tempSpel" items="${spellen}">
+                <table class="table">
+                    <tr>
+                        <th>Naam</th>
+                        <th>Prijs</th>
+                        <th>Categorie</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
 
-                                <c:url var="updateLink" value="/spel/updateForm">
-                                    <c:param name="spelId" value="${tempSpel.id}"/>
-                                </c:url>
+                    <c:forEach var="tempSpel" items="${spellen}">
 
-                                <c:url var="deleteLink" value="/spel/delete">
-                                    <c:param name="spelId" value="${tempSpel.id}"/>
-                                </c:url>
+                        <c:url var="updateLink" value="/spel/updateForm">
+                            <c:param name="spelId" value="${tempSpel.id}"/>
+                        </c:url>
 
-                                <tr>
-                                    <td>${tempSpel.naam}</td>
-                                    <td>${tempSpel.prijs}</td>
-                                    <td>${tempSpel.categorie}</td>
+                        <c:url var="deleteLink" value="/spel/delete">
+                            <c:param name="spelId" value="${tempSpel.id}"/>
+                        </c:url>
 
-                                    <td>
-                                        <!-- display the update link --> <a href="${updateLink}">Update</a>
-                                        | <a href="${deleteLink}"
-                                             onclick="if (!(confirm('Are you sure you want to delete this spel?'))) return false">Delete</a>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td>${tempSpel.naam}</td>
+                            <td>${tempSpel.prijs}</td>
+                            <td>${tempSpel.categorie.beschrijving}</td>
+                            <td>${tempSpel.status.beschrijving}</td>
 
-                            </c:forEach>
-                        </table>
-                    </div>
-                </div>
+                            <td>
+                                <!-- display the update link --> <a href="${updateLink}">Update</a>
+                                | <a href="${deleteLink}"
+                                     onclick="if (!(confirm('Are you sure you want to delete this spel?'))) return false">Delete</a>
+                            </td>
+                        </tr>
+
+                    </c:forEach>
+                </table>
             </div>
         </div>
+
     </div>
 </div>
 

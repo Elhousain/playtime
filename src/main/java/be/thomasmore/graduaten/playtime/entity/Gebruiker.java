@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 public class Gebruiker {
 
+    public static final String GEBRUIKER = "Gebruiker";
     public static final String VOORNAAM = "Voornaam";
     public static final String ACHTERNAAM = "Familienaam";
     public static final String EMAIL = "E-mailadres";

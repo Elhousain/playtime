@@ -1,186 +1,65 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.List" %>
-<!doctype html>
-<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %><%--
+  Created by IntelliJ IDEA.
+  User: tomsc
+  Date: 16/12/2020
+  Time: 21:37
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <title>PlayTime - Registreren</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <title>Add Gebruiker</title>
 </head>
 <body>
-
 <%
-    HashMap<String, String> values = (HashMap<String, String>) request.getAttribute("values");
-    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
+    Gebruiker gebruiker = (Gebruiker) request.getAttribute(Gebruiker.GEBRUIKER);
+    if (gebruiker.getVoornaam()==null){
+        gebruiker.setVoornaam("");
+        gebruiker.setAchternaam("");
+        gebruiker.setEmail("");
+        gebruiker.setPaswoord("");
+        gebruiker.setStraat("");
+        gebruiker.setTelefoon("");
+        gebruiker.setWoonplaats("");
+    }
 %>
 
-<div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
-            <ul class="list-unstyled components mb5-">
-                <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
-                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
-                </li>
-                <li>
-                    <a href="#">Dobbelspel (1)</a>
-                </li>
-                <li>
-                    <a href="#">Bordspel (2)</a>
-                </li>
-                <li>
-                    <a href="#">Kaartspel (3)</a>
-                </li>
-            </ul>
+<form:form action="saveGebruiker" method="post" modelAttribute="gebruiker">
+    <form:hidden path="id"/>
 
-            <div class="footer">
-                <p>PLAYTIME</p>
-            </div>
+    <label class="form-control-label" for="voornaam">Voornaam</label>
+    <input type="text" class="form-control" id="voornaam" name="voornaam" value="<%=gebruiker.getVoornaam()%>">
 
-        </div>
-    </nav>
+    <label class="form-control-label" for="achternaam">Achternaam</label>
+    <input type="text" class="form-control" id="achternaam" name="achternaam" value="<%=gebruiker.getAchternaam()%>">
 
+    <label class="form-control-label" for="email">Email</label>
+    <input type="text" class="form-control" id="email" name="email" value="<%=gebruiker.getEmail()%>">
 
+    <label class="form-control-label" for="straat">Straat</label>
+    <input type="text" class="form-control" id="straat" name="straat" value="<%=gebruiker.getStraat()%>">
 
+    <label class="form-control-label" for="huisnummer">Huisnummer</label>
+    <input type="text" class="form-control" id="huisnummer" name="huisnummer" value="<%=gebruiker.getHuisnummer()%>">
 
-    <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5">
+    <label class="form-control-label" for="woonplaats">Woonplaats</label>
+    <input type="text" class="form-control" id="woonplaats" name="woonplaats" value="<%=gebruiker.getWoonplaats()%>">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <!--
-<button type="button" id="sidebarCollapse" class="btn btn-primary">
-<i class="fa fa-bars"></i>
-<span class="sr-only">Toggle Menu</span>
-</button>
-<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-<i class="fa fa-bars"></i>
-</button>
--->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+    <label class="form-control-label" for="postcode">Postcode</label>
+    <input type="text" class="form-control" id="postcode" name="postcode" value="<%=gebruiker.getPostcode()%>">
 
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Inloggen</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <label class="form-control-label" for="telefoon">Telefoon</label>
+    <input type="text" class="form-control" id="telefoon" name="telefoon" value="<%=gebruiker.getTelefoon()%>">
 
+    <label class="form-control-label" for="paswoord">Paswoord</label>
+    <input type="text" class="form-control" id="paswoord" name="paswoord" value="<%=gebruiker.getPaswoord()%>">
 
-        <div class="container">
-
-
-
-
-            <form:form action="saveGebruiker" cssClass="form-horizontal"
-                       method="post" modelAttribute="gebruiker">
-
-            <form:hidden path="id"/>
-                <div class="row col-md-12">
-                    <div class="form-group col-4">
-                        <label class="form-control-label" for="voornaam">Voornaam</label>
-                        <input type="text" class="form-control" id="voornaam" name="voornaam">
-                    </div>
-
-                    <div class="form-group col-4">
-                        <label class="form-control-label" for="achternaam">Familienaam</label>
-                        <input type="text" class="form-control" id="achternaam" name="achternaam">
-                    </div>
-
-                    <div class="form-group col-4">
-                        <label class="form-control-label" for="geboortedatum">Geboortedatum</label>
-                        <input type="date" class="form-control" id="geboortedatum" name="geboortedatum">
-                    </div>
-
-                    <div class="row col-md-12">
-
-                        <div class="form-group col-6">
-                            <label class="form-control-label" for="straat">Straat</label>
-                            <input type="text" class="form-control" id="straat" name="straat">
-                        </div>
-
-                        <div class="form-group col-2">
-                            <label class="form-control-label" for="huisnummer">Huisnummer</label>
-                            <input type="number" class="form-control" id="huisnummer" name="huisnummer">
-                        </div>
-                    </div>
-
-
-                    <div class="row col-md-12">
-
-                        <div class="form-group col-6">
-                            <label class="form-control-label" for="woonplaats">Gemeente</label>
-                            <input type="text" class="form-control" id="woonplaats" name="woonplaats">
-                        </div>
-
-                        <div class="form-group col-2">
-                            <label class="form-control-label" for="postcode">Postcode</label>
-                            <input type="number" min="999" class="form-control" id="postcode" name="postcode">
-                        </div>
-                    </div>
-
-
-                    <div class="row col-md-12">
-
-                        <div class="form-group col-6">
-
-                            <label class="form-control-label" for="telefoon">Telefoon</label>
-                            <input type="tel" class="form-control" id="telefoon" name="telefoon">
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="row col-md-12">
-                        <div class="form-group col-6">
-                            <label class="form-control-label" for="emailadres">E-mailadres</label>
-                            <input type="email" class="form-control" id="emailadres" name="emailadres">
-
-                        </div>
-
-                        <div class="form-group col-6">
-                            <label class="form-control-label" for="wachtwoord">Wachtwoord</label>
-                            <input type="password" class="form-control" id="wachtwoord" name="wachtwoord">
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-                    <div class="row col-md-12">
-
-                        <div  class="form-group col-6" >
-                            <input type="submit" class="btn btn-primary" value="Opslaan">
-                        </div>
-                    </div>
-
-                </form:form>
-
-            </div>
-        </div>
+    <div  class="form-group col-6" >
+        <input type="submit" class="btn btn-primary" value="Registreren">
     </div>
-</div>
 
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+</form:form>
 </body>
 </html>
