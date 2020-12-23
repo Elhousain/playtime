@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.DateTimeException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 @Controller
@@ -201,6 +201,7 @@ public class MainController {
 
 
         //Validatie Achternaam
+
         String achternaam = request.getParameter(Gebruiker.ACHTERNAAM);
         values.put(Gebruiker.ACHTERNAAM, achternaam);
         if (achternaam.isEmpty()) {
@@ -211,14 +212,6 @@ public class MainController {
         String rol = "ROLE_USER";
 
 
-        //Validatie Geboortedatum
-        String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
-        values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
-        Date geboortedatum = null;
-        if (geboortedatumString.isEmpty())
-            {
-                errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
-            }
 
 
 
@@ -292,11 +285,26 @@ public class MainController {
             errors.put(Gebruiker.HUISNUMMER, "Gelieve het huisnummer in te vullen.");
         }
 
+        //Validatie Geboortedatum
+        String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
+        values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
+
+
+        if (geboortedatumString.isEmpty())
+        {
+            errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
+        }
+
+
+
+
         //Navigate to correct page with correct actions
         if (errors.isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+            LocalDate date = LocalDate.parse(geboortedatumString, formatter);
 
 
-            gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, (java.sql.Date) geboortedatum,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
+            gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, date,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
             return "index";
         } else {
             model.addAttribute("values", values);

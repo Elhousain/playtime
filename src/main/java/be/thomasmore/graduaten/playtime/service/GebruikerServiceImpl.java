@@ -31,4 +31,8 @@ public class GebruikerServiceImpl implements GebruikerService {
     @Override
     public void deleteGebruiker(Long id) { gebruikerRepository.deleteById((long) id);
     }
+
+
+
+
 }

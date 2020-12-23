@@ -9,6 +9,7 @@ import java.util.List;
 public class Gebruiker {
     public static final String NAME = "gebruiker";
     public static final String GEBRUIKER = "Gebruiker";
+    public static final String ID = "Id";
     public static final String VOORNAAM = "Voornaam";
     public static final String ACHTERNAAM = "Familienaam";
     public static final String EMAIL = "E-mailadres";
@@ -28,7 +29,7 @@ public class Gebruiker {
     private String voornaam;
     private String achternaam;
     private String rol;
-    private Date geboortedatum;
+    private LocalDate geboortedatum;
     //private Date geboortedatum;
     private String email;
     private String paswoord;
@@ -43,7 +44,7 @@ public class Gebruiker {
     public Gebruiker() {
     }
 
-    public Gebruiker(String voornaam, String achternaam, String rol, Date geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
+    public Gebruiker(String voornaam, String achternaam, String rol, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
         //this.id = id;
         this.voornaam = voornaam;
         this.achternaam = achternaam;
@@ -82,11 +83,11 @@ public class Gebruiker {
         this.achternaam = achternaam;
     }
 
-    public Date getGeboortedatum() {
+    public LocalDate getGeboortedatum() {
         return geboortedatum;
     }
 
-    public void setGeboortedatum(Date geboortedatum) {
+    public void setGeboortedatum(LocalDate geboortedatum) {
         this.geboortedatum = geboortedatum;
     }
 

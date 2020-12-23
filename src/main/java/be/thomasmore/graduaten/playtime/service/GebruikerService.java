@@ -9,5 +9,6 @@ public interface GebruikerService {
     Gebruiker getGebruikerById(Long id);
     List<Gebruiker> getGebruikers();
     Gebruiker addGebruiker(Gebruiker gebruiker);
-    public void deleteGebruiker(Long id);
+    void deleteGebruiker(Long id);
+
 }

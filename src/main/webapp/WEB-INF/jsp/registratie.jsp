@@ -98,7 +98,7 @@
 
 
                             <label class="form-control-label" for="<%=Gebruiker.VOORNAAM%>"><%=Gebruiker.VOORNAAM%></label>
-                            <input class="form-control" type="text" id="<%=Gebruiker.VOORNAAM%>" name="<%=Gebruiker.VOORNAAM%>" value="<%=values.get(Gebruiker.VOORNAAM)%>">
+                            <input class="form-control" maxlength="20" type="text" id="<%=Gebruiker.VOORNAAM%>" name="<%=Gebruiker.VOORNAAM%>" value="<%=values.get(Gebruiker.VOORNAAM)%>">
 
                             <%
                             if (errors.containsKey(Gebruiker.VOORNAAM)) {
@@ -113,7 +113,7 @@
                     <div class="form-group col-4">
 
                         <label class="form-control-label" for="<%=Gebruiker.ACHTERNAAM%>"><%=Gebruiker.ACHTERNAAM%></label>
-                        <input class="form-control" type="text" id="<%=Gebruiker.ACHTERNAAM%>" name="<%=Gebruiker.ACHTERNAAM%>" value="<%=values.get(Gebruiker.ACHTERNAAM)%>">
+                        <input class="form-control" maxlength="30" type="text" id="<%=Gebruiker.ACHTERNAAM%>" name="<%=Gebruiker.ACHTERNAAM%>" value="<%=values.get(Gebruiker.ACHTERNAAM)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.ACHTERNAAM)) {
@@ -125,8 +125,6 @@
 
                     </div>
                     <div class="form-group col-4">
-
-
                         <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
                         <input class="form-control" type="date" id="<%=Gebruiker.GEBOORTEDATUM%>" placeholder="dd-mm-yyyy" name="<%=Gebruiker.GEBOORTEDATUM%>" value="<%=values.get(Gebruiker.GEBOORTEDATUM)%>">
 
@@ -135,20 +133,7 @@
                                 out.print("<span style='color: red;'>" + errors.get(Gebruiker.GEBOORTEDATUM) + "</span>");
                             }
                         %>
-
-
-
-
                     </div>
-
-
-
-
-
-
-
-
-
                 </div>
 
 
@@ -156,7 +141,7 @@
 
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Gebruiker.STRAAT%>"><%=Gebruiker.STRAAT%></label>
-                        <input class="form-control" type="text" id="<%=Gebruiker.STRAAT%>" name="<%=Gebruiker.STRAAT%>" value="<%=values.get(Gebruiker.STRAAT)%>">
+                        <input class="form-control" maxlength="40" type="text" id="<%=Gebruiker.STRAAT%>" name="<%=Gebruiker.STRAAT%>" value="<%=values.get(Gebruiker.STRAAT)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.STRAAT)) {
@@ -167,7 +152,7 @@
 
                     <div class="form-group col-2">
                         <label class="form-control-label" for="<%=Gebruiker.HUISNUMMER%>"><%=Gebruiker.HUISNUMMER%></label>
-                        <input class="form-control" type="number"  min="1" id="<%=Gebruiker.HUISNUMMER%>" name="<%=Gebruiker.HUISNUMMER%>" value="<%=values.get(Gebruiker.HUISNUMMER)%>">
+                        <input class="form-control" maxlength="4" type="number"  min="1" id="<%=Gebruiker.HUISNUMMER%>" name="<%=Gebruiker.HUISNUMMER%>" value="<%=values.get(Gebruiker.HUISNUMMER)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.HUISNUMMER)) {
@@ -182,7 +167,7 @@
 
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Gebruiker.WOONPLAATS%>"><%=Gebruiker.WOONPLAATS%></label>
-                        <input class="form-control" type="text" id="<%=Gebruiker.WOONPLAATS%>" name="<%=Gebruiker.WOONPLAATS%>" value="<%=values.get(Gebruiker.WOONPLAATS)%>">
+                        <input class="form-control"  maxlength="20" type="text" id="<%=Gebruiker.WOONPLAATS%>" name="<%=Gebruiker.WOONPLAATS%>" value="<%=values.get(Gebruiker.WOONPLAATS)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.WOONPLAATS)) {
@@ -192,7 +177,7 @@
                     </div>
                     <div class="form-group col-2">
                         <label class="form-control-label" for="<%=Gebruiker.POSTCODE%>"><%=Gebruiker.POSTCODE%></label>
-                        <input class="form-control" type="number" min="999" id="<%=Gebruiker.POSTCODE%>" name="<%=Gebruiker.POSTCODE%>" value="<%=values.get(Gebruiker.POSTCODE)%>">
+                        <input class="form-control" maxlength="4" type="number" min="1000" id="<%=Gebruiker.POSTCODE%>" name="<%=Gebruiker.POSTCODE%>" value="<%=values.get(Gebruiker.POSTCODE)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.POSTCODE)) {
@@ -208,7 +193,7 @@
 
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Gebruiker.TELEFOON%>"><%=Gebruiker.TELEFOON%></label>
-                        <input class="form-control" type="tel"  id="<%=Gebruiker.TELEFOON%>" name="<%=Gebruiker.TELEFOON%>" value="<%=values.get(Gebruiker.TELEFOON)%>">
+                        <input class="form-control" maxlength="20" type="tel"  id="<%=Gebruiker.TELEFOON%>" name="<%=Gebruiker.TELEFOON%>" value="<%=values.get(Gebruiker.TELEFOON)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.TELEFOON)) {
@@ -231,7 +216,7 @@
                     <div class="form-group col-6">
 
                         <label class="form-control-label" for="<%=Gebruiker.EMAIL%>"><%=Gebruiker.EMAIL%></label>
-                        <input class="form-control" type="text" id="<%=Gebruiker.EMAIL%>" name="<%=Gebruiker.EMAIL%>" value="<%=values.get(Gebruiker.EMAIL)%>">
+                        <input class="form-control" maxlength="40" type="text" id="<%=Gebruiker.EMAIL%>" name="<%=Gebruiker.EMAIL%>" value="<%=values.get(Gebruiker.EMAIL)%>">
                         <%
                             if (errors.containsKey(Gebruiker.EMAIL)) {
                                 out.print("<span style='color: red;'>" + errors.get(Gebruiker.EMAIL) + "</span>");
@@ -244,7 +229,7 @@
                     </div>
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Gebruiker.PASWOORD%>"><%=Gebruiker.PASWOORD%></label>
-                        <input class="form-control" type="password" id="<%=Gebruiker.PASWOORD%>" name="<%=Gebruiker.PASWOORD%>" value="<%=values.get(Gebruiker.PASWOORD)%>">
+                        <input class="form-control" maxlength="40" type="password" id="<%=Gebruiker.PASWOORD%>" name="<%=Gebruiker.PASWOORD%>" value="<%=values.get(Gebruiker.PASWOORD)%>">
 
                         <%
                             if (errors.containsKey(Gebruiker.PASWOORD)) {
