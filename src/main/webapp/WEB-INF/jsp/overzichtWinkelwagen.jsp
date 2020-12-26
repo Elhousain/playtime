@@ -21,12 +21,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        li{cursor: pointer}
-    </style>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js'>
+    </script><script  src="./script.js"></script>
 </head>
 <body>
 
@@ -109,25 +110,20 @@
             <h1>
                 Overzicht
             </h1>
-
             <div class="containerMand" >
                 <div>
                     <h2>Winkelwagen</h2>
-
                     <table width="100%" >
                         <tr bgcolor="#CCCCCC">
                             <td>Wissen</td>
                             <td>Afbeelding</td>
                             <td>Bestelling </td>
                             <td>Total</td>
-
                         </tr>
                         <jsp:useBean id="cart" scope="session" type="be.thomasmore.graduaten.playtime.entity.CartBean"/>
-
                         <c:if test="${cart.lineItemCount == 0}">
                             <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
                         </c:if>
-
                         <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
                             <form name="item" method="POST" action="/overzichtWinkelwagen">
                                 <tr>
@@ -155,217 +151,88 @@
                         </c:forEach>
                         <!--Total-->
                         <tr>
-
                             <td colspan="3"> </td>
                             <td>Subtotal: €<c:out value="${cart.total}"/></td>
                         </tr>
 
                     </table><div class="keuze mt-5" >
-                    <a   class="btn-primary btn-block" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
-                    <a   class="btn-info btn-block" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
+                    <a   class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
+                    <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
+                    <div id="demo" class="collapse">
+                        <!-- For Demo Purpose -->
+                        <div class="container py-3">
+                            <header class="text-center">
+                                <h2 class="font-weight-bold">AFHAAL DATUM</h2>
+                            </header>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
 
+                                    <!-- Date Picker Input -->
+                                    <!-- Date Picker Input -->
+                                    <div class="form-group mb-4">
+                                        <div class="datepicker date input-group p-0 shadow-sm">
+                                            <input type="text" placeholder="Afhaal datum" class="form-control py-4 px-4"  id="flight-datepicker">
+                                            <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+                                        </div>
+                                    </div><!-<!-- DEnd ate Picker Input -->
+                                    <!-- For Demo Purpose -->
+                                        <div class="text-center">
+                                            <p id="result-1">&nbsp;</p>
+                                            <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
+                                            <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
 
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                        </div>
+
+                                        <a href="/gebruikerBordspel/send-mail" >shopping car</a>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
 <script>
-    var getal=0;
-    function car(id,picture,name,price)
-    {
+    $(document).ready(function(){
+        $('#content').click(function(){
+            var x = document.getElementById("flight-datepicker").value;
+            document.getElementById("pickedDate").innerHTML = x;
+            document.getElementById("datum").innerHTML = x;
+        });
+    });
+</script>
+<script>
 
-        var _id=document.getElementById("webkar"),
-            _li1=document.createElement('li'),
-            _div1=document.createElement('div'),
-            _a1=document.createElement('a'),
-            _img1=document.createElement('img'),
-            _span1=document.createElement('span'),
-            _btn1=document.createElement('button'),
-            _span2=document.createElement('span'),
-            _btn2=document.createElement('button'),
-            _p1=document.createElement('p');
+    var dateSelect     = $('#flight-datepicker');
+    var dateDepart     = $('#pickedDate');
+    var dateReturn     = $('#end-date');
+    var spanDepart     = $('.date-depart');
+    var spanReturn     = $('.date-return');
+    var spanDateFormat = 'ddd, MMMM D yyyy';
+    dateSelect.datepicker({
+        autoclose: true,
+        format: "mm/dd",
+        maxViewMode: 0,
+        startDate: "now"
+    }).on('change', function() {
+        var start = $.format.date(dateDepart.datepicker('getDate'), spanDateFormat);
+        var end = $.format.date(dateReturn.datepicker('getDate'), spanDateFormat);
+        spanDepart.text(start);
+        spanReturn.text(end);
+    });
 
-        var _delete=document.createTextNode("X"),
-            _naam=document.createTextNode(name),
-            _plus=document.createTextNode("+"),
-            _aantal=document.createTextNode("1"),
-            _min=document.createTextNode("-"),
-            _totaal=document.createTextNode(price);
-
-
-        _li1.setAttribute("class","kader onderlijn");
-        _div1.setAttribute("class","row");
-
-        _a1.appendChild(_delete);
-        _a1.setAttribute("class","col-sm-1 m-auto");
-
-        _img1.setAttribute("src",picture);
-        _img1.setAttribute("class","afb col-sm-2 m-auto");
-        _img1.setAttribute("id",id)
-
-        _span1.setAttribute("class","col-sm-4 m-auto");
-        _span1.appendChild(_naam);
-
-        _btn1.setAttribute("class","knop m-auto");
-        _btn1.setAttribute("id",id+"_kopenPlus");
-        _btn1.setAttribute("onclick","reken("+id+",'Kplus')");
-        _btn1.appendChild(_plus);
-
-        _span2.setAttribute("id",id+"_aantal");
-        _span2.setAttribute("class","m-auto");
-        _span2.appendChild(_aantal);
-
-        _btn2.setAttribute("class","knop m-auto");
-        _btn2.setAttribute("id",id+"_kopenMin");
-        _btn2.setAttribute("onclick","reken("+id+",'Kmin')");
-        _btn2.appendChild(_min);
-
-        _p1.setAttribute("class","col-sm-2 m-auto");
-        _p1.appendChild(_totaal);
-
-        _li1.appendChild(_div1);
-        _div1.appendChild(_a1);
-        _div1.appendChild(_img1);
-        _div1.appendChild(_span1);
-        _div1.appendChild(_btn1);
-        _div1.appendChild(_span2);
-        _div1.appendChild(_btn2);
-        _div1.appendChild(_p1);
-        var sw=0;
-        if (getal===0)
-        {
-            _id.appendChild(_li1);
-            getal=1
-        }
-        else
-        {
-
-            var  items = document.querySelectorAll("#webcar li"),
-                tab = [], index;
-            kab = [], index;
-
-
-            for(var i = 0; i < items.length; i++){
-                tab.push(items[i].innerHTML);
-                //alert("Er bestaat al "+items.length+" product bulent");
-                //hele string
-                var split1 = items[i].innerHTML;
-                //var split1 = _li1.innerHTML;
-                //haal ID uit string
-                var id_pm1=split1.split('id="').pop().split('">')[0];
-                //haal Aantal uit string
-                var aantal_pr1=split1.split('class="m-auto">').pop().split('<')[0];
-                //alert("Product id="+id_pm1+"en aantal="+aantal_pr1);
-
-                //alert(items[i].innerHTML +" tabPush voor");
-                for(var a = 0; a < items.length; a++){
-                    kab.push(items[a].innerHTML);
-
-                    //hele string
-                    var split3 = items[i].innerHTML;
-                    var split2 = _li1.innerHTML;
-                    //alert(split2);
-                    //haal ID uit string
-                    var id_pm2=split2.split('id="').pop().split('">')[0];
-                    //haal Aantal uit string
-                    var IDaantal_pm2=split2.split('<span id="').pop().split('" class="m-auto">')[0];
-                    var aantal_pm3=split3.split('class="m-auto">').pop().split('<')[0];
-
-                    //alert("Product id="+id_pm2+"en aantal="+aantal_pr2);
-
-
-                    if (id_pm1===id_pm2)
-                    {
-                        sw=1;
-                        var x=parseInt(aantal_pm3);
-                        x=x+1;
-                        document.getElementById(IDaantal_pm2).innerHTML = x;
-                        refreshArray();
-                    }
-                }
-            }
-        }
-        if (sw===0)
-        {
-            //alert("nieuw product is toegevoed");
-            _id.appendChild(_li1);
-        }
-        else
-        {
-            //alert("deze product bestaat al en word niet toegevoegd");
-        }
-
-
-        function refreshArray()
-        {
-            // clear array
-            tab.length = 0;
-            items = document.querySelectorAll("#list li");
-            // fill array
-            for(var i = 0; i < items.length; i++){
-                tab.push(items[i].innerHTML);
-            }
-        }
-
-    }
-
-
-    function huur(naam,prijs) {
-        var geld;
-        geld = prijs*1.15
-        alert(naam +" kost "+ geld.toFixed(2)+" €");
-
-    }
-    function kopen(naam,prijs) {
-        var geld;
-        geld = prijs
-        alert(naam +" kost "+geld+" €");
-
-    }
-    var aantal = 0;
-    var bedrag = 20;
-
-
-    function reken(a,b)
-    {
-        var  items = document.querySelectorAll("#webcar li");
-        var split3 = items[a-1].innerHTML;
-        var IDaantal_pm2=split3.split('<span id="').pop().split('" class="m-auto">')[0];
-        var aantal_pm3=split3.split('class="m-auto">').pop().split('<')[0];
-
-        var x=parseInt(aantal_pm3);
-
-        if(b==="Kplus")
-        {
-            x=x+1;
-            // alert("2");
-
-        }
-
-        if(b==="Kmin"&&x>0)
-        {
-            x=x-1;
-            // alert("3");
-        }
-
-        document.getElementById(IDaantal_pm2).innerHTML = x;
-        refreshArray();
-
-
-    }
 
 </script>
 
+
+<script src="${pageContext.request.contextPath}/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>

@@ -44,9 +44,6 @@ public class GebruikerController {
 
 
 
-
-
-
     @GetMapping("showForm")
     public String showFormForAdd(Model model){
 

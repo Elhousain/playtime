@@ -75,6 +75,9 @@ FOREIGN KEY (spelid) REFERENCES spel(id) ON DELETE CASCADE,
 FOREIGN KEY (gebruikerid) REFERENCES gebruiker(id)
 );
 
+
+
+
 insert into taal(beschrijving)
 values ( 'Nederlands' );
 insert into taal(beschrijving)

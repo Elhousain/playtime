@@ -21,6 +21,15 @@ public class GebruikerBordspel
     //constructor
     public GebruikerBordspel(){}
 
+    public GebruikerBordspel(int spelid, int gebruikerid, LocalDate afhaaldatum, boolean verwerkt, boolean ishuur, int aantal) {
+        this.spelid = spelid;
+        this.gebruikerid = gebruikerid;
+        this.afhaaldatum = afhaaldatum;
+        this.verwerkt = verwerkt;
+        this.ishuur = ishuur;
+        this.aantal = aantal;
+    }
+
     //id
     public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}

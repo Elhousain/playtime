@@ -135,6 +135,10 @@
                 Overzicht spellen
             </h1>
 
+
+<a href="/success" >Bevestiging</a>
+
+
             <div class="row dashboard-cards">
                 <c:forEach  items="${spellen}" var="spel">
                     <div class=card>
@@ -176,13 +180,13 @@
                                 <div class=onderlijn>${spel.beschrijving}</div>
                                 <ul class=task-list>
                                     <li>
-                                        <img class=img-thumbnail src=/images/pngegg.png > Spelers tussen ${spel.min_spelers} en ${spel.max_spelers}
+                                        <img class=img-thumbnail src=${pageContext.request.contextPath}/images/pngegg.png > Spelers tussen ${spel.min_spelers} en ${spel.max_spelers}
                                     </li>
                                     <li>
-                                        <img src=/images/age.png>${spel.min_leeftijd}
+                                        <img src=${pageContext.request.contextPath}/images/age.png>${spel.min_leeftijd}
                                     </li>
                                     <li>
-                                        <img src=/images/taal.png >
+                                        <img src=${pageContext.request.contextPath}/images/taal.png >
                                         <c:forEach items="${talen}" var="taal">
                                             <c:if test="${spel.taal==taal.id}">
                                                 <p>${taal.beschrijving}</p>
@@ -191,7 +195,7 @@
                                         </c:forEach>
                                     </li>
                                     <li>
-                                        <img src=/images/uitgever.png >
+                                        <img src=${pageContext.request.contextPath}/images/uitgever.png >
                                         <c:forEach items="${uitgevers}" var="uitgever">
                                             <c:if test="${spel.uitgever==uitgever.id}">
                                                 <p>${uitgever.beschrijving}</p>
@@ -207,6 +211,11 @@
 
                 </c:forEach>
             </div>
+            <form method="post" action="${pageContext.request.contextPath}/sendEmail">
+               <input  type="submit">
+
+            </form>
+
 
         </div>
         <!--endregion-->
