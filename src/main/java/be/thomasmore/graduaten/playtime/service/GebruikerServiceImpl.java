@@ -19,6 +19,11 @@ public class GebruikerServiceImpl implements GebruikerService {
     }
 
     @Override
+    public Gebruiker getGebruikerByEmail(String email) {
+        return gebruikerRepository.getGebruikerByEmail(email);
+    }
+
+    @Override
     public List<Gebruiker> getGebruikers() {
         return gebruikerRepository.findAll();
     }

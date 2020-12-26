@@ -153,7 +153,7 @@ public class MainController {
         HashMap<String, String> values = new HashMap<>();
         HashMap<String, String> errors = new HashMap<>();
         values.put(Gebruiker.VOORNAAM, "");
-       values.put(Gebruiker.ACHTERNAAM, "");
+        values.put(Gebruiker.ACHTERNAAM, "");
         values.put(Gebruiker.EMAIL, "");
         values.put(Gebruiker.TELEFOON, "");
         values.put(Gebruiker.GEBOORTEDATUM, "");
@@ -168,23 +168,6 @@ public class MainController {
     }
 
 
-    /*@RequestMapping("/data-add-gebruiker")
-    public String dataAddGebruiker(HttpServletRequest request) {
-        String voornaam = request.getParameter("voornaam");
-        String achternaam = request.getParameter("achternaam");
-        LocalDate geboortedatum = LocalDate.parse(request.getParameter("geboortedatum"));
-        String email = request.getParameter("email");
-        String paswoord = request.getParameter("paswoord");
-        String telefoon = request.getParameter("telefoon");
-        String woonplaats = request.getParameter("woonplaats");
-        String postcode = request.getParameter("postcode");
-        String straat = request.getParameter("straat");
-        String huisnummer = request.getParameter("huisnummer");
-        Gebruiker gebruiker = new Gebruiker(voornaam,achternaam,geboortedatum,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer);
-        gebruikerService.addGebruiker(gebruiker);
-        return "index";
-    } */
-
 
     @RequestMapping("/data-add-gebruiker")
     public String dataAddGebruiker(HttpServletRequest request, Model model) {
@@ -192,21 +175,14 @@ public class MainController {
         HashMap<String, String> values = new HashMap<>();
         HashMap<String, String> errors = new HashMap<>();
 
-        //Validatie voornaam
-        String voornaam = request.getParameter(Gebruiker.VOORNAAM);
-        values.put(Gebruiker.VOORNAAM, voornaam);
-        if (voornaam.isEmpty()) {
-            errors.put(Gebruiker.VOORNAAM, "Gelieve de voornaam in te vullen.");
-        }
 
+        String voornaam = request.getParameter(Gebruiker.VOORNAAM);
+        validatieVoornaam(values, errors , voornaam);
 
         //Validatie Achternaam
 
         String achternaam = request.getParameter(Gebruiker.ACHTERNAAM);
-        values.put(Gebruiker.ACHTERNAAM, achternaam);
-        if (achternaam.isEmpty()) {
-            errors.put(Gebruiker.ACHTERNAAM, "Gelieve de familienaam in te vullen.");
-        }
+        validatieAchternaam(values, errors , achternaam);
 
 
         String rol = "ROLE_USER";
@@ -232,70 +208,53 @@ public class MainController {
 
 
 
-        //Validatie Paswoord
+
+
         String paswoord = request.getParameter(Gebruiker.PASWOORD);
-        values.put(Gebruiker.PASWOORD, paswoord);
-        if (paswoord.isEmpty()) {
-            errors.put(Gebruiker.PASWOORD, "Gelieve een wachtwoord te kiezen.");
-        }
+        validatiePaswoord(values, errors , paswoord);
 
 
 
 
-        //Validatie Telefoon
         String telefoon = request.getParameter(Gebruiker.TELEFOON);
-        values.put(Gebruiker.TELEFOON, telefoon);
-        if (telefoon.isEmpty()) {
-            errors.put(Gebruiker.TELEFOON, "Gelieve een telefoonnummer in te vullen.");
-        }
+        validatieTelefoon(values, errors , telefoon);
 
 
-        //Validatie Woonplaats
         String woonplaats = request.getParameter(Gebruiker.WOONPLAATS);
-        values.put(Gebruiker.WOONPLAATS, woonplaats);
-        if (woonplaats.isEmpty()) {
-            errors.put(Gebruiker.WOONPLAATS, "Gelieve de woonplaats in te vullen.");
-        }
+        validatieWoonplaats(values, errors , woonplaats);
 
 
 
-        //Validatie Postcode
         String postcode = request.getParameter(Gebruiker.POSTCODE);
-        values.put(Gebruiker.POSTCODE, postcode);
-        if (postcode.isEmpty()) {
-            errors.put(Gebruiker.POSTCODE, "Gelieve de postcode in te vullen.");
-        }
+        validatiePostcode(values, errors , postcode);
 
 
 
-        //Validatie Straat
         String straat = request.getParameter(Gebruiker.STRAAT);
-        values.put(Gebruiker.STRAAT, straat);
-        if (straat.isEmpty()) {
-            errors.put(Gebruiker.STRAAT, "Gelieve de straatnaam in te vullen.");
-        }
+        validatieStraat(values, errors , straat);
 
 
 
 
-        //Validatie Huisnummer
         String huisnummer = request.getParameter(Gebruiker.HUISNUMMER);
-        values.put(Gebruiker.HUISNUMMER, huisnummer);
-        if (huisnummer.isEmpty()) {
-            errors.put(Gebruiker.HUISNUMMER, "Gelieve het huisnummer in te vullen.");
-        }
+        validatieHuisnummer(values, errors , huisnummer);
+
+
+        String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
+        validatieGeboortedatum(values, errors , geboortedatumString);
+
 
         //Validatie Geboortedatum
-        String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
+        /*String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
         values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
 
 
         if (geboortedatumString.isEmpty())
         {
             errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
-        }
+        }*/
 
-
+        
 
 
         //Navigate to correct page with correct actions
@@ -314,6 +273,83 @@ public class MainController {
     }
 
 
+
+    //VALIDATIE VOORNAAM
+    private void validatieVoornaam(HashMap values,   HashMap errors, String voornaam) {
+        values.put(Gebruiker.VOORNAAM, voornaam);
+        if (voornaam.isEmpty()) {
+            errors.put(Gebruiker.VOORNAAM, "Gelieve de voornaam in te vullen.");
+        }
+    }
+
+    //VALIDATIE ACHTERNAAM
+    private void validatieAchternaam(HashMap values,   HashMap errors, String achternaam) {
+        values.put(Gebruiker.ACHTERNAAM, achternaam);
+        if (achternaam.isEmpty()) {
+            errors.put(Gebruiker.ACHTERNAAM, "Gelieve de achternaam in te vullen.");
+        }
+    }
+
+
+    //VALIDATIE PASWOORD
+    private void validatiePaswoord(HashMap values,   HashMap errors, String paswoord) {
+        values.put(Gebruiker.PASWOORD, paswoord);
+        if (paswoord.isEmpty()) {
+            errors.put(Gebruiker.PASWOORD, "Gelieve het wachtwoord in te vullen.");
+        }
+    }
+
+    //VALIDATIE WOONPLAATS
+    private void validatieWoonplaats(HashMap values,   HashMap errors, String woonplaats) {
+        values.put(Gebruiker.WOONPLAATS, woonplaats);
+        if (woonplaats.isEmpty()) {
+            errors.put(Gebruiker.WOONPLAATS, "Gelieve de woonplaats in te vullen.");
+        }
+    }
+
+    //VALIDATIE STRAAT
+    private void validatieStraat(HashMap values,   HashMap errors, String straat) {
+        values.put(Gebruiker.STRAAT, straat);
+        if (straat.isEmpty()) {
+            errors.put(Gebruiker.STRAAT, "Gelieve de straat in te vullen.");
+        }
+    }
+
+
+    //VALIDATIE HUISNUMMER
+    private void validatieHuisnummer(HashMap values,   HashMap errors, String huisnummer) {
+        values.put(Gebruiker.HUISNUMMER, huisnummer);
+        if (huisnummer.isEmpty()) {
+            errors.put(Gebruiker.HUISNUMMER, "Gelieve het huisnummer in te vullen.");
+        }
+    }
+
+
+    //VALIDATIE POSTCODE
+    private void validatiePostcode(HashMap values,   HashMap errors, String postcode) {
+        values.put(Gebruiker.POSTCODE, postcode);
+        if (postcode.isEmpty()) {
+            errors.put(Gebruiker.POSTCODE, "Gelieve de postcode in te vullen.");
+        }
+    }
+
+
+    //VALIDATIE TELEFOON
+    private void validatieTelefoon(HashMap values,   HashMap errors, String telefoon) {
+        values.put(Gebruiker.TELEFOON, telefoon);
+        if (telefoon.isEmpty()) {
+            errors.put(Gebruiker.TELEFOON, "Gelieve het telefoonnummer in te vullen.");
+        }
+    }
+
+
+    //VALIDATIE GEBOORTEDATUM
+    private void validatieGeboortedatum(HashMap values,   HashMap errors, String geboortedatumString) {
+        values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
+        if (geboortedatumString.isEmpty()) {
+            errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
+        }
+    }
 
 
 

@@ -15,5 +15,5 @@ public class UserError {
     public String telefoon;
     public String email;
     public String paswoord;
-
+    public String rol;
 }

@@ -100,7 +100,7 @@
 
 
 
-            <form class="needs-validation" action="saveGebruiker" method="post" novalidate>
+            <form  class="needs-validation" action="saveGebruiker" method="post" novalidate>
                 <input type="hidden" id="<%=Gebruiker.ID%>" name="<%=Gebruiker.ID%>" value="<%=gebruiker.getId()%>"/>
 
                 <div class="row col-md-12">
@@ -233,8 +233,39 @@
                                value="<%=gebruiker.getTelefoon() == null ? "" : gebruiker.getTelefoon()%>">
                         <%out.print(userError.telefoon != null ? "<div class=\"invalid-feedback\">" + userError.telefoon + "</div>" : "");%>
 
+                    </div>
+
+                    <div class="form-group col-2">
+
+                        <%out.print(userError.rol != null ? "<p class=\"invalid-feedback\">" + userError.rol + "</p>" : "");%>
+
+<section >
+                        <input type="radio"
+                               id="<%=Gebruiker.ROL%>"
+                               name="<%=Gebruiker.ROL%>"
+                               class="design"
+                               value="ROLE_USER">
+
+                        <label class="form-control-label" for="<%=Gebruiker.ROL%>">Klant</label>
+
+
+</section>
+
+                        <section >
+                        <input type="radio"
+                               id="<%=Gebruiker.ROL%>"
+                               name="<%=Gebruiker.ROL%>"
+                               class="design"
+                               value="ROLE_ADMIN">
+                        <label class="form-control-label" for="<%=Gebruiker.ROL%>">Admin</label>
+
+
+
+
+</section>
 
                     </div>
+
 
                 </div>
 

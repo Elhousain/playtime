@@ -3,23 +3,26 @@ package be.thomasmore.graduaten.playtime.controller;
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.entity.UserError;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+import javax.swing.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-
-import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("gebruiker")
@@ -31,13 +34,14 @@ public class GebruikerController {
     @GetMapping("/list")
     //Object principal = SecurityContextHolder.getContext()
 
-
-
     public String lijstgebruikers (Model model){
         List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
         model.addAttribute("gebruikers", gebruikers);
         return "list-gebruikers";
     }
+
+
+
 
 
 
@@ -64,6 +68,16 @@ public class GebruikerController {
     @PostMapping("/saveGebruiker")
     public String saveGebruiker(HttpServletRequest request, Model model)  {
 
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails)
+        {
+            String username = ((UserDetails) principal).getUsername();
+        }
+        else
+        {
+            String username = principal.toString();
+        }
+
 
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
@@ -73,7 +87,7 @@ public class GebruikerController {
 
 
 
-        gebruiker.setRol("ROLE_USER");
+
         validatieVoornaam(gebruiker, userError, request.getParameter(Gebruiker.VOORNAAM));
         validatieAchternaam(gebruiker, userError, request.getParameter(Gebruiker.ACHTERNAAM));
 
@@ -87,6 +101,15 @@ public class GebruikerController {
         validatieTelefoon(gebruiker, userError, request.getParameter(Gebruiker.TELEFOON));
         validatieEmail(gebruiker, userError, request.getParameter(Gebruiker.EMAIL));
         validatiePaswoord(gebruiker, userError, request.getParameter(Gebruiker.PASWOORD));
+
+        validatieRol(gebruiker, userError, request.getParameter(Gebruiker.ROL));
+
+
+
+
+
+
+
 
 
         if (userError.hasErrors) {
@@ -118,6 +141,8 @@ public class GebruikerController {
     }
 
 
+
+
     //VALIDATIE ID
     private void validatieId(Gebruiker gebruiker, String id) {
 
@@ -128,20 +153,12 @@ public class GebruikerController {
     }
 
 
-    /*//VALIDATIE GEBOORTEDATUM
-    private void validatieGeboortedatum(Gebruiker gebruiker, UserError userError, String geboortedatumstring) {
 
-        gebruiker.setGeboortedatum(LocalDate.parse(geboortedatumstring));
-        if (geboortedatumstring.isEmpty()) {
-            userError.geboortedatum = "Gelieve een geboortedatum in te vullen";
-            userError.hasErrors = true;
-        }
-    }*/
+
 
 
     //VALIDATIE GEBOORTEDATUM
     private void validatieGeboortedatum(Gebruiker gebruiker, UserError userError, String geboortedatumstring) {
-
 
         if (geboortedatumstring.equals(""))
         {
@@ -154,9 +171,22 @@ public class GebruikerController {
             LocalDate mijnDatum = LocalDate.parse(geboortedatumstring, formatter);
             gebruiker.setGeboortedatum(mijnDatum);
         }
-
-
     }
+
+
+
+    //VALIDATIE ROL
+    private void validatieRol(Gebruiker gebruiker, UserError userError, String rolString) {
+        gebruiker.setRol(rolString);
+        if (rolString==null) {
+            userError.rol = "Gelieve het type user aan te duiden";
+            userError.hasErrors = true;
+        }
+    }
+
+
+
+
 
     //VALIDATIE VOORNAAM
     private void validatieVoornaam(Gebruiker gebruiker, UserError userError, String voornaam) {
@@ -263,6 +293,25 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

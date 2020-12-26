@@ -12,6 +12,7 @@ public class Gebruiker {
     public static final String ID = "Id";
     public static final String VOORNAAM = "Voornaam";
     public static final String ACHTERNAAM = "Familienaam";
+    public static final String ROL = "Rol";
     public static final String EMAIL = "E-mailadres";
     public static final String PASWOORD = "Wachtwoord";
     public static final String GEBOORTEDATUM = "Geboortedatum";
@@ -38,7 +39,7 @@ public class Gebruiker {
     private String postcode;
     private String straat;
     private String huisnummer;
-    //moet hier nog een verwijzing komen?
+
 
 
     public Gebruiker() {
@@ -158,5 +159,9 @@ public class Gebruiker {
     @Override
     public String toString() {
         return voornaam +" " + achternaam;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 }
