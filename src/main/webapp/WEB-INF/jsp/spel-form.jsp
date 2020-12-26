@@ -25,7 +25,7 @@
     <!--#region Navigatie-->
     <nav id="sidebar">
         <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.png);"></a>
+            <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
             <ul class="list-unstyled components mb-5">
                 <li>
                     <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
