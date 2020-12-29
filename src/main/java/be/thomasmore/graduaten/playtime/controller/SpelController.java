@@ -19,11 +19,18 @@ public class SpelController {
     @Autowired UitgeverService uitgeverService;
     @Autowired CategorieService categorieService;
     @Autowired StatusService statusService;
+    @Autowired
+    GebruikerBordspelService gebruikerBordspelService;
+
+
+
+    @Autowired
+    GebruikerService gebruikerService;
 
     @GetMapping ("/list")
     public String lijstSpellen (Model model){
         List<Spel> spellen = spelService.getSpellen();
-        model.addAttribute("spellen",spellen);
+        model.addAttribute("spellen", spellen);
         return "list-spellen";
     }
 

@@ -51,7 +51,7 @@ public class JavaMailUtil
                     "        <p>Bulent Arslan</p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 40%\">\n" +
-                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen op halen op <strong>12/12/2020</strong>  vanaf <strong>09u00</strong> </p>\n" +
+                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen op halen op <strong>"+datum+"</strong>  vanaf <strong>"+uur+"</strong> </p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 30%\">\n" +
                     "<p>Vragen over jouw bestelling?<br><br>\n" +

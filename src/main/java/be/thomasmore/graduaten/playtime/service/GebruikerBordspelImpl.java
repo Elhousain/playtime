@@ -5,11 +5,13 @@ import be.thomasmore.graduaten.playtime.repository.GebruikerBordspelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.io.Serializable;
 import java.util.List;
 
 @Service
 
-public class GebruikerBordspelImpl implements GebruikerBordspelService {
+public class GebruikerBordspelImpl implements GebruikerBordspelService, Serializable {
 
     @Autowired
     GebruikerBordspelRepository gebruikerBordspelRepository;

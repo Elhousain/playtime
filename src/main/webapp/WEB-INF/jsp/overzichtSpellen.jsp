@@ -134,10 +134,6 @@
                 Overzicht spellen
             </h1>
 
-
-<a href="/success" >Bevestiging</a>
-
-
             <div class="row dashboard-cards">
                 <c:forEach  items="${spellen}" var="spel">
                     <div class=card>
@@ -149,7 +145,7 @@
                         <div class=achtergrond>
                             <div class=row>
                                 <div class=col-sm-6>
-                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/overzichtWinkelwagen">
+                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
                                         <input type="hidden" name="id" value="${spel.id}"><br/>
                                         <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
                                         <input type="hidden" name="titel" value="kopen"><br/>
@@ -161,7 +157,7 @@
 
 
                                 <div class=col-sm-6>
-                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/overzichtWinkelwagen">
+                                    <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
                                         <input type="hidden" name="id" value="${spel.id}"><br/>
                                         <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
                                         <input type="hidden" name="titel" value="huren"><br/>
@@ -186,32 +182,20 @@
                                     </li>
                                     <li>
                                         <img src=${pageContext.request.contextPath}/images/taal.png >
-                                        <c:forEach items="${talen}" var="taal">
-                                            <c:if test="${spel.taal==taal.id}">
-                                                <p>${taal.beschrijving}</p>
-
-                                            </c:if>
-                                        </c:forEach>
+                                        <p> ${spel.getTaal().getBeschrijving() }</p>
                                     </li>
                                     <li>
                                         <img src=${pageContext.request.contextPath}/images/uitgever.png >
-                                        <c:forEach items="${uitgevers}" var="uitgever">
-                                            <c:if test="${spel.uitgever==uitgever.id}">
-                                                <p>${uitgever.beschrijving}</p>
-                                            </c:if>
-                                        </c:forEach>
+                                        <p>${ spel.getUitgever().getBeschrijving()} </p>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-
-
                 </c:forEach>
             </div>
-            <form method="post" action="${pageContext.request.contextPath}/sendEmail">
-               <input  type="submit">
+
 
             </form>
 

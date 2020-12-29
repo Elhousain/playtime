@@ -4,9 +4,12 @@ import be.thomasmore.graduaten.playtime.config.JavaMailUtil;
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
 import be.thomasmore.graduaten.playtime.entity.MyUserDetails;
+import be.thomasmore.graduaten.playtime.entity.Spel;
 import be.thomasmore.graduaten.playtime.repository.GebruikerBordspelRepository;
 import be.thomasmore.graduaten.playtime.service.GebruikerBordspelService;
 
+import be.thomasmore.graduaten.playtime.service.GebruikerService;
+import be.thomasmore.graduaten.playtime.service.SpelService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.Id;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +37,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 public class GebruikerBordspelController {
 
-    @Autowired GebruikerBordspelService gebruikerBordspelService;
+    @Autowired
+    GebruikerBordspelService gebruikerBordspelService;
+
+    @Autowired
+    SpelService spelService;
+
+    @Autowired
+    GebruikerService gebruikerService;
 
 
     @GetMapping ("/list")
@@ -82,11 +93,13 @@ public class GebruikerBordspelController {
 
 
     @GetMapping("/send-mail")
-    public String sendEmail(@AuthenticationPrincipal MyUserDetails userDetails) throws MessagingException {
+    public String sendEmail(@AuthenticationPrincipal MyUserDetails userDetails, HttpServletRequest request) throws MessagingException {
+        String datum = request.getParameter("datum");
         String mail= userDetails.getUsername();
-        JavaMailUtil.sendMail(mail,"01/01/2020","14h00");
+        JavaMailUtil.sendMail(mail,datum,"9h00");
         return "success";
     }
+
 
 
 

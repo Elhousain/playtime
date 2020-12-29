@@ -1,6 +1,7 @@
 package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public class GebruikerBordspel
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long  id;
+    private int ordernr;
     private int spelid;
     private int gebruikerid;
     private LocalDate afhaaldatum;
@@ -21,18 +23,13 @@ public class GebruikerBordspel
     //constructor
     public GebruikerBordspel(){}
 
-    public GebruikerBordspel(int spelid, int gebruikerid, LocalDate afhaaldatum, boolean verwerkt, boolean ishuur, int aantal) {
-        this.spelid = spelid;
-        this.gebruikerid = gebruikerid;
-        this.afhaaldatum = afhaaldatum;
-        this.verwerkt = verwerkt;
-        this.ishuur = ishuur;
-        this.aantal = aantal;
-    }
-
     //id
     public void setId(Long id) {this.id = id;}
     public Long getId() {return id;}
+
+    //ordernr
+    public int getOrdernr() { return ordernr;}
+    public void setOrdernr(int ordernr) {this.ordernr = ordernr;}
 
     //spelid
     public void setSpelid(int spelid) {this.spelid = spelid;}
@@ -57,5 +54,7 @@ public class GebruikerBordspel
     //aantal
     public void setAantal(int aantal) {this.aantal = aantal;}
     public int getAantal() {return aantal;}
+
+
 }
 

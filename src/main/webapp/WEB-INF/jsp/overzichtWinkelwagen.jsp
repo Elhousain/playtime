@@ -12,6 +12,8 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.*" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.GebruikerBordspel" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -30,6 +32,7 @@
     </script><script  src="./script.js"></script>
 </head>
 <body>
+<jsp:useBean id="cart" scope="session" type="be.thomasmore.graduaten.playtime.entity.CartBean"/>
 
 <div class="wrapper d-flex align-items-stretch">
     <!--#region Linksepaneel-->
@@ -110,17 +113,24 @@
             <h1>
                 Overzicht
             </h1>
+
+
+
+
+
+
             <div class="containerMand" >
                 <div>
                     <h2>Winkelwagen</h2>
-                    <table width="100%" >
+                    <table width="100%" id="inhoud" >
                         <tr bgcolor="#CCCCCC">
                             <td>Wissen</td>
                             <td>Afbeelding</td>
                             <td>Bestelling </td>
-                            <td>Total</td>
+                            <td>Totaal</td>
                         </tr>
-                        <jsp:useBean id="cart" scope="session" type="be.thomasmore.graduaten.playtime.entity.CartBean"/>
+
+
                         <c:if test="${cart.lineItemCount == 0}">
                             <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
                         </c:if>
@@ -137,7 +147,7 @@
                                         <div class="blocks" >
                                             <p>${cartItem.titel}</p>
                                             €<c:out value="${(cartItem.prijs)}"/>
-                                            <input style="width: 20%" type='number' name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                            <input style="width: 20%" type='number'  name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
                                         </div>
                                     </td>
                                     <td>€<c:out value="${cartItem.totaal}"/></td>
@@ -145,14 +155,14 @@
                                         <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
                                         <input type="submit" name="action" value="Update">
                                     </td>
-
                                 </tr>
+
                             </form>
                         </c:forEach>
                         <!--Total-->
                         <tr>
                             <td colspan="3"> </td>
-                            <td>Subtotal: €<c:out value="${cart.total}"/></td>
+                            <td>Subtotaal: €<c:out value="${cart.total}"/></td>
                         </tr>
 
                     </table><div class="keuze mt-5" >
@@ -182,11 +192,28 @@
                                         <div class="text-center">
                                             <p id="result-1">&nbsp;</p>
                                             <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
-                                            <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
-
                                         </div>
 
-                                        <a href="/gebruikerBordspel/send-mail" >shopping car</a>
+
+
+
+
+                                    <form action="${pageContext.request.contextPath}/gebruikerBordspel/send-mail">
+                                            <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
+                                                <p>spelid = ${cartItem.id} </p>
+                                                <p>${cartItem.aantal} </p>
+                                                <c:if test="${cartItem.titel=='huren'}">
+                                                    <p>product = huren </p>
+                                                </c:if>
+                                                <c:if test="${cartItem.titel=='kopen'}">
+                                                    <p>product = kopen </p>
+                                                </c:if>
+                                            </c:forEach>
+                                            <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
+                                            <input type="hidden" id="datetm" name="datum">
+                                            <input type="submit" value="Bevestigen">
+                                        </form>
+                                        <a href="${pageContext.request.contextPath}/gebruikerBordspel/send-mail" >shopping car</a>
 
                                     </div>
                                 </div>
@@ -199,12 +226,16 @@
     </div>
 </div>
 
+
+
+
 <script>
     $(document).ready(function(){
         $('#content').click(function(){
             var x = document.getElementById("flight-datepicker").value;
             document.getElementById("pickedDate").innerHTML = x;
-            document.getElementById("datum").innerHTML = x;
+            document.getElementById("datetm").value =x;
+
         });
     });
 </script>

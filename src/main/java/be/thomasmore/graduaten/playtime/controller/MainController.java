@@ -2,10 +2,7 @@ package be.thomasmore.graduaten.playtime.controller;
 
 
 import be.thomasmore.graduaten.playtime.entity.*;
-import be.thomasmore.graduaten.playtime.service.GebruikerService;
-import be.thomasmore.graduaten.playtime.service.SpelService;
-import be.thomasmore.graduaten.playtime.service.TaalService;
-import be.thomasmore.graduaten.playtime.service.UitgeverService;
+import be.thomasmore.graduaten.playtime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +25,28 @@ import java.util.*;
 public class MainController {
 
     @Autowired
-
     GebruikerService gebruikerService;
+
+    @Autowired
+    SpelService spelService;
+
+    @Autowired
+    TaalService taalService;
+
+    @Autowired
+    UitgeverService uitgeverService;
+
+    @Autowired
+    GebruikerBordspelService gebruikerBordspelService;
+
+
+
+    @RequestMapping("/overzichtGebruikers")
+    public String overzichtGebruikers(Model model){
+        List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
+        model.addAttribute("gebruikers", gebruikers);
+        return "overzichtGebruikers";
+    }
 
 
     @RequestMapping("/")
@@ -37,8 +54,29 @@ public class MainController {
         return "index";
 
     }
+
+    @RequestMapping("/overzichtSpellen")
+    public String overzichtSpellen(Model model) {
+        List<Spel> spellen = spelService.getSpellen();
+        model.addAttribute("spellen", spellen);
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
+        model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
+        return "overzichtSpellen";
+    }
+
     @RequestMapping("/overzichtWinkelwagen")
-    public String overzichtWinkelwagen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    public String overzichtWinkelwagen(Model model) {
+        List<Spel> spellen = spelService.getSpellen();
+        model.addAttribute("spellen", spellen);
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
+        model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
+
+
+        return "overzichtWinkelwagen";
+    }
+
+    @RequestMapping("/shoppingCart")
+    public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model) throws ServletException, IOException
     {
         String iAction = request.getParameter("action");
 
@@ -58,8 +96,13 @@ public class MainController {
                     break;
             }
         }
+        List<Spel> spellen = spelService.getSpellen();
+        model.addAttribute("spellen", spellen);
 
-        return "/overzichtWinkelwagen";
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
+        model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
+
+        return "overzichtWinkelwagen";
     }
     protected void deleteCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -118,28 +161,6 @@ public class MainController {
 
     }
 
-    @Autowired
-    SpelService spelService;
-
-    @Autowired
-    TaalService taalService;
-
-    @Autowired
-    UitgeverService uitgeverService;
-
-    @RequestMapping("/overzichtSpellen")
-    public String overzichtSpellen(Model model) {
-        List<Spel> spellen = spelService.getSpellen();
-        model.addAttribute("spellen", spellen);
-        return "overzichtSpellen";
-    }
-
-    @RequestMapping("/overzichtGebruikers")
-    public String overzichtGebruikers(Model model){
-        List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
-        model.addAttribute("gebruikers", gebruikers);
-        return "overzichtGebruikers";
-    }
 
 
    /* @RequestMapping("/registratie")

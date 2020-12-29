@@ -35,6 +35,7 @@ public class Spel
     private int voorraad_koop;
 
 
+
     //constructor
     public Spel()
     {

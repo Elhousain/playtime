@@ -257,7 +257,7 @@
 
                     <div class="form-group col-2">
 
-                        <%out.print(userError.rol != null ? "<p class=\"invalid-feedback\">" + userError.rol + "</p>" : "");%>
+                        <%out.print(userError.rol != null ? "<div class=\"invalid-feedback\">" + userError.rol + "</div>" : "");%>
 
                         <section >
                             <input type="radio"

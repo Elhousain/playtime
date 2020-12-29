@@ -1,4 +1,4 @@
-drop table IF EXISTS gebruikerbordspel;
+drop table IF EXISTS gebruiker_bordspel;
 drop table IF EXISTS spel;
 drop table IF EXISTS taal;
 drop table IF EXISTS uitgever;
@@ -62,8 +62,9 @@ straat              varchar(40)     not null,
 huisnummer          varchar(4)      not null,
 primary key (id)
 );
-create table gebruikerbordspel(
+create table gebruiker_bordspel(
 id                  int             not null AUTO_INCREMENT,
+ordernr             int             not null,
 spelid              int             not null,
 gebruikerid         int             not null,
 afhaaldatum         datetime        not null,
@@ -118,13 +119,13 @@ values ( 'Monopoly', 'images/monopoly.jpg', '30.00', ' De ingrediënten om te wi
 insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
 values ( 'Elhousain', 'Farah', '1989-04-17', 'ROLE_ADMIN', 'r0797083@student.thomasmore.be', 'test', '014444444', 'Beringen', '3580', 'Hoogstraat', '32' );
 insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
-values ( 'Bulent', 'Arslan', '1989-08-23', 'ROLE_ADMIN', 'r0792355@student.thomasmore.be', 'test', '0433333333', 'Beringen', '3580', 'Laagstraat', '40' );
+values ( 'Bulent', 'Arslan', '1989-08-23', 'ROLE_ADMIN', 'bulentarslan0877@gmail.com', 'test', '0433333333', 'Beringen', '3580', 'Laagstraat', '40' );
 insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
 values ( 'Tom', 'Scheyltjens', '1989-03-18', 'ROLE_USER', 's0200162@thomasmore.student.be', 'test', '0472743607', 'Vosselaar', '2350', 'Grootheidestraat', '23' );
 
-insert into gebruikerbordspel(spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
-values ( '1', '3', '2020-11-01', 'true', 'true', '1' );
-insert into gebruikerbordspel(spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
-values ( '2', '2', '2020-11-01', 'true', 'false', '1' );
-insert into gebruikerbordspel(spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
-values ( '2', '3', '2020-11-01', 'false', 'false', '2' );
+insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
+values ( '1','1', '3', '2020-11-01', 'true', 'true', '1' );
+insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
+values ( '2','2', '2', '2020-11-01', 'true', 'false', '1' );
+insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
+values ( '3','2', '3', '2020-11-01', 'false', 'false', '2' );
