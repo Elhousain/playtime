@@ -21,52 +21,63 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
+
+<%
+    Spel spel = (Spel)request.getAttribute(Spel.SPEL);
+
+
+
+    SpelError spelError = (SpelError) request.getAttribute(SpelError.SPEL);
+
+
+%>
+
 <div class="wrapper d-flex align-items-stretch">
-    <!--#region Navigatie-->
     <nav id="sidebar">
         <div class="p-4 pt-5">
             <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
-            <ul class="list-unstyled components mb-5">
+            <ul class="list-unstyled components mb5-">
                 <li>
                     <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
                     <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
                 </li>
-
+                <li>
+                    <a href="#">Dobbelspel (1)</a>
+                </li>
+                <li>
+                    <a href="#">Bordspel (2)</a>
+                </li>
+                <li>
+                    <a href="#">Kaartspel (3)</a>
+                </li>
             </ul>
 
             <div class="footer">
-                <p>
-                    Playtime
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    <br>
-                    Elhousain | Tom  | Bulent
-                    <i class="icon-heart" aria-hidden="true"></i>
-                    <a href="#" target="_blank">
-                        www.playtime.be
-                    </a>
-                </p>
+                <p>PLAYTIME</p>
             </div>
 
         </div>
     </nav>
 
 
-    <!--#endregion-->
+
+
+
+
+    <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-        <!--#region Header-->
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-primary d-lg-none">
-                    <i class="fa fa-bars"></i>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <!--
+<button type="button" id="sidebarCollapse" class="btn btn-primary">
+<i class="fa fa-bars"></i>
+<span class="sr-only">Toggle Menu</span>
+</button>
+<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<i class="fa fa-bars"></i>
+</button>
+-->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
@@ -74,135 +85,177 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
-                        </li>
 
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg" >
-                                    <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
-                                    <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-                                </svg>
-                            </a>
+                            <a class="nav-link" href="#">Inloggen</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <!--#endregion -->
+
+
         <div class="container">
-            <div class="col-md-offset-2 col-md-7">
-                <h3 class="text-center">Spel toevoegen</h3>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <div class="panel-title">Add Spel</div>
+            <form  class="needs-validation" action="saveSpel" method="post" novalidate>
+                <input type="hidden" id="<%=Spel.ID%>" name="<%=Spel.ID%>" value="<%=spel.getId()%>"/>
+
+                <div class="row col-md-12">
+
+                    <div class="form-group col-6">
+                        <label class="form-control-label" for="<%=Spel.NAAM%>"><%=Spel.NAAM%></label>
+                        <input class="form-control<%out.print(spelError.naam != null ? " is-invalid" : "");%>"
+                               maxlength="50" type="text"
+                               id="<%=Spel.NAAM%>"
+                               name="<%=Spel.NAAM%>"
+                               value="<%=spel.getNaam() == null ? "" : spel.getNaam()%>">
+                        <%out.print(spelError.naam != null ? "<div class=\"invalid-feedback\">" + spelError.naam + "</div>" : "");%>
                     </div>
-                    <div class="panel-body">
 
-                        <%
-                            Spel spel = (Spel)request.getAttribute(Spel.SPEL);
-                            if (spel.getNaam()==null){
-                                spel.setNaam("");
-                                spel.setBeschrijving("");
-                            }
-                        %>
-
-                        <form:form action="saveSpel" method="post" modelAttribute="spel" >
-                            <form:hidden path="id"/>
-
-                            <div class="form-group col-4">
-                                <label class="form-control-label" for="naam">Naam</label>
-                                <input type="text" class="form-control" id="naam" name="naam" value="<%=spel.getNaam()%>">
-
-                                <label class="form-control-label" for="foto">Foto</label>
-                                <input type="text" class="form-control" id="foto" name="foto">
-
-                                <label class="form-control-label" for="prijs">Prijs</label>
-                                <input type="text" class="form-control" id="prijs" name="prijs" value="<%=spel.getPrijs()%>">
-
-                                <label class="form-control-label" for="beschrijving">Beschrijving</label>
-                                <input type="text" class="form-control" id="beschrijving" name="beschrijving" value="<%=spel.getBeschrijving()%>">
-
-                                <label for="categorie">Categorie</label>
-                                <select name="categorie" id="categorie">
-                                    <option hidden disabled selected value> -- select an option -- </option>
-                                    <%
-                                        List<Categorie> categorien = (List<Categorie>)request.getAttribute("categorien");
-                                        for (Categorie categorie:categorien){
-                                            out.print("<option value=" + categorie.getId() + ">" + categorie.getBeschrijving() + "</option>");
-                                        }
-                                    %>
-                                </select>
-
-                                <label class="form-control-label" for="min_spelers">Minimum Spelers</label>
-                                <input type="text" class="form-control" id="min_spelers" name="min_spelers" value="<%=spel.getMin_spelers()%>">
-
-                                <label class="form-control-label" for="max_spelers">Maximum Spelers</label>
-                                <input type="text" class="form-control" id="max_spelers" name="max_spelers" value="<%=spel.getMax_spelers()%>">
-
-                                <label class="form-control-label" for="min_leeftijd">Minimum leeftijd</label>
-                                <input type="text" class="form-control" id="min_leeftijd" name="min_leeftijd" value="<%=spel.getMin_leeftijd()%>">
-
-                                <label for="taal">Taal</label>
-                                <select name="taal" id="taal">
-                                    <option hidden disabled selected value> -- select an option -- </option>
-                                    <%
-                                        List<Taal> talen = (List<Taal>)request.getAttribute("talen");
-                                        for (Taal taal:talen){
-                                            out.print("<option value=" + taal.getId() + ">" + taal.getBeschrijving() + "</option>");
-                                        }
-                                    %>
-                                </select>
-
-                                <label for="uitgever">Uitgever</label>
-                                <select name="uitgever" id="uitgever">
-                                    <option hidden disabled selected value> -- select an option -- </option>
-                                    <%
-                                        List<Uitgever> uitgevers = (List<Uitgever>)request.getAttribute("uitgevers");
-                                        for (Uitgever uitgever:uitgevers){
-                                            out.print("<option value=" + uitgever.getId() + ">" + uitgever.getBeschrijving() + "</option>");
-                                        }
-                                    %>
-                                </select>
-
-                                <label for="status">Status</label>
-                                <select name="status" id="status">
-                                    <option hidden disabled selected value> -- select an option -- </option>
-                                    <%
-                                        List<Status> statussen = (List<Status>)request.getAttribute("statussen");
-                                        for (Status status:statussen){
-                                            out.print("<option value=" + status.getId() + ">" + status.getBeschrijving() + "</option>");
-                                        }
-                                    %>
-                                </select>
-
-                                <label class="form-control-label" for="voorraad_huur">Voorraad huur</label>
-                                <input type="text" class="form-control" id="voorraad_huur" name="voorraad_huur" value="<%=spel.getVoorraad_huur()%>">
-
-                                <label class="form-control-label" for="voorraad_koop">Voorraad koop</label>
-                                <input type="text" class="form-control" id="voorraad_koop" name="voorraad_koop" value="<%=spel.getVoorraad_koop()%>">
-
-                            </div>
-
-                            <div class="row col-md-12">
-
-                                <div  class="form-group col-6" >
-                                    <input type="submit" class="btn btn-primary" value="Registreren">
-                                </div>
-                            </div>
-
-                        </form:form>
+                    <div class="form-group col-6">
+                        <label class="form-control-label" for="<%=Spel.PRIJS%>"><%=Spel.PRIJS%></label>
+                        <input class="form-control<%out.print(spelError.prijs != null ? " is-invalid" : "");%>"
+                               maxlength="10" type="number"
+                               id="<%=Spel.PRIJS%>"
+                               name="<%=Spel.PRIJS%>"
+                               value="<%=spel.getPrijs() == 0 ? "" : spel.getPrijs()%>">
+                        <%out.print(spelError.prijs != null ? "<div class=\"invalid-feedback\">" + spelError.prijs + "</div>" : "");%>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
+                <div class="row col-md-12">
+                    <div class="form-group col-12">
+                        <label class="form-control-label" for="<%=Spel.BESCHRIJVING%>"><%=Spel.BESCHRIJVING%></label>
+                        <input class="form-control<%out.print(spelError.beschrijving != null ? " is-invalid" : "");%>"
+                               maxlength="1000" type="text"
+                               id="<%=Spel.BESCHRIJVING%>"
+                               name="<%=Spel.BESCHRIJVING%>"
+                               value="<%=spel.getBeschrijving() == null ? "" : spel.getBeschrijving()%>">
+                        <%out.print(spelError.beschrijving != null ? "<div class=\"invalid-feedback\">" + spelError.beschrijving + "</div>" : "");%>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="form-group col-4">
+                        <label class="form-control-label" for="<%=Spel.MIN_SPELERS%>"><%=Spel.MIN_SPELERS%></label>
+                        <input class="form-control<%out.print(spelError.min_spelers != null ? " is-invalid" : "");%>"
+                               maxlength="3" type="number"
+                               id="<%=Spel.MIN_SPELERS%>"
+                               name="<%=Spel.MIN_SPELERS%>"
+                               value="<%=spel.getMin_spelers() == 0 ? "" : spel.getMin_spelers()%>">
+                        <%out.print(spelError.min_spelers != null ? "<div class=\"invalid-feedback\">" + spelError.min_spelers + "</div>" : "");%>
+                    </div>
+
+                    <div class="form-group col-4">
+                        <label class="form-control-label" for="<%=Spel.MAX_SPELERS%>"><%=Spel.MAX_SPELERS%></label>
+                        <input class="form-control<%out.print(spelError.max_spelers != null ? " is-invalid" : "");%>"
+                               maxlength="3" type="number"
+                               id="<%=Spel.MAX_SPELERS%>"
+                               name="<%=Spel.MAX_SPELERS%>"
+                               value="<%=spel.getMax_spelers() == 0 ? "" : spel.getMax_spelers()%>">
+                        <%out.print(spelError.max_spelers != null ? "<div class=\"invalid-feedback\">" + spelError.max_spelers + "</div>" : "");%>
+                    </div>
+
+                    <div class="form-group col-4">
+                        <label class="form-control-label" for="<%=Spel.MIN_LEEFTIJD%>"><%=Spel.MIN_LEEFTIJD%></label>
+                        <input class="form-control<%out.print(spelError.min_leeftijd != null ? " is-invalid" : "");%>"
+                               maxlength="3" type="number"
+                               id="<%=Spel.MIN_LEEFTIJD%>"
+                               name="<%=Spel.MIN_LEEFTIJD%>"
+                               value="<%=spel.getMin_leeftijd() == 0 ? "" : spel.getMin_leeftijd()%>">
+                        <%out.print(spelError.min_leeftijd != null ? "<div class=\"invalid-feedback\">" + spelError.min_leeftijd + "</div>" : "");%>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12" >
+                        <label for="<%=Spel.CATEGORIE%>">Categorie</label>
+                        <br>
+                        <select name="<%=Spel.CATEGORIE%>" id="<%=Spel.CATEGORIE%>">
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <%
+                                List<Categorie> categorien = (List<Categorie>)request.getAttribute("categorien");
+                                for (Categorie categorie:categorien){
+                                    out.print("<option value=" + categorie.getBeschrijving() + ">" + categorie.getBeschrijving() + "</option>");
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
+                        <label for="<%=Spel.TAAL%>">Taal</label>
+                        <br>
+                        <select name="<%=Spel.TAAL%>" id="<%=Spel.TAAL%>">
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <%
+                                List<Taal> talen = (List<Taal>)request.getAttribute("talen");
+                                for (Taal taal:talen){
+                                    out.print("<option value=" + taal.getBeschrijving() + ">" + taal.getBeschrijving() + "</option>");
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
+                        <label for="<%=Spel.UITGEVER%>">Uitgever</label>
+                        <br>
+                        <select name="<%=Spel.UITGEVER%>" id="<%=Spel.UITGEVER%>">
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <%
+                                List<Uitgever> uitgevers = (List<Uitgever>)request.getAttribute("uitgevers");
+                                for (Uitgever uitgever:uitgevers){
+                                    out.print("<option value=" + uitgever.getBeschrijving() + ">" + uitgever.getBeschrijving() + "</option>");
+                                }
+                            %>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
+                        <label for="<%=Spel.STATUS%>">Status</label>
+                        <br>
+                        <select name="<%=Spel.STATUS%>" id="<%=Spel.STATUS%>">
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            <%
+                                List<Status> statussen = (List<Status>)request.getAttribute("statussen");
+                                for (Status status:statussen){
+                                    out.print("<option value=" + status.getBeschrijving() + ">" + status.getBeschrijving() + "</option>");
+                                }
+                            %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div class="form-group col-6">
+                        <label class="form-control-label" for="<%=Spel.VOORRAAD_HUUR%>"><%=Spel.VOORRAAD_HUUR%></label>
+                        <input class="form-control<%out.print(spelError.voorraad_huur != null ? " is-invalid" : "");%>"
+                               maxlength="4" type="number"
+                               id="<%=Spel.VOORRAAD_HUUR%>"
+                               name="<%=Spel.VOORRAAD_HUUR%>"
+                               value="<%=spel.getVoorraad_huur() == 0 ? "" : spel.getVoorraad_huur()%>">
+                        <%out.print(spelError.voorraad_huur != null ? "<div class=\"invalid-feedback\">" + spelError.voorraad_huur + "</div>" : "");%>
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="form-control-label" for="<%=Spel.VOORRAAD_KOOP%>"><%=Spel.VOORRAAD_KOOP%></label>
+                        <input class="form-control<%out.print(spelError.voorraad_koop != null ? " is-invalid" : "");%>"
+                               maxlength="4" type="number"
+                               id="<%=Spel.VOORRAAD_KOOP%>"
+                               name="<%=Spel.VOORRAAD_KOOP%>"
+                               value="<%=spel.getVoorraad_koop() == 0 ? "" : spel.getVoorraad_koop()%>">
+                        <%out.print(spelError.voorraad_koop != null ? "<div class=\"invalid-feedback\">" + spelError.voorraad_koop + "</div>" : "");%>
+                    </div>
+                </div>
+
+                <div class="row col-md-12">
+                    <div  class="form-group col-6" >
+                        <input type="submit" class="btn btn-primary" value="Opslaan">
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+</body>
 </body>
 </html>

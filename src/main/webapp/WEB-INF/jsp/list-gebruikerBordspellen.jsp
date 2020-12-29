@@ -1,21 +1,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: elhousain.farah
-  Date: 19/10/2020
-  Time: 20:01
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
-<%@ page import="java.util.List" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Uitgever" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.*" %>
-
 
 <!doctype html>
 <html lang="en">
@@ -43,8 +28,7 @@
     <!--#region Linksepaneel-->
     <nav id="sidebar">
         <div class="p-4 pt-5">
-            <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
-
+            <a href="#" class="img logo rounded-circle mb-5" style=" background-image: url(images/logo.png);position: relative; display: block;z-index: 1000"></a>
             <ul class="list-unstyled components mb-5">
                 <li>
                     <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spellen</a>
@@ -127,52 +111,46 @@
             <!--#endregion-->
             <!--#region Bordenspel groepen-->
             <div class="row-col-md-12" >
-                <h3 class="text-center">Create, Read, Update, Delete Spellen</h3>
+                <h3 class="text-center">Overzicht GebruikerBordspellen</h3>
                 <div class="container">
 
-                    <input type="button" value="Add Spel"
+                    <input type="button" value="Add GebruikerBordspel"
                            onclick="window.location.href='showForm'; return false;"
                            class="btn-info" /> <br />
                     <br />
-                    <form th:action="@{/}">
-                        Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
-                        &nbsp;
-                        <input type="submit" value="Search" />
-                        &nbsp;
-                        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
-                    </form>
-                    <div class="heading-section">Spel List</div>
+
+                    <div class="heading-section">GB List</div>
 
 
                     <table class="table">
                         <tr>
                             <th>Naam</th>
-                            <th>Prijs</th>
-                            <th>Categorie</th>
-                            <th>Status</th>
+                            <th>Spel</th>
+                            <th>Afhaaldatum</th>
+                            <th>Huur</th>
                             <th>Action</th>
                         </tr>
 
-                        <c:forEach var="tempSpel" items="${spellen}">
+                        <c:forEach var="tempGBS" items="${gebruikerBordspellen}">
 
-                            <c:url var="updateLink" value="/spel/updateForm">
-                                <c:param name="spelId" value="${tempSpel.id}"/>
+                            <c:url var="updateLink" value="/gebruikerBordspel/updateForm">
+                                <c:param name="gebruikerBordspelId" value="${tempGBS.id}"/>
                             </c:url>
 
-                            <c:url var="deleteLink" value="/spel/delete">
-                                <c:param name="spelId" value="${tempSpel.id}"/>
+                            <c:url var="deleteLink" value="/gebruikerBordspel/delete">
+                                <c:param name="gebruikerBordspelId" value="${tempGBS.id}"/>
                             </c:url>
 
                             <tr>
-                                <td>${tempSpel.naam}</td>
-                                <td>${tempSpel.prijs}</td>
-                                <td>${tempSpel.categorie.beschrijving}</td>
-                                <td>${tempSpel.status.beschrijving}</td>
+                                <td>${tempGBS.gebruikerid}</td>
+                                <td>${tempGBS.spelid}</td>
+                                <td>${tempGBS.afhaaldatum}</td>
+                                <td>${tempGBS.ishuur}</td>
 
                                 <td>
                                     <!-- display the update link --> <a href="${updateLink}">Update</a>
                                     | <a href="${deleteLink}"
-                                         onclick="if (!(confirm('LET OP, eventueel gelinkte bestellingen zullen ook verwijderd worden, bent u zeker dat u dit spel wil verwijderen?'))) return false">Delete</a>
+                                         onclick="if (!(confirm('Are you sure you want to delete this GBS?'))) return false">Delete</a>
                                 </td>
                             </tr>
 
@@ -191,11 +169,6 @@
         <!--endregion-->
     </div>
 </div>
-<script type="text/javascript">
-    function clearSearch() {
-        window.location = "/spel/list";
-    }
-</script>
 <script>
     var zindex = 10;
     $(document).on('click','#tonen',function()

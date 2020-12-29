@@ -8,7 +8,7 @@ import java.util.List;
 public interface SpelService {
     Spel getSpelById(Long id);
 
-    List<Spel> getSpellen();
+    List<Spel> getSpellen(String keyword);
 
     Spel addSpel(Spel spel);
 

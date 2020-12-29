@@ -12,6 +12,14 @@ public class Categorie {
     public Categorie() {
     }
 
+    public Categorie(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
+
+    public Categorie(Long id) {
+        this.id = id;
+    }
+
     public Categorie(Long id, String beschrijving) {
         this.id = id;
         this.beschrijving = beschrijving;

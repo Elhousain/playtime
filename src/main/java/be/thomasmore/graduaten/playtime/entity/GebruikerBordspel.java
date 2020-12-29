@@ -10,7 +10,6 @@ public class GebruikerBordspel
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long  id;
     private int ordernr;
     private int spelid;
@@ -21,7 +20,7 @@ public class GebruikerBordspel
     private int aantal;
 
     //constructor
-    public GebruikerBordspel(){}
+    public GebruikerBordspel() {}
 
     //id
     public void setId(Long id) {this.id = id;}

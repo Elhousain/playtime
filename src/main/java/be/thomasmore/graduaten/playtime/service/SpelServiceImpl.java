@@ -19,7 +19,10 @@ public class SpelServiceImpl implements SpelService  {
     }
 
     @Override
-    public List<Spel> getSpellen() {
+    public List<Spel> getSpellen(String keyword){
+        if (keyword != null){
+            return spelRepository.search(keyword);
+        }
         return spelRepository.findAll();
     }
 

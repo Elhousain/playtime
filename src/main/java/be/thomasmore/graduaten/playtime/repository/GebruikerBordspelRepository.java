@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface GebruikerBordspelRepository extends JpaRepository<GebruikerBordspel,Long>
+public interface GebruikerBordspelRepository extends JpaRepository<GebruikerBordspel, Long>
 {
 
 }

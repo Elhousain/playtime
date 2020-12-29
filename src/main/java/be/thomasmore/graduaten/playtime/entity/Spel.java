@@ -8,6 +8,21 @@ import javax.persistence.*;
 public class Spel
 {
     public static final String SPEL = "spel";
+    public static final String ID = "Id";
+    public static final String NAAM = "Naam";
+    public static final String PRIJS = "Prijs";
+    public static final String BESCHRIJVING = "Beschrijving";
+    public static final String CATEGORIE = "Categorie";
+    public static final String MIN_SPELERS = "Min_spelers";
+    public static final String MAX_SPELERS = "Max_spelers";
+    public static final String MIN_LEEFTIJD = "Min_leeftijd";
+    public static final String TAAL = "Taal";
+    public static final String UITGEVER = "Uitgever";
+    public static final String STATUS = "Status";
+    public static final String VOORRAAD_HUUR = "Voorraad_huur";
+    public static final String VOORRAAD_KOOP = "Voorraad_koop";
+
+
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -39,6 +54,22 @@ public class Spel
     //constructor
     public Spel()
     {
+    }
+
+    public Spel(Long id, String naam, double prijs, String beschrijving, Categorie categorie, int min_spelers, int max_spelers, int min_leeftijd, Taal taal, Uitgever uitgever, Status status, int voorraad_huur, int voorraad_koop) {
+        this.id = id;
+        this.naam = naam;
+        this.prijs = prijs;
+        this.beschrijving = beschrijving;
+        this.categorie = categorie;
+        this.min_spelers = min_spelers;
+        this.max_spelers = max_spelers;
+        this.min_leeftijd = min_leeftijd;
+        this.taal = taal;
+        this.uitgever = uitgever;
+        this.status = status;
+        this.voorraad_huur = voorraad_huur;
+        this.voorraad_koop = voorraad_koop;
     }
 
     public Long getId() {
