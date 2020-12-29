@@ -4,6 +4,7 @@ package be.thomasmore.graduaten.playtime.controller;
 import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +57,8 @@ public class MainController {
     }
 
     @RequestMapping("/overzichtSpellen")
-    public String overzichtSpellen(Model model) {
-        List<Spel> spellen = spelService.getSpellen();
+    public String overzichtSpellen(Model model, @Param("keyword") String keyword) {
+        List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
@@ -65,8 +66,8 @@ public class MainController {
     }
 
     @RequestMapping("/overzichtWinkelwagen")
-    public String overzichtWinkelwagen(Model model) {
-        List<Spel> spellen = spelService.getSpellen();
+    public String overzichtWinkelwagen(Model model, @Param("keyword") String keyword) {
+        List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
@@ -76,7 +77,7 @@ public class MainController {
     }
 
     @RequestMapping("/shoppingCart")
-    public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model) throws ServletException, IOException
+    public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model, @Param("keyword") String keyword) throws ServletException, IOException
     {
         String iAction = request.getParameter("action");
 
@@ -96,7 +97,7 @@ public class MainController {
                     break;
             }
         }
-        List<Spel> spellen = spelService.getSpellen();
+        List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
 
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();

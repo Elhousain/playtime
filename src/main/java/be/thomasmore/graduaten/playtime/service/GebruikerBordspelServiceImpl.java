@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 
-public class GebruikerBordspelImpl implements GebruikerBordspelService, Serializable {
+public class GebruikerBordspelServiceImpl implements GebruikerBordspelService, Serializable {
 
     @Autowired
     GebruikerBordspelRepository gebruikerBordspelRepository;
