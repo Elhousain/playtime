@@ -2,6 +2,9 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.List" %>
 <%@ page import="be.thomasmore.graduaten.playtime.entity.UserError" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.MyUserDetails" %>
+<%@ page import="javax.sql.RowSet" %>
+<%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!doctype html>
@@ -22,10 +25,8 @@
 
 <%
     Gebruiker gebruiker = (Gebruiker)request.getAttribute(Gebruiker.NAME);
-
-
-
     UserError userError = (UserError) request.getAttribute(UserError.NAME);
+
 
 
 %>
@@ -85,9 +86,22 @@
                             <a class="nav-link" href="#">Contact</a>
 
                         </li>
+
+
+
+
                         <li class="nav-item">
                             <a class="nav-link" href="#">Inloggen</a>
                         </li>
+                        <li class="nav-item">
+                            <form action="/logout" method="post">
+                                <input type="submit" value="Logout" />
+                            </form>
+                        </li>
+
+
+
+
                     </ul>
                 </div>
             </div>
@@ -236,39 +250,50 @@
 
                     </div>
 
+
+
+
+
+
                     <div class="form-group col-2">
 
                         <%out.print(userError.rol != null ? "<p class=\"invalid-feedback\">" + userError.rol + "</p>" : "");%>
 
-<section >
-                        <input type="radio"
-                               id="<%=Gebruiker.ROL%>"
-                               name="<%=Gebruiker.ROL%>"
-                               class="design"
-                               value="ROLE_USER">
-
-                        <label class="form-control-label" for="<%=Gebruiker.ROL%>">Klant</label>
-
-
-</section>
-
                         <section >
-                        <input type="radio"
-                               id="<%=Gebruiker.ROL%>"
-                               name="<%=Gebruiker.ROL%>"
-                               class="design"
-                               value="ROLE_ADMIN">
-                        <label class="form-control-label" for="<%=Gebruiker.ROL%>">Admin</label>
+                            <input type="radio"
+                                   id="<%=Gebruiker.ROL%>"
+                                   name="<%=Gebruiker.ROL%>"
+                                   class="design"
+                                   value="ROLE_USER">
 
+                            <label class="form-control-label" for="<%=Gebruiker.ROL%>">Klant</label>
+                        </section>
 
-
-
-</section>
+                        <section>
+                            <input type="radio"
+                                   id="<%=Gebruiker.ROL%>"
+                                   name="<%=Gebruiker.ROL%>"
+                                   class="design"
+                                   value="ROLE_ADMIN">
+                            <label class="form-control-label" for="<%=Gebruiker.ROL%>">Admin</label>
+                        </section>
 
                     </div>
 
 
+
+
+
+
+
+
+
+
                 </div>
+
+
+
+
 
 
 

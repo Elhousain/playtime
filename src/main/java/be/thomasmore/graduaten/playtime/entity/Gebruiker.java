@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Gebruiker {
@@ -164,4 +165,31 @@ public class Gebruiker {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gebruiker gebruiker = (Gebruiker) o;
+        return id.equals(gebruiker.id);
+    }
+
+
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
+
+
+
+
+
+
+
 }

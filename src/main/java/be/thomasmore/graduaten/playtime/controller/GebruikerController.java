@@ -1,14 +1,16 @@
 package be.thomasmore.graduaten.playtime.controller;
 
 import be.thomasmore.graduaten.playtime.entity.Gebruiker;
+import be.thomasmore.graduaten.playtime.entity.MyUserDetails;
+
 import be.thomasmore.graduaten.playtime.entity.UserError;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import javax.swing.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+
+
 
 @Controller
 @RequestMapping("gebruiker")
@@ -32,13 +35,39 @@ public class GebruikerController {
     GebruikerService gebruikerService;
 
     @GetMapping("/list")
-    //Object principal = SecurityContextHolder.getContext()
-
-    public String lijstgebruikers (Model model){
+ public String lijstgebruikers (@AuthenticationPrincipal MyUserDetails userDetails,Model model){
         List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
         model.addAttribute("gebruikers", gebruikers);
+
+
+        String mail= userDetails.getUsername();
+        Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
+        model.addAttribute("ingelogdeGebruiker", ingelogdeGebruiker);
+
         return "list-gebruikers";
     }
+
+
+
+
+    @GetMapping("/eigendata")
+    public String eigenGebruiker (@AuthenticationPrincipal MyUserDetails userDetails,Model model){
+        String mail= userDetails.getUsername();
+        Gebruiker gebruiker = gebruikerService.getGebruikerByEmail(mail);
+        model.addAttribute("gebruiker", gebruiker);
+        return "gebruiker-eigendata";
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -46,16 +75,11 @@ public class GebruikerController {
 
     @GetMapping("showForm")
     public String showFormForAdd(Model model){
-
-
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
-        //model.addAttribute("gebruiker", gebruiker);
 
         model.addAttribute(Gebruiker.NAME, gebruiker);
         model.addAttribute(UserError.NAME, userError);
-
-
 
         return "gebruiker-form";
     }
@@ -63,34 +87,15 @@ public class GebruikerController {
 
 
     @PostMapping("/saveGebruiker")
-    public String saveGebruiker(HttpServletRequest request, Model model)  {
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails)
-        {
-            String username = ((UserDetails) principal).getUsername();
-        }
-        else
-        {
-            String username = principal.toString();
-        }
-
+    public String saveGebruiker(@AuthenticationPrincipal MyUserDetails userDetails,HttpServletRequest request, Model model)  {
 
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
 
-
         validatieId(gebruiker, request.getParameter(Gebruiker.ID));
-
-
-
-
         validatieVoornaam(gebruiker, userError, request.getParameter(Gebruiker.VOORNAAM));
         validatieAchternaam(gebruiker, userError, request.getParameter(Gebruiker.ACHTERNAAM));
-
         validatieGeboortedatum(gebruiker, userError, request.getParameter(Gebruiker.GEBOORTEDATUM));
-
-
         validatieWoonplaats(gebruiker, userError, request.getParameter(Gebruiker.WOONPLAATS));
         validatieStraat(gebruiker, userError, request.getParameter(Gebruiker.STRAAT));
         validatieHuisnummer(gebruiker, userError, request.getParameter(Gebruiker.HUISNUMMER));
@@ -98,16 +103,7 @@ public class GebruikerController {
         validatieTelefoon(gebruiker, userError, request.getParameter(Gebruiker.TELEFOON));
         validatieEmail(gebruiker, userError, request.getParameter(Gebruiker.EMAIL));
         validatiePaswoord(gebruiker, userError, request.getParameter(Gebruiker.PASWOORD));
-
         validatieRol(gebruiker, userError, request.getParameter(Gebruiker.ROL));
-
-
-
-
-
-
-
-
 
         if (userError.hasErrors) {
             model.addAttribute(Gebruiker.NAME, gebruiker);
@@ -115,11 +111,29 @@ public class GebruikerController {
             return "gebruiker-form";
         } else {
             gebruikerService.addGebruiker(gebruiker);
-            return "redirect:/gebruiker/list";
-        }
+
+
+//hier checken of emailadres veranderd is, zo ja, automatisch uitloggen
+
+
+            return "redirect:/gebruiker/eigendata";
+           /* String mail= userDetails.getUsername();
+            Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
+
+            if (ingelogdeGebruiker.equals(gebruiker))
+            {
+                return "redirect:/gebruiker/eigendata";
+            }
+            else
+            {
+                return "redirect:/gebruiker/list";
+            }*/
+
+            }
+
+
+
     }
-
-
 
     @GetMapping("/updateForm")
     public String showFormForUpdate(@RequestParam("gebruikerId") int id, Model model){
@@ -127,7 +141,6 @@ public class GebruikerController {
         UserError userError = new UserError();
         model.addAttribute(Gebruiker.NAME, gebruiker);
         model.addAttribute(UserError.NAME, userError);
-
         return "gebruiker-form";
     }
 
@@ -204,21 +217,6 @@ public class GebruikerController {
     }
 
 
-
-    //VALIDATIE GEBOORTEDATUM
-   /* private void ValidatieGeboortedatum(Gebruiker gebruiker, UserError userError, String geboortedatum) {
-
-
-        gebruiker.setGeboortedatum(achternaam);
-        if (achternaam.isEmpty()) {
-            userError.achternaam = "Gelieve een geboortedatum in te vullen";
-            userError.hasErrors = true;
-        }
-    }*/
-
-
-
-
     //VALIDATIE WOONPLAATS
     private void validatieWoonplaats(Gebruiker gebruiker, UserError userError, String woonplaats) {
         gebruiker.setWoonplaats(woonplaats);
@@ -227,6 +225,7 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
+
 
     //VALIDATIE HUISNUMMER
     private void validatieHuisnummer(Gebruiker gebruiker, UserError userError, String huisnummer) {
@@ -266,7 +265,7 @@ public class GebruikerController {
     }
 
     //VALIDATIE EMAIL
-    private void validatieEmail(Gebruiker gebruiker, UserError userError, String email) {
+   /* private void validatieEmail(Gebruiker gebruiker, UserError userError, String email) {
         gebruiker.setEmail(email);
         if (email.isEmpty()) {
             userError.email = "Gelieve een e-mailadres in te vullen";
@@ -279,7 +278,52 @@ public class GebruikerController {
                 userError.hasErrors = true;
             }
         }
+    }*/
+
+
+
+    //VALIDATIE EMAIL
+    private void validatieEmail(Gebruiker gebruiker, UserError userError, String email) {
+        gebruiker.setEmail(email);
+        if (email.isEmpty()) {
+            userError.email = "Gelieve een e-mailadres in te vullen";
+            userError.hasErrors = true;
+        } else{
+                int posAt = email.indexOf("@");
+                int posDot = (posAt != -1) ? email.substring(posAt).indexOf(".") : -1;
+                if (posAt == -1 || posDot == -1) {
+                    userError.email = "Dit is een ongeldig e-mailadres";
+                    userError.hasErrors = true;
+            }
+                else{
+
+                    List<Gebruiker> lijstGebruikers = gebruikerService.getGebruikers();
+
+                    int count=0;
+                    for (Gebruiker item : lijstGebruikers)
+                    {
+                        if (!item.getId().equals(gebruiker.getId()))
+                        {
+                            String itemString =item.getEmail();
+                            String gebruikerString = gebruiker.getEmail();
+
+                            if (itemString.equals(gebruikerString))
+                            {
+                                count++;
+                            }
+                        }
+                    }
+
+                    if (count>0)
+                    {
+                        userError.email = "Dit e-mailadres heeft al een account";
+                        userError.hasErrors = true;
+                    }
+            }
+        }
     }
+
+
 
 
     //VALIDATIE PASWOORD

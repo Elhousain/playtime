@@ -128,13 +128,11 @@
                 <h3 class="text-center">Create, Read, Update, Delete Gebruikers</h3>
                 <div class="container">
 
-                    <input type="button" value="Add Gebruiker"
-                           onclick="window.location.href='showForm'; return false;"
-                           class="btn btn-info" /> <br />
+
                     <br />
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <div class="panel-title">Lijst Gebruikers</div>
+                            <div class="panel-title">Jouw data</div>
                         </div>
                         <div class="panel-body">
 
@@ -146,29 +144,33 @@
                                     <th>Actie</th>
                                 </tr>
 
-                                <c:forEach var="tempGebruiker" items="${gebruikers}">
 
-                                    <c:url var="updateLink" value="/gebruiker/updateForm">
-                                        <c:param name="gebruikerId" value="${tempGebruiker.id}"/>
-                                    </c:url>
 
-                                    <c:url var="deleteLink" value="/gebruiker/delete">
-                                        <c:param name="gebruikerId" value="${tempGebruiker.id}"/>
-                                    </c:url>
+
+                                <c:url var="updateLink" value="/gebruiker/updateForm">
+                                    <c:param name="gebruikerId" value="${gebruiker.id}"/>
+                                </c:url>
+
+
+
 
                                     <tr>
-                                        <td>${tempGebruiker.voornaam}</td>
-                                        <td>${tempGebruiker.achternaam}</td>
-                                        <td>${tempGebruiker.email}</td>
+                                        <td>${gebruiker.voornaam}</td>
+                                        <td>${gebruiker.achternaam}</td>
+                                        <td>${gebruiker.email}</td>
 
                                         <td>
                                             <!-- display the update link --> <a href="${updateLink}">Update</a>
-                                            | <a href="${deleteLink}"
-                                                 onclick="if (!(confirm('Ben je zeker dat je deze gebruiker wilt verwijderen?'))) return false">Delete</a>
                                         </td>
                                     </tr>
 
-                                </c:forEach>
+                                </c>
+
+
+
+
+
+
                             </table>
                         </div>
                     </div>
