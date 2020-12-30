@@ -226,9 +226,25 @@ public class MainController {
             errors.put(Gebruiker.EMAIL, "Gelieve het e-mailadres in te vullen.");
         } else if (posAt == -1 || posDot == -1 || posDot > posAt) {
             errors.put(Gebruiker.EMAIL, "Dit e-mailadres is niet geldig.");
+        } else {
+            List<Gebruiker> lijstGebruikers = gebruikerService.getGebruikers();
+
+            int count=0;
+            for (Gebruiker item : lijstGebruikers)
+            {
+                    String itemString =item.getEmail();
+                    String gebruikerString = request.getParameter(Gebruiker.EMAIL);
+
+                    if (itemString.equals(gebruikerString))
+                    {
+                        count++;
+                    }
+            }
+            if (count>0)
+            {
+                errors.put(Gebruiker.EMAIL, "Dit e-mailadres heeft al een PlayTime-account");
+            }
         }
-
-
 
 
 
@@ -266,27 +282,15 @@ public class MainController {
         validatieGeboortedatum(values, errors , geboortedatumString);
 
 
-        //Validatie Geboortedatum
-        /*String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
-        values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
-
-
-        if (geboortedatumString.isEmpty())
-        {
-            errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
-        }*/
-
-        
-
-
         //Navigate to correct page with correct actions
         if (errors.isEmpty()) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
             LocalDate date = LocalDate.parse(geboortedatumString, formatter);
 
-
             gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, date,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
-            return "index";
+
+            //Hier code toevoegen om in te loggen
+            return "overzichtSpellen";
         } else {
             model.addAttribute("values", values);
             model.addAttribute("errors", errors);

@@ -7,6 +7,8 @@
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+
 <!doctype html>
 <html lang="en">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -93,6 +95,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Inloggen</a>
                         </li>
+
                         <li class="nav-item">
                             <form action="/logout" method="post">
                                 <input type="submit" value="Logout" />

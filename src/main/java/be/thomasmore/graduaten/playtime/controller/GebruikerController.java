@@ -34,6 +34,9 @@ public class GebruikerController {
     @Autowired
     GebruikerService gebruikerService;
 
+    String oorspronkelijkeMail;
+
+
     @GetMapping("/list")
  public String lijstgebruikers (@AuthenticationPrincipal MyUserDetails userDetails,Model model){
         List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
@@ -59,28 +62,15 @@ public class GebruikerController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("showForm")
-    public String showFormForAdd(Model model){
+    public String showFormForAdd(Model model, HttpServletRequest request){
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
 
         model.addAttribute(Gebruiker.NAME, gebruiker);
         model.addAttribute(UserError.NAME, userError);
 
+        oorspronkelijkeMail = "";
         return "gebruiker-form";
     }
 
@@ -92,6 +82,10 @@ public class GebruikerController {
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
 
+
+        String mail= userDetails.getUsername();
+        Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
+
         validatieId(gebruiker, request.getParameter(Gebruiker.ID));
         validatieVoornaam(gebruiker, userError, request.getParameter(Gebruiker.VOORNAAM));
         validatieAchternaam(gebruiker, userError, request.getParameter(Gebruiker.ACHTERNAAM));
@@ -102,6 +96,8 @@ public class GebruikerController {
         validatiePostcode(gebruiker, userError, request.getParameter(Gebruiker.POSTCODE));
         validatieTelefoon(gebruiker, userError, request.getParameter(Gebruiker.TELEFOON));
         validatieEmail(gebruiker, userError, request.getParameter(Gebruiker.EMAIL));
+
+
         validatiePaswoord(gebruiker, userError, request.getParameter(Gebruiker.PASWOORD));
         validatieRol(gebruiker, userError, request.getParameter(Gebruiker.ROL));
 
@@ -111,36 +107,45 @@ public class GebruikerController {
             return "gebruiker-form";
         } else {
             gebruikerService.addGebruiker(gebruiker);
-
-
-//hier checken of emailadres veranderd is, zo ja, automatisch uitloggen
-
-
-            return "redirect:/gebruiker/eigendata";
-           /* String mail= userDetails.getUsername();
-            Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
-
-            if (ingelogdeGebruiker.equals(gebruiker))
+            String nieuweMail=gebruiker.getEmail();
+            //CHECK 1: e-mailadres gewijzigd
+            if (!oorspronkelijkeMail.equals(nieuweMail))
             {
-                return "redirect:/gebruiker/eigendata";
+                //CHECK 2: is ingelogde user zelfde als gewizjigde user
+                if (gebruiker.equals(ingelogdeGebruiker))
+                {
+                    return "redirect:/logout";
+                }
+                else
+                {
+                    return "redirect:/gebruiker/list";
+                }
             }
             else
             {
-                return "redirect:/gebruiker/list";
-            }*/
+                //Hier nog if toevoegen of user admin is
+                if (ingelogdeGebruiker.getRol().equals("ROLE_ADMIN"))
+                {
+                    return "redirect:/gebruiker/list";
+                }
+                else
+                {
+                    return "redirect:/gebruiker/eigendata";
+                }
 
             }
-
-
-
+        }
     }
 
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("gebruikerId") int id, Model model){
+    public String showFormForUpdate(@RequestParam("gebruikerId") int id, Model model,HttpServletRequest request){
         Gebruiker gebruiker = gebruikerService.getGebruikerById((long) id);
         UserError userError = new UserError();
         model.addAttribute(Gebruiker.NAME, gebruiker);
         model.addAttribute(UserError.NAME, userError);
+
+        oorspronkelijkeMail = gebruiker.getEmail();
+
         return "gebruiker-form";
     }
 
@@ -264,21 +269,7 @@ public class GebruikerController {
         }
     }
 
-    //VALIDATIE EMAIL
-   /* private void validatieEmail(Gebruiker gebruiker, UserError userError, String email) {
-        gebruiker.setEmail(email);
-        if (email.isEmpty()) {
-            userError.email = "Gelieve een e-mailadres in te vullen";
-            userError.hasErrors = true;
-        } else{
-            int posAt = email.indexOf("@");
-            int posDot = (posAt != -1) ? email.substring(posAt).indexOf(".") : -1;
-            if (posAt == -1 || posDot == -1) {
-                userError.email = "Dit is een ongeldig e-mailadres";
-                userError.hasErrors = true;
-            }
-        }
-    }*/
+
 
 
 
@@ -316,7 +307,7 @@ public class GebruikerController {
 
                     if (count>0)
                     {
-                        userError.email = "Dit e-mailadres heeft al een account";
+                        userError.email = "Dit e-mailadres heeft al een PlayTime-account";
                         userError.hasErrors = true;
                     }
             }
