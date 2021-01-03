@@ -3,7 +3,7 @@ package be.thomasmore.graduaten.playtime.entity;
 import javax.persistence.*;
 
 public class SpelError {
-    public static final String SPEL = "spel_error";
+    public static final String GAME = "spel_error";
     public boolean hasErrors;
 
     public String naam;

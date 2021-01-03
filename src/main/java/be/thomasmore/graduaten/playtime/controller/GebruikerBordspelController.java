@@ -48,12 +48,18 @@ public class GebruikerBordspelController {
 
 
     @GetMapping ("/list")
-        public String lijstGebruikerBordspellen (Model model)
-        {
-        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
-        model.addAttribute("gebruikerBordspellen",gebruikerBordspellen);
+    public String lijstGebruikerBordspellenNietVerwerkt (Model model) {
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellenNietVerwerkt();
+        model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
         return "list-gebruikerBordspellen";
         }
+
+    @GetMapping("/showAll")
+    public String lijstGebruikerBordspellen (Model model){
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
+        model.addAttribute("gebruikerBordspellen",gebruikerBordspellen);
+        return "forward:/gebruikerBordspel/list";
+    }
 
     @GetMapping ("showForm")
     public String showFormForAdd(Model model)
@@ -71,10 +77,16 @@ public class GebruikerBordspelController {
     }
 
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("gebruikerBordspelId") int id, Model model) {
+    public String showFormForUpdate(@RequestParam("gebruikerBordspelId") int id) {
         GebruikerBordspel gebruikerBordspel = gebruikerBordspelService.getGebruikerBordspelById((long) id);
-        model.addAttribute("gebruikerBordspel", gebruikerBordspel);
-        return "gebruikerBordspel-form";
+        boolean x = gebruikerBordspel.isVerwerkt();
+        if (x==true){
+            gebruikerBordspel.setVerwerkt(false);
+        } else {
+            gebruikerBordspel.setVerwerkt(true);
+        }
+        gebruikerBordspelService.addGebruikerBordspel(gebruikerBordspel);
+        return "redirect:/gebruikerBordspel/list";
     }
 
     @GetMapping("/delete")

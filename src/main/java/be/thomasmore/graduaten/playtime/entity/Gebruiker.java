@@ -41,8 +41,6 @@ public class Gebruiker {
     private String straat;
     private String huisnummer;
 
-
-
     public Gebruiker() {
     }
 

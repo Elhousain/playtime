@@ -27,6 +27,9 @@ public class GebruikerBordspelServiceImpl implements GebruikerBordspelService, S
     }
 
     @Override
+    public List<GebruikerBordspel> getGebruikerBordspellenNietVerwerkt() { return gebruikerBordspelRepository.getGebruikerBordspellenNietVerwerkt(); }
+
+    @Override
     public GebruikerBordspel addGebruikerBordspel(GebruikerBordspel gebruikerBordspel){
         return gebruikerBordspelRepository.save(gebruikerBordspel);
     }

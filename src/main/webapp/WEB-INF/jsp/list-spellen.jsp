@@ -15,6 +15,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.*" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.UitgeverError" %>
 
 
 <!doctype html>
@@ -37,94 +38,10 @@
     </style>
 </head>
 <body>
-
 <div class="wrapper d-flex align-items-stretch">
 
-    <!--#region Linksepaneel-->
-    <nav id="sidebar">
-        <div class="p-4 pt-5">
-            <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
+    <jsp:include page="my-header.jsp"/>
 
-            <ul class="list-unstyled components mb-5">
-                <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spellen</a>
-                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
-                </li>
-                <li >
-                    <a href="#">Dobbelspel (1)</a>
-                </li>
-                <li>
-                    <a href="#">Bordspel (2)</a>
-                </li>
-                <li>
-                    <a href="#">Kaartspel (3)</a>
-                </li>
-            </ul>
-
-            <div class="footer">
-                <p>
-                    Playtime
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script>
-                    <br>
-                    Elhousain | Tom  | Bulent
-                    <i class="icon-heart" aria-hidden="true"></i>
-                    <a href="#" target="_blank">
-                        www.playtime.be
-                    </a>
-                </p>
-            </div>
-        </div>
-    </nav>
-    <!--#endregion-->
-
-    <div class="container-fluid" style="position: relative">
-        <div id="content" class="p-4 p-md-5">
-            <!--#region Header-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary d-lg-none">
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button>
-
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg" >
-                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
-                                        <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/overzichtWinkelwagen" role=button aria-expanded=false aria-controls=collapseExample>
-                                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cart-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
-                                        <path fill-rule="evenodd" d="M11.354 5.646a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
-                                    </svg>
-                                </a>
-                                <div id="bestelling">2</div>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!--#endregion-->
             <!--#region Bordenspel groepen-->
             <div class="row-col-md-12" >
                 <h3 class="text-center">Create, Read, Update, Delete Spellen</h3>
@@ -188,6 +105,40 @@
 
 
         </div>
+
+<%
+    Uitgever uitgever = (Uitgever)request.getAttribute(Uitgever.EDITOR);
+    UitgeverError uitgeverError = (UitgeverError)request.getAttribute(UitgeverError.EDITOR);
+%>
+
+<form  class="needs-validation" action="/spel/saveUitgever" method="post" novalidate>
+    <input type="hidden" id="<%=Uitgever.ID%>" name="<%=Uitgever.ID%>" value="<%=uitgever.getId()%>"/>
+
+    <div class="row col-md-12">
+
+
+        <div class="form-group col-4">
+
+            <label class="form-control-label" for="<%=Uitgever.BESCHRIJVING%>"><%=Uitgever.BESCHRIJVING%></label>
+            <input class="form-control<%out.print(uitgeverError.beschrijving != null ? " is-invalid" : "");%>"
+                   maxlength="20" type="text"
+                   id="<%=Uitgever.BESCHRIJVING%>"
+                   name="<%=Uitgever.BESCHRIJVING%>"
+                   value="<%=uitgever.getBeschrijving() == null ? "" : uitgever.getBeschrijving()%>">
+            <%out.print(uitgeverError.beschrijving != null ? "<div class=\"invalid-feedback\">" + uitgeverError.beschrijving + "</div>" : "");%>
+        </div>
+
+
+
+        <div class="row col-md-12">
+
+            <div  class="form-group col-6" >
+                <input type="submit" class="btn btn-primary" value="Opslaan">
+            </div>
+        </div>
+    </div>
+</form>
+
         <!--endregion-->
     </div>
 </div>

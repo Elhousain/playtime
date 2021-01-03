@@ -23,11 +23,11 @@
 <body>
 
 <%
-    Spel spel = (Spel)request.getAttribute(Spel.SPEL);
+    Spel spel = (Spel)request.getAttribute(Spel.GAME);
 
 
 
-    SpelError spelError = (SpelError) request.getAttribute(SpelError.SPEL);
+    SpelError spelError = (SpelError) request.getAttribute(SpelError.GAME);
 
 
 %>
@@ -126,11 +126,11 @@
                 <div class="row col-md-12">
                     <div class="form-group col-12">
                         <label class="form-control-label" for="<%=Spel.BESCHRIJVING%>"><%=Spel.BESCHRIJVING%></label>
-                        <input class="form-control<%out.print(spelError.beschrijving != null ? " is-invalid" : "");%>"
+                        <textarea class="form-control<%out.print(spelError.beschrijving != null ? " is-invalid" : "");%>"
                                maxlength="1000" type="text"
                                id="<%=Spel.BESCHRIJVING%>"
                                name="<%=Spel.BESCHRIJVING%>"
-                               value="<%=spel.getBeschrijving() == null ? "" : spel.getBeschrijving()%>">
+                               value="<%=spel.getBeschrijving() == null ? "" : spel.getBeschrijving()%>"></textarea>
                         <%out.print(spelError.beschrijving != null ? "<div class=\"invalid-feedback\">" + spelError.beschrijving + "</div>" : "");%>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         <label for="<%=Spel.CATEGORIE%>">Categorie</label>
                         <br>
                         <select name="<%=Spel.CATEGORIE%>" id="<%=Spel.CATEGORIE%>">
-                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option hidden selected value ="fout"> -- select an option -- </option>
                             <%
                                 List<Categorie> categorien = (List<Categorie>)request.getAttribute("categorien");
                                 for (Categorie categorie:categorien){
@@ -180,12 +180,13 @@
                                 }
                             %>
                         </select>
+                        <%out.print(spelError.categorie != null ? "<div class=\"invalid-feedback\">" + spelError.categorie + "</div>" : "");%>
                     </div>
                     <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
                         <label for="<%=Spel.TAAL%>">Taal</label>
                         <br>
                         <select name="<%=Spel.TAAL%>" id="<%=Spel.TAAL%>">
-                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option hidden selected value = "fout"> -- select an option -- </option>
                             <%
                                 List<Taal> talen = (List<Taal>)request.getAttribute("talen");
                                 for (Taal taal:talen){
@@ -193,12 +194,13 @@
                                 }
                             %>
                         </select>
+                        <%out.print(spelError.taal != null ? "<div class=\"invalid-feedback\">" + spelError.taal + "</div>" : "");%>
                     </div>
                     <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
                         <label for="<%=Spel.UITGEVER%>">Uitgever</label>
                         <br>
                         <select name="<%=Spel.UITGEVER%>" id="<%=Spel.UITGEVER%>">
-                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option hidden  selected value = "fout"> -- select an option -- </option>
                             <%
                                 List<Uitgever> uitgevers = (List<Uitgever>)request.getAttribute("uitgevers");
                                 for (Uitgever uitgever:uitgevers){
@@ -206,12 +208,13 @@
                                 }
                             %>
                         </select>
+                        <%out.print(spelError.uitgever != null ? "<div class=\"invalid-feedback\">" + spelError.uitgever + "</div>" : "");%>
                     </div>
                     <div class="form-group col-lg-3 form-group col-md-6 form-group col-sm-12">
                         <label for="<%=Spel.STATUS%>">Status</label>
                         <br>
                         <select name="<%=Spel.STATUS%>" id="<%=Spel.STATUS%>">
-                            <option hidden disabled selected value> -- select an option -- </option>
+                            <option hidden  selected value = "fout"> -- select an option -- </option>
                             <%
                                 List<Status> statussen = (List<Status>)request.getAttribute("statussen");
                                 for (Status status:statussen){
@@ -219,6 +222,7 @@
                                 }
                             %>
                         </select>
+                        <%out.print(spelError.status != null ? "<div class=\"invalid-feedback\">" + spelError.status + "</div>" : "");%>
                     </div>
                 </div>
 

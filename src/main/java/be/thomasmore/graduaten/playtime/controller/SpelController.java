@@ -4,6 +4,7 @@ import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.Id;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -32,15 +34,21 @@ public class SpelController {
         List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen",spellen);
         model.addAttribute("keyword", keyword);
+
+        Uitgever uitgever = new Uitgever();
+        model.addAttribute(Uitgever.EDITOR, uitgever);
+        UitgeverError uitgeverError = new UitgeverError();
+        model.addAttribute(UitgeverError.EDITOR, uitgeverError);
+
         return "list-spellen";
     }
 
     @GetMapping ("showForm")
     public String showFormForAdd(Model model){
         Spel spel = new Spel();
-        model.addAttribute(Spel.SPEL, spel);
+        model.addAttribute(Spel.GAME, spel);
         SpelError spelError = new SpelError();
-        model.addAttribute(SpelError.SPEL, spelError);
+        model.addAttribute(SpelError.GAME, spelError);
         List<Taal> talen = taalService.getTalen();
         model.addAttribute("talen", talen);
         List<Categorie> categorien = categorieService.getCategorien();
@@ -52,10 +60,37 @@ public class SpelController {
         return "spel-form";
     }
 
+    @PostMapping("/saveUitgever")
+    public String saveUitgever(HttpServletRequest request, Model model){
+        Uitgever uitgever = new Uitgever();
+        UitgeverError uitgeverError = new UitgeverError();
+
+        validatieIdUitgever(uitgever, request.getParameter(Uitgever.ID));
+        validatieUitgeverToevoegen(uitgever, uitgeverError, request.getParameter(Uitgever.BESCHRIJVING));
+
+        if (uitgeverError.hasErrors){
+            model.addAttribute(Uitgever.EDITOR, uitgever);
+            model.addAttribute(UitgeverError.EDITOR, uitgeverError);
+            return "list-spellen";
+        } else {
+            uitgeverService.addUitgever(uitgever);
+            return "redirect:/spel/list";
+        }
+
+    }
+
     @PostMapping("/saveSpel")
     public String saveSpel(HttpServletRequest request, Model model){
         Spel spel = new Spel();
         SpelError spelError = new SpelError();
+        List<Taal> talen = taalService.getTalen();
+        model.addAttribute("talen", talen);
+        List<Categorie> categorien = categorieService.getCategorien();
+        model.addAttribute("categorien", categorien);
+        List<Uitgever> uitgevers = uitgeverService.getUitgevers();
+        model.addAttribute("uitgevers", uitgevers);
+        List<Status> statussen = statusService.getStatussen();
+        model.addAttribute("statussen", statussen);
 
         validatieId(spel, request.getParameter(Spel.ID));
 
@@ -74,8 +109,8 @@ public class SpelController {
 
 
         if (spelError.hasErrors){
-            model.addAttribute(Spel.SPEL, spel);
-            model.addAttribute(SpelError.SPEL, spelError);
+            model.addAttribute(Spel.GAME, spel);
+            model.addAttribute(SpelError.GAME, spelError);
             return "spel-form";
         } else {
             spelService.addSpel(spel);
@@ -89,8 +124,8 @@ public class SpelController {
     public String showFormForUpdate(@RequestParam("spelId") int id, Model model) {
         Spel spel = spelService.getSpelById((long) id);
         SpelError spelError = new SpelError();
-        model.addAttribute(Spel.SPEL, spel);
-        model.addAttribute(SpelError.SPEL, spelError);
+        model.addAttribute(Spel.GAME, spel);
+        model.addAttribute(SpelError.GAME, spelError);
         List<Taal> talen = taalService.getTalen();
         model.addAttribute("talen", talen);
         List<Categorie> categorien = categorieService.getCategorien();
@@ -185,7 +220,7 @@ public class SpelController {
     //VALIDATIE VOORRAAD_HUUR
     private void validatieVoorraad_huur(Spel spel, SpelError spelError, String voorraad_huur) {
         if (voorraad_huur.equals("")){
-            spelError.voorraad_huur = "Gelieve de voorraad voor verkoop in te vullen";
+            spelError.voorraad_huur = "Gelieve de voorraad voor verhuur in te vullen";
             spelError.hasErrors = true;
         } else {
             int mijnVoorraad_koop = Integer.parseInt(voorraad_huur);
@@ -206,7 +241,7 @@ public class SpelController {
 
     //VALIDATIE CATEGORIE
     private void validatieCategorie(Spel spel, SpelError spelError, String categorie){
-        if (categorie.equals("")){
+        if (categorie.equals("fout")){
             spelError.voorraad_koop = "Gelieve een categorie te selecteren";
             spelError.hasErrors = true;
         } else {
@@ -223,7 +258,7 @@ public class SpelController {
 
     //VALIDATIE STATUS
     private void validatieStatus(Spel spel, SpelError spelError, String status){
-        if (status.equals("")){
+        if (status.equals("fout")){
             spelError.voorraad_koop = "Gelieve een status te selecteren";
             spelError.hasErrors = true;
         } else {
@@ -240,7 +275,7 @@ public class SpelController {
 
     //VALIDATIE TAAL
     private void validatieTaal(Spel spel, SpelError spelError, String taal){
-        if (taal.equals("")){
+        if (taal.equals("fout")){
             spelError.voorraad_koop = "Gelieve een taal te selecteren";
             spelError.hasErrors = true;
         } else {
@@ -257,7 +292,7 @@ public class SpelController {
 
     //VALIDATIE UITGEVER
     private void validatieUitgever(Spel spel, SpelError spelError, String uitgever){
-        if (uitgever.equals("")){
+        if (uitgever.equals("fout")){
             spelError.voorraad_koop = "Gelieve een categorie te selecteren";
             spelError.hasErrors = true;
         } else {
@@ -272,16 +307,23 @@ public class SpelController {
         }
     }
 
+    //VALIDATIE ID UITGEVER
+    private void validatieIdUitgever(Uitgever uitgever, String id) {
 
-    /*private void validatieCategorie(Spel spel, SpelError spelError, String categorie){
-        if (categorie.equals("")){
-            spelError.categorie = "Gelieve een categorie aan te duiden";
-            spelError.hasErrors = true;
-        } else {
-            Categorie mijnCategorie = Categorie(categorie);
+        if (!id.equals("null"))
+        {
+            uitgever.setId(Long.parseLong(id));
         }
-    }*/
+    }
 
+    //VALIDATIE BESCHRIJVING UITGEVER
+    private void validatieUitgeverToevoegen(Uitgever uitgever, UitgeverError uitgeverError, String beschrijving) {
+        uitgever.setBeschrijving(beschrijving);
+        if (beschrijving.isEmpty()) {
+            uitgeverError.beschrijving = "Gelieve een beschrijving in te vullen";
+            uitgeverError.hasErrors = true;
+        }
+    }
 
 
 }

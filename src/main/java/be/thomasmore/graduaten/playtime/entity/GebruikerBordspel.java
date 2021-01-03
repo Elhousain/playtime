@@ -12,8 +12,12 @@ public class GebruikerBordspel
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  id;
     private int ordernr;
-    private int spelid;
-    private int gebruikerid;
+    @ManyToOne
+    @JoinColumn(name = "spelid")
+    private Spel spel;
+    @ManyToOne
+    @JoinColumn(name = "gebruikerid")
+    private Gebruiker gebruiker;
     private LocalDate afhaaldatum;
     private boolean verwerkt;
     private boolean ishuur;
@@ -30,13 +34,13 @@ public class GebruikerBordspel
     public int getOrdernr() { return ordernr;}
     public void setOrdernr(int ordernr) {this.ordernr = ordernr;}
 
-    //spelid
-    public void setSpelid(int spelid) {this.spelid = spelid;}
-    public int getSpelid() {return spelid;}
+    //spel
+    public Spel getSpel() { return spel;}
+    public void setSpel(Spel spel) { this.spel = spel;}
 
-    //gebruikerid
-    public void setGebruikerid(int gebruikerid) {this.gebruikerid = gebruikerid;}
-    public int getGebruikerid() {return gebruikerid;}
+    //gebruiker
+    public Gebruiker getGebruiker() { return gebruiker; }
+    public void setGebruiker(Gebruiker gebruiker) { this.gebruiker = gebruiker; }
 
     //afhaaldatum
     public void setAfhaaldatum(LocalDate afhaaldatum) {this.afhaaldatum = afhaaldatum;}

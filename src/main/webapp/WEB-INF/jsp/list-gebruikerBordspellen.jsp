@@ -114,8 +114,13 @@
                 <h3 class="text-center">Overzicht GebruikerBordspellen</h3>
                 <div class="container">
 
-                    <input type="button" value="Add GebruikerBordspel"
-                           onclick="window.location.href='showForm'; return false;"
+                    <form>
+                        <input type="radio" name="All" id="All" value="Show">
+                        <label for="All">Show All</label>
+                    </form>
+
+                    <input type="button" value="showAll"
+                           onclick="window.location.href='showAll'; return false;"
                            class="btn-info" /> <br />
                     <br />
 
@@ -124,10 +129,13 @@
 
                     <table class="table">
                         <tr>
+                            <th>Order nummer</th>
                             <th>Naam</th>
                             <th>Spel</th>
                             <th>Afhaaldatum</th>
                             <th>Huur</th>
+                            <th>Aantal</th>
+                            <th>Verwerkt</th>
                             <th>Action</th>
                         </tr>
 
@@ -142,10 +150,13 @@
                             </c:url>
 
                             <tr>
-                                <td>${tempGBS.gebruikerid}</td>
-                                <td>${tempGBS.spelid}</td>
+                                <td>${tempGBS.ordernr}</td>
+                                <td>${tempGBS.gebruiker.toString()}</td>
+                                <td>${tempGBS.spel.naam}</td>
                                 <td>${tempGBS.afhaaldatum}</td>
                                 <td>${tempGBS.ishuur}</td>
+                                <td>${tempGBS.aantal}</td>
+                                <td>${tempGBS.verwerkt}</td>
 
                                 <td>
                                     <!-- display the update link --> <a href="${updateLink}">Update</a>

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 public class Spel
 {
-    public static final String SPEL = "spel";
+    public static final String GAME = "spel";
     public static final String ID = "Id";
     public static final String NAAM = "Naam";
     public static final String PRIJS = "Prijs";
