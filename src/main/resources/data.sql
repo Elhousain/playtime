@@ -129,3 +129,8 @@ insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerk
 values ( '2','2', '2', '2020-11-01', 'true', 'false', '1' );
 insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
 values ( '3','2', '3', '2020-11-01', 'false', 'false', '2' );
+
+
+
+
+

@@ -108,7 +108,7 @@ public class MainController {
     protected void deleteCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        String iSTT = request.getParameter("stt");
+        int iSTT =Integer.parseInt(request.getParameter("stt")) ;
         CartBean cartBean = null;
 
         Object iObject = session.getAttribute("cart");
@@ -124,7 +124,7 @@ public class MainController {
         HttpSession session = request.getSession();
 
         String iQuantity = request.getParameter("aantal");
-        String iSTT = request.getParameter("stt");
+        int iSTT =Integer.parseInt( request.getParameter("stt"));
 
         CartBean cartBean = null;
 

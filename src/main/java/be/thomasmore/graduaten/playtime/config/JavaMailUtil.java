@@ -22,8 +22,8 @@ public class JavaMailUtil
         properties.put("mail.smtp.host","smtp.gmail.com");
         properties.put("mail.smtp.poort","587");
 
-        String myAccountEmail="info.hecasolutions@gmail.com";
-        String password="Titanium1977";
+        String myAccountEmail="bulentarslan0877@gmail.com";
+        String password="Bilo1234@";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -32,6 +32,7 @@ public class JavaMailUtil
             }
         });
         Message message=prepareMessage(session,myAccountEmail,recepient,datum,uur);
+
         Transport.send(message);
         System.out.println("Message sent succesfully");
     }
@@ -51,7 +52,7 @@ public class JavaMailUtil
                     "        <p>Bulent Arslan</p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 40%\">\n" +
-                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen op halen op <strong>"+datum+"</strong>  vanaf <strong>"+uur+"</strong> </p>\n" +
+                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen afhalen op <strong>"+datum+"</strong>  vanaf <strong>"+uur+"</strong> </p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 30%\">\n" +
                     "<p>Vragen over jouw bestelling?<br><br>\n" +

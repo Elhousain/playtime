@@ -6,14 +6,11 @@
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
 <%@ page import="java.util.List" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Uitgever" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.*" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.GebruikerBordspel" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -34,6 +31,10 @@
 <body>
 <jsp:useBean id="cart" scope="session" type="be.thomasmore.graduaten.playtime.entity.CartBean"/>
 
+<%
+    GebruikerBordspel gebruikerBordspel = (GebruikerBordspel)request.getAttribute(GebruikerBordspel.NAME);
+
+%>
 <div class="wrapper d-flex align-items-stretch">
     <!--#region Linksepaneel-->
     <nav id="sidebar">
@@ -108,16 +109,6 @@
                     </div>
                 </div>
             </nav>
-            <!--#endregion-->
-            <!--#region Bordenspel groepen-->
-            <h1>
-                Overzicht
-            </h1>
-
-
-
-
-
 
             <div class="containerMand" >
                 <div>
@@ -131,17 +122,23 @@
                         </tr>
 
 
+
+                        <%
+                           // System.out.println(cart);
+                        %>
+
                         <c:if test="${cart.lineItemCount == 0}">
                             <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
                         </c:if>
                         <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
-                            <form name="item" method="POST" action="/overzichtWinkelwagen">
+                            <form name="item" method="POST" action="${pageContext.request.contextPath}/gebruikerBordspel/shoppingCart">
                                 <tr>
                                     <td>
                                         <input class="delete cirkel wissenRow m-auto" type="submit" name="action" value="X">
                                     </td>
                                     <td>
-                                        <img class="afb "src="${cartItem.afbeelding}">
+
+                                        <img class="afb" src="${pageContext.request.contextPath}/${cartItem.afbeelding}" alt="picture">
                                     </td>
                                     <td class="langsElkaar">
                                         <div class="blocks" >
@@ -165,7 +162,8 @@
                             <td>Subtotaal: €<c:out value="${cart.total}"/></td>
                         </tr>
 
-                    </table><div class="keuze mt-5" >
+                    </table>
+                    <div class="keuze mt-5" >
                     <a   class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
                     <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
                     <div id="demo" class="collapse">
@@ -176,43 +174,39 @@
                             </header>
                         </div>
                         <div class="container">
+                            <form action="${pageContext.request.contextPath}/gebruikerBordspel/saveOrder" id="form_invoegen"  method="post">
                             <div class="row">
-                                <div class="col-md-6 mx-auto">
-                                    <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
 
-                                    <!-- Date Picker Input -->
-                                    <!-- Date Picker Input -->
-                                    <div class="form-group mb-4">
-                                        <div class="datepicker date input-group p-0 shadow-sm">
-                                            <input type="text" placeholder="Afhaal datum" class="form-control py-4 px-4"  id="flight-datepicker">
-                                            <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
-                                        </div>
-                                    </div><!-<!-- DEnd ate Picker Input -->
-                                    <!-- For Demo Purpose -->
-                                        <div class="text-center">
-                                            <p id="result-1">&nbsp;</p>
-                                            <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
-                                        </div>
+                                    <div class="col-md-6 mx-auto">
+                                        <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
 
+                                        <!-- Date Picker Input -->
+                                        <!-- Date Picker Input -->
+                                        <div class="form-group mb-4">
+                                            <div class="datepicker date input-group p-0 shadow-sm">
+                                                <!--afhaal datum-->
+                                                <label  for="<%=GebruikerBordspel.AFHAALDATUM%> "></label>
+                                                <input type="text"
+                                                       id="<%=GebruikerBordspel.AFHAALDATUM%>"
+                                                       name="<%=GebruikerBordspel.AFHAALDATUM%>"
+                                                       placeholder="Afhaal datum"
+                                                       class="form-control py-4 px-4"  >
 
+                                                <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+                                            </div>
+                                        </div><!-<!-- DEnd ate Picker Input -->
+                                        <!-- For Demo Purpose -->
+                                            <div class="text-center">
+                                                <p id="result-1">&nbsp;</p>
+                                                <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
+                                            </div>
 
-
-
-                                    <form action="${pageContext.request.contextPath}/gebruikerBordspel/send-mail">
-                                            <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
-                                                <p>spelid = ${cartItem.id} </p>
-                                                <p>${cartItem.aantal} </p>
-                                                <c:if test="${cartItem.titel=='huren'}">
-                                                    <p>product = huren </p>
-                                                </c:if>
-                                                <c:if test="${cartItem.titel=='kopen'}">
-                                                    <p>product = kopen </p>
-                                                </c:if>
-                                            </c:forEach>
+                                        <%%>
                                             <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
                                             <input type="hidden" id="datetm" name="datum">
-                                            <input type="submit" value="Bevestigen">
+                                        <input type="submit"  value="Bevestigen" >
                                         </form>
+
                                         <a href="${pageContext.request.contextPath}/gebruikerBordspel/send-mail" >shopping car</a>
 
                                     </div>
@@ -230,18 +224,33 @@
 
 
 <script>
+
     $(document).ready(function(){
-        $('#content').click(function(){
-            var x = document.getElementById("flight-datepicker").value;
+        $('#content').click(function()
+        {
+            var x = document.getElementById("<%=GebruikerBordspel.AFHAALDATUM%>").value;
             document.getElementById("pickedDate").innerHTML = x;
             document.getElementById("datetm").value =x;
-
         });
+
+        $('#laden').click(function()
+        {
+            document.getElementById("form_invoegen").submit();
+        });
+
     });
 </script>
+
+<script>
+    input.oninput = function() {
+        alert("submitten")
+
+    };
+</script>
+
 <script>
 
-    var dateSelect     = $('#flight-datepicker');
+    var dateSelect     = $('#<%=GebruikerBordspel.AFHAALDATUM%>');
     var dateDepart     = $('#pickedDate');
     var dateReturn     = $('#end-date');
     var spanDepart     = $('.date-depart');
@@ -249,7 +258,7 @@
     var spanDateFormat = 'ddd, MMMM D yyyy';
     dateSelect.datepicker({
         autoclose: true,
-        format: "mm/dd",
+        format: "yyyy-mm-dd",
         maxViewMode: 0,
         startDate: "now"
     }).on('change', function() {

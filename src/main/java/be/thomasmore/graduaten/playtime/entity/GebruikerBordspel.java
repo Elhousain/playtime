@@ -8,6 +8,18 @@ import java.time.LocalDate;
 @Entity
 public class GebruikerBordspel
 {
+    public static final String NAME = "gebruikerbordspel";
+    public static final String GEBRUIKER = "Gebruikerbordspel";
+    public static final String ID = "Id";
+    public static final String ORDERNR = "Ordernr";
+    public static final String SPEL = "Spel";
+    public static final String GEBRUIKERID = "Gebruikerid";
+    public static final String AFHAALDATUM = "Afhaaldatum";
+    public static final String VERWERKT = "Verwerkt";
+    public static final String ISHUUR = "Ishuur";
+    public static final String AANTAL = "Aantal";
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  id;
@@ -25,6 +37,16 @@ public class GebruikerBordspel
 
     //constructor
     public GebruikerBordspel() {}
+
+    public GebruikerBordspel(int ordernr, Spel spel, Gebruiker gebruiker, LocalDate afhaaldatum, boolean verwerkt, boolean ishuur, int aantal) {
+        this.ordernr = ordernr;
+        this.spel = spel;
+        this.gebruiker = gebruiker;
+        this.afhaaldatum = afhaaldatum;
+        this.verwerkt = verwerkt;
+        this.ishuur = ishuur;
+        this.aantal = aantal;
+    }
 
     //id
     public void setId(Long id) {this.id = id;}

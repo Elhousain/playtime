@@ -1,13 +1,23 @@
 package be.thomasmore.graduaten.playtime.entity;
 
-import java.util.ArrayList;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@Scope(value =WebApplicationContext.SCOPE_SESSION,proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CartBean
 {
     private ArrayList list = new ArrayList();
     private double total;
 
+
     public ArrayList getList() {
+
         return list;
     }
 
@@ -27,11 +37,14 @@ public class CartBean
         return list.size();
     }
 
-    public void deleteCart(String stt) {
-        int iSTT = 0;
+    public CartBean() {
+    }
+
+    public void deleteCart(int stt) {
+        //int iSTT = 0;
         try {
-            iSTT = Integer.parseInt(stt);
-            list.remove(iSTT - 1);
+            //iSTT = Integer.parseInt(stt);
+            list.remove(stt - 1);
             calculateOrderTotal();
         } catch (NumberFormatException nfe) {
             System.out.println("\n" +
@@ -40,9 +53,9 @@ public class CartBean
         }
     }
 
-    public void updateCart(String stt, String aantal) {
-        int iSTT = Integer.parseInt(stt);
-        CartItemBean cartItem = (CartItemBean) list.get(iSTT - 1);
+    public void updateCart(int stt, String aantal) {
+        //int iSTT = Integer.parseInt(stt);
+        CartItemBean cartItem = (CartItemBean) list.get(stt - 1);
         double iPrijs = cartItem.getPrijs();
         int iAantal = Integer.parseInt(aantal);
         try {
@@ -57,6 +70,12 @@ public class CartBean
             nfe.printStackTrace();
         }
 
+    }
+
+    public void listClear()
+    {
+        list.clear();
+        total=0;
     }
 
     public void addCart(String id, String afbeelding, String prijs, String aantal,String titel) {

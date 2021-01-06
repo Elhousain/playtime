@@ -1,6 +1,13 @@
 package be.thomasmore.graduaten.playtime.entity;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
 import java.util.Objects;
+@Component
+@Scope(value = WebApplicationContext.SCOPE_SESSION,proxyMode = ScopedProxyMode.TARGET_CLASS)
 
 public class CartItemBean
 {
@@ -10,6 +17,7 @@ public class CartItemBean
     private int aantal;
     private String titel;
     private double totaal;
+
 
     public CartItemBean() {}
 
@@ -26,11 +34,12 @@ public class CartItemBean
     public void setAantal(int aantal) {this.aantal = aantal;}
 
     public void setTitel(String titel) {this.titel = titel;}
-
     public String getTitel() {return titel;}
 
     public double getTotaal() {return totaal; }
     public void setTotaal(double totaal) {this.totaal = totaal;}
+
+
 
     @Override
     public boolean equals(Object o) {
