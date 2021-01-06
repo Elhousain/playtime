@@ -29,16 +29,16 @@
 
             <!--#region Bordenspel groepen-->
             <div class="row-col-md-12" >
-                <h3 class="text-center">Overzicht GebruikerBordspellen</h3>
+                <h3 class="text-center">Overzicht Alle Bestellingen</h3>
                 <div class="container">
 
 
-                    <input type="button" value="Toon Alle Bestellingen"
-                           onclick="window.location.href='all'; return false;"
+                    <input type="button" value="Lijst niet verwerkt"
+                           onclick="window.location.href='list'; return false;"
                            class="btn-info" /> <br />
                     <br />
 
-                    <div class="heading-section">Niet Opgehaalde Spellen</div>
+                    <div class="heading-section">Lijst Alle Bestellingen</div>
 
 
                     <table class="table">
@@ -50,7 +50,7 @@
                             <th>Huur</th>
                             <th>Aantal</th>
                             <th>Verwerkt</th>
-                            <th>Action</th>
+                            <th>Actie</th>
                         </tr>
 
                         <c:forEach var="tempGBS" items="${gebruikerBordspellen}">

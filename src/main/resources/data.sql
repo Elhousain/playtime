@@ -73,7 +73,7 @@ ishuur              bool            not null,
 aantal              int             not null,
 primary key (id),
 FOREIGN KEY (spelid) REFERENCES spel(id) ON DELETE CASCADE,
-FOREIGN KEY (gebruikerid) REFERENCES gebruiker(id)
+FOREIGN KEY (gebruikerid) REFERENCES gebruiker(id) ON DELETE CASCADE
 );
 
 

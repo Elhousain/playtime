@@ -2,6 +2,7 @@ package be.thomasmore.graduaten.playtime.service;
 
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface GebruikerBordspelService

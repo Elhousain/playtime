@@ -58,7 +58,7 @@ public class MainController {
 
     @RequestMapping("/overzichtSpellen")
     public String overzichtSpellen(Model model, @Param("keyword") String keyword) {
-        List<Spel> spellen = spelService.getSpellen(keyword);
+        List<Spel> spellen = spelService.getSpellenActief(keyword);
         model.addAttribute("spellen", spellen);
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);

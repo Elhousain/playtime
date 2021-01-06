@@ -129,8 +129,7 @@
                         <textarea class="form-control<%out.print(spelError.beschrijving != null ? " is-invalid" : "");%>"
                                maxlength="1000" type="text"
                                id="<%=Spel.BESCHRIJVING%>"
-                               name="<%=Spel.BESCHRIJVING%>"
-                               value="<%=spel.getBeschrijving() == null ? "" : spel.getBeschrijving()%>"></textarea>
+                               name="<%=Spel.BESCHRIJVING%>"><%=spel.getBeschrijving() == null ? "" : spel.getBeschrijving()%></textarea>
                         <%out.print(spelError.beschrijving != null ? "<div class=\"invalid-feedback\">" + spelError.beschrijving + "</div>" : "");%>
                     </div>
                 </div>
@@ -172,11 +171,16 @@
                         <label for="<%=Spel.CATEGORIE%>">Categorie</label>
                         <br>
                         <select name="<%=Spel.CATEGORIE%>" id="<%=Spel.CATEGORIE%>">
-                            <option hidden selected value ="fout"> -- select an option -- </option>
+
                             <%
                                 List<Categorie> categorien = (List<Categorie>)request.getAttribute("categorien");
                                 for (Categorie categorie:categorien){
-                                    out.print("<option value=" + categorie.getBeschrijving() + ">" + categorie.getBeschrijving() + "</option>");
+                                    out.print("<option value=\"" + categorie.getBeschrijving() + "\">" + categorie.getBeschrijving() + "</option>");
+                                }
+                                if (spel.getCategorie() == null){
+                                    out.print("<option hidden selected value = \"fout\"> -- select an option -- </option>");
+                                } else {
+                                    out.print("<option selected value=\"" + spel.getCategorie().getBeschrijving() + "\">" + spel.getCategorie().getBeschrijving() + "</option>");
                                 }
                             %>
                         </select>
@@ -186,11 +190,16 @@
                         <label for="<%=Spel.TAAL%>">Taal</label>
                         <br>
                         <select name="<%=Spel.TAAL%>" id="<%=Spel.TAAL%>">
-                            <option hidden selected value = "fout"> -- select an option -- </option>
+
                             <%
                                 List<Taal> talen = (List<Taal>)request.getAttribute("talen");
                                 for (Taal taal:talen){
-                                    out.print("<option value=" + taal.getBeschrijving() + ">" + taal.getBeschrijving() + "</option>");
+                                    out.print("<option value=\"" + taal.getBeschrijving() + "\">" + taal.getBeschrijving() + "</option>");
+                                }
+                                if (spel.getTaal() == null){
+                                    out.print("<option hidden selected value = \"fout\"> -- select an option -- </option>");
+                                } else {
+                                    out.print("<option selected value=\"" + spel.getTaal().getBeschrijving() + "\">" + spel.getTaal().getBeschrijving() + "</option>");
                                 }
                             %>
                         </select>
@@ -200,11 +209,15 @@
                         <label for="<%=Spel.UITGEVER%>">Uitgever</label>
                         <br>
                         <select name="<%=Spel.UITGEVER%>" id="<%=Spel.UITGEVER%>">
-                            <option hidden  selected value = "fout"> -- select an option -- </option>
                             <%
                                 List<Uitgever> uitgevers = (List<Uitgever>)request.getAttribute("uitgevers");
                                 for (Uitgever uitgever:uitgevers){
-                                    out.print("<option value=" + uitgever.getBeschrijving() + ">" + uitgever.getBeschrijving() + "</option>");
+                                    out.print("<option value=\"" + uitgever.getBeschrijving() + "\">" + uitgever.getBeschrijving() + "</option>");
+                                }
+                                if (spel.getUitgever() == null){
+                                    out.print("<option hidden selected value = \"fout\"> -- select an option -- </option>");
+                                } else {
+                                    out.print("<option selected value=\"" + spel.getUitgever().getBeschrijving() + "\">" + spel.getUitgever().getBeschrijving() + "</option>");
                                 }
                             %>
                         </select>
@@ -214,11 +227,15 @@
                         <label for="<%=Spel.STATUS%>">Status</label>
                         <br>
                         <select name="<%=Spel.STATUS%>" id="<%=Spel.STATUS%>">
-                            <option hidden  selected value = "fout"> -- select an option -- </option>
                             <%
                                 List<Status> statussen = (List<Status>)request.getAttribute("statussen");
                                 for (Status status:statussen){
-                                    out.print("<option value=" + status.getBeschrijving() + ">" + status.getBeschrijving() + "</option>");
+                                    out.print("<option value=\"" + status.getBeschrijving() + "\">" + status.getBeschrijving() + "</option>");
+                                }
+                                if (spel.getStatus() == null){
+                                    out.print("<option hidden selected value = \"fout\"> -- select an option -- </option>");
+                                } else {
+                                    out.print("<option selected value=\"" + spel.getStatus().getBeschrijving() + "\">" + spel.getStatus().getBeschrijving() + "</option>");
                                 }
                             %>
                         </select>

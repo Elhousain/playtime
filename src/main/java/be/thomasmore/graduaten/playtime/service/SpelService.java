@@ -9,6 +9,7 @@ public interface SpelService {
     Spel getSpelById(Long id);
 
     List<Spel> getSpellen(String keyword);
+    List<Spel> getSpellenActief(String keyword);
 
     Spel addSpel(Spel spel);
 

@@ -7,15 +7,12 @@
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
 <%@ page import="java.util.List" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Uitgever" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.*" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.UitgeverError" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.*" %>
 
 
 <!doctype html>
@@ -98,16 +95,13 @@
                 </div>
             </div>
 
-            <form method="post" action="${pageContext.request.contextPath}/sendEmail">
-                <input  type="submit">
 
-            </form>
 
 
         </div>
 
 <%
-    Uitgever uitgever = (Uitgever)request.getAttribute(Uitgever.EDITOR);
+    Uitgever uitgever = (Uitgever) request.getAttribute(Uitgever.EDITOR);
     UitgeverError uitgeverError = (UitgeverError)request.getAttribute(UitgeverError.EDITOR);
 %>
 
@@ -138,6 +132,39 @@
         </div>
     </div>
 </form>
+
+<%--<%
+    Categorie categorie = (Categorie) request.getAttribute(Categorie.CATEGGORIE);
+    CategorieError categorieError = (CategorieError) request.getAttribute(CategorieError.CATEGORIE);
+%>
+
+<form  class="needs-validation" action="/spel/saveCategorie" method="post" novalidate>
+    <input type="hidden" id="<%=Categorie.ID%>" name="<%=Categorie.ID%>" value="<%=categorie.getId()%>"/>
+
+    <div class="row col-md-12">
+
+
+        <div class="form-group col-4">
+
+            <label class="form-control-label" for="<%=Categorie.BESCHRIJVING%>"><%=Categorie.BESCHRIJVING%></label>
+            <input class="form-control<%out.print(categorieError.beschrijving != null ? " is-invalid" : "");%>"
+                   maxlength="20" type="text"
+                   id="<%=Categorie.BESCHRIJVING%>"
+                   name="<%=Categorie.BESCHRIJVING%>"
+                   value="<%=categorie.getBeschrijving() == null ? "" : categorie.getBeschrijving()%>">
+            <%out.print(categorieError.beschrijving != null ? "<div class=\"invalid-feedback\">" + categorieError.beschrijving + "</div>" : "");%>
+        </div>
+
+
+
+        <div class="row col-md-12">
+
+            <div  class="form-group col-6" >
+                <input type="submit" class="btn btn-primary" value="Opslaan">
+            </div>
+        </div>
+    </div>
+</form>--%>
 
         <!--endregion-->
     </div>

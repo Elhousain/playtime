@@ -1,35 +1,22 @@
 package be.thomasmore.graduaten.playtime.controller;
 
 import be.thomasmore.graduaten.playtime.config.JavaMailUtil;
-import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
 import be.thomasmore.graduaten.playtime.entity.MyUserDetails;
-import be.thomasmore.graduaten.playtime.entity.Spel;
-import be.thomasmore.graduaten.playtime.repository.GebruikerBordspelRepository;
 import be.thomasmore.graduaten.playtime.service.GebruikerBordspelService;
 
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
 import be.thomasmore.graduaten.playtime.service.SpelService;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Controller
@@ -54,11 +41,11 @@ public class GebruikerBordspelController {
         return "list-gebruikerBordspellen";
         }
 
-    @GetMapping("/showAll")
+    @GetMapping("/all")
     public String lijstGebruikerBordspellen (Model model){
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen",gebruikerBordspellen);
-        return "forward:/gebruikerBordspel/list";
+        return "all-gebruikerBordspellen";
     }
 
     @GetMapping ("showForm")

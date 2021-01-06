@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -74,6 +75,24 @@ public class SpelController {
             return "list-spellen";
         } else {
             uitgeverService.addUitgever(uitgever);
+            return "redirect:/spel/list";
+        }
+
+    }
+    @PostMapping("/saveCategorie")
+    public String saveCategorie(HttpServletRequest request, Model model){
+        Categorie categorie = new Categorie();
+        CategorieError categorieError = new CategorieError();
+
+        validatieIdCategorie(categorie, request.getParameter(Categorie.ID));
+        validatieCategorieToevoegen(categorie, categorieError, request.getParameter(Categorie.BESCHRIJVING));
+
+        if (categorieError.hasErrors){
+            model.addAttribute(Categorie.CATEGGORIE, categorie);
+            model.addAttribute(CategorieError.CATEGORIE, categorieError);
+            return "list-spellen";
+        } else {
+            categorieService.addCategorie(categorie);
             return "redirect:/spel/list";
         }
 
@@ -322,6 +341,24 @@ public class SpelController {
         if (beschrijving.isEmpty()) {
             uitgeverError.beschrijving = "Gelieve een beschrijving in te vullen";
             uitgeverError.hasErrors = true;
+        }
+    }
+
+    //VALIDATIE ID CATEGORIE
+    private void validatieIdCategorie(Categorie categorie, String id) {
+
+        if (!id.equals("null"))
+        {
+            categorie.setId(Long.parseLong(id));
+        }
+    }
+
+    //VALIDATIE BESCHRIJVING CATEGORIE
+    private void validatieCategorieToevoegen(Categorie categorie, CategorieError categorieError, String beschrijving) {
+        categorie.setBeschrijving(beschrijving);
+        if (beschrijving.isEmpty()) {
+            categorieError.beschrijving = "Gelieve een categorie in te vullen";
+            categorieError.hasErrors = true;
         }
     }
 

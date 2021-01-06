@@ -22,9 +22,7 @@ public class GebruikerBordspelServiceImpl implements GebruikerBordspelService, S
     }
 
     @Override
-    public List<GebruikerBordspel>getGebruikerBordspellen(){
-        return gebruikerBordspelRepository.findAll();
-    }
+    public List<GebruikerBordspel>getGebruikerBordspellen(){ return gebruikerBordspelRepository.findAll(); }
 
     @Override
     public List<GebruikerBordspel> getGebruikerBordspellenNietVerwerkt() { return gebruikerBordspelRepository.getGebruikerBordspellenNietVerwerkt(); }

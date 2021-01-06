@@ -4,6 +4,11 @@ import javax.persistence.*;
 
 @Entity
 public class Categorie {
+    public static final String CATEGGORIE = "categorie";
+    public static final String ID = "id";
+    public static final String BESCHRIJVING = "beschrijving";
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

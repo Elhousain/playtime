@@ -27,6 +27,14 @@ public class SpelServiceImpl implements SpelService  {
     }
 
     @Override
+    public List <Spel> getSpellenActief(String keyword){
+        if (keyword != null){
+            return spelRepository.getSpellenActief(keyword);
+        }
+        return spelRepository.getSpellenActief("");
+    }
+
+    @Override
     public Spel addSpel(Spel spel) {
         return spelRepository.save(spel);
     }

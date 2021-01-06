@@ -1,4 +1,9 @@
-<%--
+<%@ page import="be.thomasmore.graduaten.playtime.entity.MyUserDetails" %>
+<%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
+<%@ page import="org.springframework.security.core.authority.SimpleGrantedAuthority" %><%--
   Created by IntelliJ IDEA.
   User: tomsc
   Date: 1/01/2021
@@ -9,22 +14,28 @@
     <nav id="sidebar">
         <div class="p-4 pt-5">
             <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
-
             <ul class="list-unstyled components mb-5">
                 <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spellen</a>
-                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
-                </li>
-                <li >
-                    <a href="#">Dobbelspel (1)</a>
-                </li>
-                <li>
-                    <a href="#">Bordspel (2)</a>
-                </li>
-                <li>
-                    <a href="#">Kaartspel (3)</a>
+            <%
+                if (request.getRemoteUser()==null){
+                    out.print("<a href=/overzichtSpellen>Overzicht Spellen</a>");
+                    out.print("<a href=/login>Login</a>");
+                } else {
+                    out.print("<a href=/overzichtSpellen>Overzicht Spellen</a>");
+                    out.print("<a href=/gebruiker/eigendata>Overzicht Profiel</a>");
+                    out.print("<a href=/logout>Logout</a>");
+
+                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                    if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+                        out.print("<a href=/gebruiker/list>Beheer Gebruikers</a>");
+                        out.print("<a href=/gebruikerBordspel/list>Beheer Spellen</a>");
+                    }
+                }
+
+            %>
                 </li>
             </ul>
+
 
             <div class="footer">
                 <p>
