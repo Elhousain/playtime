@@ -248,6 +248,7 @@
     };
 </script>
 
+<!--
 <script>
 
     var dateSelect     = $('#<%=GebruikerBordspel.AFHAALDATUM%>');
@@ -270,6 +271,7 @@
 
 
 </script>
+-->
 
 
 <script src="${pageContext.request.contextPath}/js/script.js"></script>

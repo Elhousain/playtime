@@ -22,6 +22,17 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+
+
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/card.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js'>
+    </script><script  src="./script.js"></script>
+
+
 </head>
 <body>
 
@@ -126,17 +137,43 @@
                                value="<%=gebruiker.getAchternaam() == null ? "" : gebruiker.getAchternaam()%>">
                         <%out.print(userError.achternaam != null ? "<div class=\"invalid-feedback\">" + userError.achternaam + "</div>" : "");%>
                     </div>
+
+
+
+
+
+
+
+
+
                     <div class="form-group col-4">
                         <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
+
+
                         <input class="form-control<%out.print(userError.geboortedatum != null ? " is-invalid" : "");%>"
-                               type="date"
-                               placeholder="dd-mm-yyyy"
+                               type="text"
+                               placeholder="yyyy-mm-dd"
                                id="<%=Gebruiker.GEBOORTEDATUM%>"
                                name="<%=Gebruiker.GEBOORTEDATUM%>"
                                value="<%=gebruiker.getGeboortedatum() == null ? "" : gebruiker.getGeboortedatum()%>">
+
+
+
+
+
                         <%out.print(userError.geboortedatum != null ? "<div class=\"invalid-feedback\">" + userError.geboortedatum + "</div>" : "");%>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
 
 
                 <div class="row col-md-12">
@@ -246,6 +283,30 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+    var dateSelect     = $('#<%=Gebruiker.GEBOORTEDATUM%>');
+    var dateDepart     = $('#pickedDate');
+    var dateReturn     = $('#end-date');
+    var spanDepart     = $('.date-depart');
+    var spanReturn     = $('.date-return');
+    var spanDateFormat = 'ddd, MMMM D yyyy';
+    dateSelect.datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        maxViewMode: 0,
+        endDate: "now"
+    }).on('change', function() {
+        var start = $.format.date(dateDepart.datepicker('getDate'), spanDateFormat);
+        var end = $.format.date(dateReturn.datepicker('getDate'), spanDateFormat);
+        spanDepart.text(start);
+        spanReturn.text(end);
+    });
+
+
+</script>
 
 
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>

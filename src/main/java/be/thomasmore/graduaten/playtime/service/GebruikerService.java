@@ -10,6 +10,7 @@ public interface GebruikerService {
     Gebruiker getGebruikerByEmail(String email);
     List<Gebruiker> getGebruikers();
     Gebruiker addGebruiker(Gebruiker gebruiker);
-    void deleteGebruiker(Long id);
+    public void deleteGebruiker(Long id);
+
 
 }

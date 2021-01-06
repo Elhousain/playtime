@@ -4,14 +4,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>PlayTime - Registreren</title>
+    <title>PLAYTIME - Registreren</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/card.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js'>
+    </script><script  src="./script.js"></script>
 </head>
 <body>
 
@@ -124,16 +128,32 @@
 
 
                     </div>
-                    <div class="form-group col-4">
-                        <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
-                        <input class="form-control" type="date" id="<%=Gebruiker.GEBOORTEDATUM%>" placeholder="dd-mm-yyyy" name="<%=Gebruiker.GEBOORTEDATUM%>" value="<%=values.get(Gebruiker.GEBOORTEDATUM)%>">
 
-                        <%
-                            if (errors.containsKey(Gebruiker.GEBOORTEDATUM)) {
-                                out.print("<span style='color: red;'>" + errors.get(Gebruiker.GEBOORTEDATUM) + "</span>");
-                            }
-                        %>
-                    </div>
+
+
+                        <div class="form-group col-4">
+                            <!--afhaal datum-->
+                            <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
+
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="<%=Gebruiker.GEBOORTEDATUM%>"
+                                   name="<%=Gebruiker.GEBOORTEDATUM%>"
+                                   placeholder="yyyy-MM-dd"
+                                   class="form-control py-4 px-4"
+                                   value="<%=values.get(Gebruiker.GEBOORTEDATUM)%>"
+                            >
+
+                            <%
+                                if (errors.containsKey(Gebruiker.GEBOORTEDATUM)) {
+                                    out.print("<span style='color: red;'>" + errors.get(Gebruiker.GEBOORTEDATUM) + "</span>");
+                                }
+                            %>
+
+                            <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+                        </div>
+
                 </div>
 
 
@@ -253,6 +273,36 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+<script>
+
+    var dateSelect     = $('#<%=Gebruiker.GEBOORTEDATUM%>');
+    var dateDepart     = $('#pickedDate');
+    var dateReturn     = $('#end-date');
+    var spanDepart     = $('.date-depart');
+    var spanReturn     = $('.date-return');
+    var spanDateFormat = 'ddd, MMMM D yyyy';
+    dateSelect.datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        maxViewMode: 0,
+        endDate: "now"
+    }).on('change', function() {
+        var start = $.format.date(dateDepart.datepicker('getDate'), spanDateFormat);
+        var end = $.format.date(dateReturn.datepicker('getDate'), spanDateFormat);
+        spanDepart.text(start);
+        spanReturn.text(end);
+    });
+
+
+</script>
+
 
 
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
