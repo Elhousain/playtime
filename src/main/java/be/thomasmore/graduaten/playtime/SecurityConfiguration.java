@@ -25,12 +25,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/overzichtGebruikers").hasRole("ADMIN")
+                .antMatchers("/spel/*").hasRole("ADMIN")
                 .antMatchers("/gebruiker/list").hasRole("ADMIN")
-                .antMatchers("/overzichtSpellen").hasAnyRole("ADMIN", "USER")
+
+                .antMatchers("/gebruiker/eigendata").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/shoppingCart").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/eigenspellen").hasAnyRole("ADMIN", "USER")
+
                 .antMatchers("/").permitAll()
+                .antMatchers("/overzichtSpellen").permitAll()
+                .antMatchers("/registratie").permitAll()
                 .and().formLogin()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
         http.authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll();

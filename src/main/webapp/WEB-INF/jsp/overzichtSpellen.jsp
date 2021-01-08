@@ -70,7 +70,7 @@
                                 <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
                                 <input type="hidden" name="titel" value="kopen"><br/>
                                 <input type="hidden" name="aantal" value="1"><br/>
-                                <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs*.75} €</p>
+                                <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs} €</p>
                                 <input type="submit" name="action" value="Kopen" class="btn-primary btn-block w-75 m-auto">
                             </form>
                         </div>

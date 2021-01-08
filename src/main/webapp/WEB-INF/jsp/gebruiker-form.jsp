@@ -31,87 +31,18 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js'>
     </script><script  src="./script.js"></script>
-
-
 </head>
+
 <body>
 
 <%
     Gebruiker gebruiker = (Gebruiker)request.getAttribute(Gebruiker.NAME);
     UserError userError = (UserError) request.getAttribute(UserError.NAME);
-
-
-
 %>
 
 <div class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">
-        <div class="p-4 pt-5">
-            <img class="img logo rounded-circle mb-5" src="${pageContext.request.contextPath}/images/logo.png">
-            <ul class="list-unstyled components mb5-">
-                <li>
-                    <a href="${pageContext.request.contextPath}/overzichtSpellen">Overzicht spelletjes</a>
-                    <a href="${pageContext.request.contextPath}/overzichtGebruikers">Overzicht gebruikers</a>
-                </li>
-                <li>
-                    <a href="#">Dobbelspel (1)</a>
-                </li>
-                <li>
-                    <a href="#">Bordspel (2)</a>
-                </li>
-                <li>
-                    <a href="#">Kaartspel (3)</a>
-                </li>
-            </ul>
 
-            <div class="footer">
-                <p>PLAYTIME</p>
-            </div>
-
-        </div>
-    </nav>
-
-
-
-
-
-
-    <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <!--
-<button type="button" id="sidebarCollapse" class="btn btn-primary">
-<i class="fa fa-bars"></i>
-<span class="sr-only">Toggle Menu</span>
-</button>
-<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-<i class="fa fa-bars"></i>
-</button>
--->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Inloggen</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <form action="/logout" method="post">
-                                <input type="submit" value="Logout" />
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
+    <jsp:include page="my-header.jsp"/>
 
         <div class="container">
             <form  class="needs-validation" action="saveGebruiker" method="post" novalidate>

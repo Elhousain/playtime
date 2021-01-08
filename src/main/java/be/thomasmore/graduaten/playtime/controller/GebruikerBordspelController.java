@@ -59,11 +59,11 @@ public class GebruikerBordspelController {
         return "list-gebruikerBordspellen";
         }
 
-    @GetMapping("/showAll")
+    @GetMapping("/all")
     public String lijstGebruikerBordspellen (Model model){
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen",gebruikerBordspellen);
-        return "forward:/gebruikerBordspel/list";
+        return "all-gebruikerBordspellen";
     }
 
     @GetMapping ("showForm")

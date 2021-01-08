@@ -19,16 +19,24 @@
             <%
                 if (request.getRemoteUser()==null){
                     out.print("<a href=/overzichtSpellen>Overzicht Spellen</a>");
+                    out.print("<br>");
                     out.print("<a href=/login>Login</a>");
+                    out.print("<br>");
+                    out.print("<a href=/registratie>Registreren</a>");
                 } else {
                     out.print("<a href=/overzichtSpellen>Overzicht Spellen</a>");
+                    out.print("<br>");
                     out.print("<a href=/gebruiker/eigendata>Overzicht Profiel</a>");
+                    out.print("<a href=/eigenspellen>Overzicht Bestellingen</a>");
+                    out.print("<br>");
                     out.print("<a href=/logout>Logout</a>");
 
                     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                     if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+                        out.print("<br>");
                         out.print("<a href=/gebruiker/list>Beheer Gebruikers</a>");
-                        out.print("<a href=/gebruikerBordspel/list>Beheer Spellen</a>");
+                        out.print("<a href=/gebruikerBordspel/list>Beheer Reservaties</a>");
+                        out.print("<a href=/spel/list>Beheer Spellen</a>");
                     }
                 }
 
@@ -70,6 +78,14 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <%
+                            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                            if (principal instanceof UserDetails){
+                                String username = ((UserDetails)principal).getUsername();
+                                out.print("<p>Welkom " + username + " </p>");
+                            }
+
+                        %>
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">Home</a>
@@ -100,4 +116,3 @@
                     </div>
                 </div>
             </nav>
-            <!--#endregion-->

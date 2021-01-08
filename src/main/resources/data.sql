@@ -121,7 +121,7 @@ values ( 'Elhousain', 'Farah', '1989-04-17', 'ROLE_ADMIN', 'r0797083@student.tho
 insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
 values ( 'Bulent', 'Arslan', '1989-08-23', 'ROLE_ADMIN', 'bulentarslan0877@gmail.com', 'test', '0433333333', 'Beringen', '3580', 'Laagstraat', '40' );
 insert into gebruiker(voornaam, achternaam, geboortedatum, rol, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer)
-values ( 'Tom', 'Scheyltjens', '1989-03-18', 'ROLE_USER', 's0200162@thomasmore.student.be', 'test', '0472743607', 'Vosselaar', '2350', 'Grootheidestraat', '23' );
+values ( 'Tom', 'Scheyltjens', '1989-03-18', 'ROLE_USER', 's0200162@student.thomasmore.be', 'test', '0472743607', 'Vosselaar', '2350', 'Grootheidestraat', '23' );
 
 insert into gebruiker_bordspel(ordernr,spelid, gebruikerid, afhaaldatum, verwerkt, ishuur, aantal)
 values ( '1','1', '3', '2020-11-01', 'true', 'true', '1' );
