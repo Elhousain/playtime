@@ -19,7 +19,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>PLAYTIME - Overzicht Spellen</title>
+    <title>PLAYTIME - Overzicht eigen gehuurde/gekochte spellen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -43,71 +43,61 @@
 
     <!--#region Bordenspel groepen-->
     <h1>
-        Overzicht spellen
+        Overzicht eigen gehuurde en gekochte spellen
     </h1>
 
-    <form th:action="@{/}">
-        Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
-        &nbsp;
-        <input type="submit" value="Search" />
-        &nbsp;
-        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
-    </form>
+
 
     <div class="row dashboard-cards">
-        <c:forEach  items="${spellen}" var="spel">
+        <c:forEach  items="${eigenGebruikerBordspellen}" var="eigenGebruikerBordspel">
             <div class=card>
 
                 <div class=card-title>
-                    <h5> ${spel.naam}</h5>
-                    <img class=farah src="${spel.foto}">
+                    <h5> Ordernummer ${eigenGebruikerBordspel.ordernr} - ${eigenGebruikerBordspel.spel.naam}  </h5>
+                    </br>
+                    <img class=farah src="${eigenGebruikerBordspel.spel.foto}">
                 </div>
                 <div class=achtergrond>
                     <div class=row>
-                        <div class=col-sm-6>
-                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
-                                <input type="hidden" name="id" value="${spel.id}"><br/>
-                                <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
-                                <input type="hidden" name="titel" value="kopen"><br/>
-                                <input type="hidden" name="aantal" value="1"><br/>
-                                <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs*.75} €</p>
-                                <input type="submit" name="action" value="Kopen" class="btn-primary btn-block w-75 m-auto">
-                            </form>
-                        </div>
 
 
-                        <div class=col-sm-6>
-                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
-                                <input type="hidden" name="id" value="${spel.id}"><br/>
-                                <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
-                                <input type="hidden" name="titel" value="huren"><br/>
-                                <input type="hidden" name="aantal" value="1"><br/>
-                                <input type="hidden" name="prijs" value="${spel.prijs/5}"><p>${spel.prijs/5} €</p>
-                                <input type="submit" name="action" value="Huren" class="btn-info btn-block w-75 m-auto">
-                            </form>
-                        </div>
+
+
                         <a id=tonen class=m-auto> details</a>
                     </div>
                 </div>
 
                 <div class=card-flap>
                     <div class=card-description>
-                        <div class=onderlijn>${spel.beschrijving}</div>
                         <ul class=task-list>
                             <li>
-                                <img class=img-thumbnail src=${pageContext.request.contextPath}/images/pngegg.png > Spelers tussen ${spel.min_spelers} en ${spel.max_spelers}
+                                <img title="Afhaaldatum" src=${pageContext.request.contextPath}/images/datum.png>${eigenGebruikerBordspel.afhaaldatum}
                             </li>
                             <li>
-                                <img src=${pageContext.request.contextPath}/images/age.png>${spel.min_leeftijd}
+
+                               <c:if test="${eigenGebruikerBordspel.ishuur==true}">
+                                   <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/rent.svg>Gehuurd
+
+                               </c:if>
+
+                                <c:if test="${eigenGebruikerBordspel.ishuur==false}">
+                                    <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/sale.svg>Gekocht
+
+                                </c:if>
+
+
                             </li>
                             <li>
-                                <img src=${pageContext.request.contextPath}/images/taal.png >
-                                <p> ${spel.getTaal().getBeschrijving() }</p>
+
+                                <img title="Aantal spelletjes gehuurd of gekocht" src=${pageContext.request.contextPath}/images/number.svg>${eigenGebruikerBordspel.aantal}
+
+
+
                             </li>
-                            <li>
-                                <img src=${pageContext.request.contextPath}/images/uitgever.png >
-                                <p>${ spel.getUitgever().getBeschrijving()} </p>
-                            </li>
+
+
+
+
                         </ul>
                     </div>
                 </div>
@@ -117,18 +107,13 @@
     </div>
 
 
-    </form>
 
 
-</div>
+
+            </div>
 <!--endregion-->
+        </div>
 </div>
-</div>
-<script type="text/javascript">
-    function clearSearch() {
-        window.location = "/overzichtSpellen";
-    }
-</script>
 <script>
     var zindex = 10;
     $(document).on('click','#tonen',function()
@@ -139,6 +124,12 @@
         else card.addClass('d-card-show').css({zIndex:zindex})
     })
 </script><!--details tonen-->
+
+<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/popper.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/main.js"></script>
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'/>
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.js"></script>

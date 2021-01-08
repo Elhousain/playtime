@@ -157,24 +157,9 @@
                                name="<%=Gebruiker.GEBOORTEDATUM%>"
                                value="<%=gebruiker.getGeboortedatum() == null ? "" : gebruiker.getGeboortedatum()%>">
 
-
-
-
-
                         <%out.print(userError.geboortedatum != null ? "<div class=\"invalid-feedback\">" + userError.geboortedatum + "</div>" : "");%>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
 
                 <div class="row col-md-12">
                     <div class="form-group col-6">
@@ -196,7 +181,6 @@
                                value="<%=gebruiker.getHuisnummer() == null ? "" : gebruiker.getHuisnummer()%>">
                         <%out.print(userError.huisnummer != null ? "<div class=\"invalid-feedback\">" + userError.huisnummer + "</div>" : "");%>
                     </div>
-
                 </div>
 
                 <div class="row col-md-12">
@@ -219,7 +203,6 @@
                         <%out.print(userError.postcode != null ? "<div class=\"invalid-feedback\">" + userError.postcode + "</div>" : "");%>
                     </div>
                 </div>
-
 
                 <div class="row col-md-12">
                     <div class="form-group col-6">
@@ -264,6 +247,7 @@
                                value="<%=gebruiker.getEmail() == null ? "" : gebruiker.getEmail()%>">
                         <%out.print(userError.email != null ? "<div class=\"invalid-feedback\">" + userError.email + "</div>" : "");%>
                     </div>
+
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Gebruiker.PASWOORD%>"><%=Gebruiker.PASWOORD%></label>
                         <input class="form-control<%out.print(userError.paswoord != null ? " is-invalid" : "");%>"

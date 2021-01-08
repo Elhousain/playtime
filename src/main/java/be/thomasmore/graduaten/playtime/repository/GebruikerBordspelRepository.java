@@ -15,4 +15,7 @@ public interface GebruikerBordspelRepository extends JpaRepository<GebruikerBord
     @Query(value = "SELECT g FROM GebruikerBordspel g WHERE g.verwerkt = false ")
     List<GebruikerBordspel> getGebruikerBordspellenNietVerwerkt();
 
+
+   // @Query(value = "SELECT g FROM GebruikerBordspel g WHERE g.id = Gebruiker .id")
+   // List<GebruikerBordspel> getGebruikerBordspellenPerGebruiker();
 }

@@ -5,8 +5,10 @@ import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
@@ -64,6 +66,63 @@ public class MainController {
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
         return "overzichtSpellen";
     }
+
+
+
+
+
+
+
+   /* @RequestMapping("/eigenspellen")
+    public String overzichtEigenSpellen(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
+        String mail= userDetails.getUsername();
+        Gebruiker gebruiker = gebruikerService.getGebruikerByEmail(mail);
+        Long id = gebruiker.getId();
+
+       List<GebruikerBordspel> eigenGebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellenPerGebruiker(id);
+System.out.println(eigenGebruikerBordspellen);
+
+
+        model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
+        return "gebruikerbordspel-eigendata";
+    }*/
+
+
+    @RequestMapping("/eigenspellen")
+    public String overzichtEigenSpellen(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
+        String mail= userDetails.getUsername();
+        Gebruiker gebruiker = gebruikerService.getGebruikerByEmail(mail);
+
+
+        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
+        List<GebruikerBordspel> eigenGebruikerBordspellen= new ArrayList<GebruikerBordspel>();
+
+
+        for (GebruikerBordspel gebruikerBordspel:gebruikerBordspellen)
+        {
+            if (gebruikerBordspel.getGebruiker().equals(gebruiker))
+            {
+                eigenGebruikerBordspellen.add(gebruikerBordspel);
+            }
+        }
+
+
+        model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
+        return "gebruikerbordspel-eigendata";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping("/overzichtWinkelwagen")
     public String overzichtWinkelwagen(Model model, @Param("keyword") String keyword) {
@@ -208,12 +267,6 @@ public class MainController {
 
 
         String rol = "ROLE_USER";
-
-
-
-
-
-
 
 
         //Validatie email-adres

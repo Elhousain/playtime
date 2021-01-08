@@ -16,4 +16,6 @@ public interface SpelRepository extends JpaRepository<Spel, Long> {
     @Query(value = "SELECT s FROM Spel s WHERE s.status='3' AND LOWER(CONCAT(s.naam, ' ', s.beschrijving)) LIKE %?1%")
     List<Spel> getSpellenActief(String keyword);
 
+
+
 }
