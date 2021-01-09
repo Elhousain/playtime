@@ -292,71 +292,40 @@ public class GebruikerBordspelController {
                     if (sp.getId().equals(product.getId()))
                     {
                         spel=sp;
+
                     }
                 }
                 
                     aantal = product.getAantal();
                 if (product.getTitel().equals("huren"))
                 {
-                    ishuur = false;
+                    ishuur = true;
+                    Integer huidigeVoorraad= spel.getVoorraad_huur();
+                    spel.setVoorraad_huur(huidigeVoorraad-1);
                 }
                 else
                     {
-                        ishuur = true;
+                        ishuur = false;
+                        Integer huidigeVoorraad= spel.getVoorraad_koop();
+                        spel.setVoorraad_koop(huidigeVoorraad-1);
                     }
 
                 GebruikerBordspel gebruikerBordspel = new GebruikerBordspel(ordernr,spel,aangelogdeGebruiker,afhaalDatum,verwerkt,ishuur,aantal);
                 gebruikerBordspelService.addGebruikerBordspel(gebruikerBordspel);
 
             }
+
+
             System.out.println("Order(s)in databank");
             clearList(request);
             System.out.println("winkelmandje is leeg");
 
             String mail= userDetails.getUsername();
+
             JavaMailUtil.sendMail(mail,datum,"9h00");
+
             return "success";
-        //return "redirect:/gebruikerBordspel/send-mail";
-    }
-
-/*
-    @GetMapping("/send-mail")
-    public String sendEmail(@AuthenticationPrincipal MyUserDetails userDetails, HttpServletRequest request) throws MessagingException {
-        String datum = "1/1/2020";
-        String mail= userDetails.getUsername();
-        JavaMailUtil.sendMail(mail,datum,"9h00");
-        return "success";
     }
 
 
-    @PostMapping("/saveOrder")
-    public String saveOrder(@AuthenticationPrincipal MyUserDetails userDetails,HttpServletRequest request, Model model)
-    {
-
-
-        Integer ordernr = Integer.parseInt(request.getParameter(GebruikerBordspel.ORDERNR)) ;
-        Integer spelid = Integer.parseInt(request.getParameter(GebruikerBordspel.SPELID));
-        List<Gebruiker> gebruikerList = (List<Gebruiker>) request.getAttribute("gebruikerList");
-
-        String ingelogdeUser = userDetails.getUsername();
-        Integer gebruikerid=1;
-
-
-        String datum = request.getParameter(GebruikerBordspel.AFHAALDATUM);
-        LocalDate afhaalDatum = LocalDate.parse(datum);
-
-
-        Boolean verwerkt =Boolean.parseBoolean(request.getParameter(GebruikerBordspel.VERWERKT)) ;
-        Boolean ishuur = Boolean.parseBoolean(request.getParameter(GebruikerBordspel.ISHUUR));
-        Integer aantal = Integer.parseInt(request.getParameter(GebruikerBordspel.AANTAL));
-
-        GebruikerBordspel gebruikerBordspel = new GebruikerBordspel(ordernr,spelid,gebruikerid,afhaalDatum,verwerkt,ishuur,aantal);
-
-
-        gebruikerBordspelService.addGebruikerBordspel(gebruikerBordspel);
-        System.out.println("opslaan");
-
-        return "redirect:/shoppingCart";
-    }
-  */
 }
