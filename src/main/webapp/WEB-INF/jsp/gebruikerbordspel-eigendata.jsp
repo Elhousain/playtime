@@ -14,6 +14,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.*" %>
+<%@ page import="be.thomasmore.graduaten.playtime.entity.GebruikerBordspel" %>
 
 
 <!doctype html>
@@ -48,71 +49,88 @@
 
 
 
-    <div class="row dashboard-cards">
-        <c:forEach  items="${eigenGebruikerBordspellen}" var="eigenGebruikerBordspel">
-            <div class=card>
+    <c:if test="${eigenGebruikerBordspellen.size()==0}">
+        <p>U heeft geen bestellingen</p>
 
-                <div class=card-title>
-                    <h5> Ordernummer ${eigenGebruikerBordspel.ordernr} - ${eigenGebruikerBordspel.spel.naam}  </h5>
-                    </br>
-                    <img class=farah src="${eigenGebruikerBordspel.spel.foto}">
-                </div>
-                <div class=achtergrond>
-                    <div class=row>
+    </c:if>
 
 
 
 
-                        <a id=tonen class=m-auto> details</a>
+
+    <c:if test="${eigenGebruikerBordspellen.size()>0}">
+
+
+        <div class="row dashboard-cards">
+            <c:forEach  items="${eigenGebruikerBordspellen}" var="eigenGebruikerBordspel">
+                <div class=card>
+
+                    <div class=card-title>
+                        <h5> Ordernummer ${eigenGebruikerBordspel.ordernr} - ${eigenGebruikerBordspel.spel.naam}  </h5>
+                        </br>
+                        <img class=farah src="${eigenGebruikerBordspel.spel.foto}">
+                    </div>
+                    <div class=achtergrond>
+                        <div class=row>
+
+
+
+
+                            <a id=tonen class=m-auto> details</a>
+                        </div>
+                    </div>
+
+                    <div class=card-flap>
+                        <div class=card-description>
+                            <ul class=task-list>
+                                <li>
+                                    <img title="Afhaaldatum" src=${pageContext.request.contextPath}/images/datum.png>${eigenGebruikerBordspel.afhaaldatum}
+                                </li>
+                                <li>
+
+                                    <c:if test="${eigenGebruikerBordspel.ishuur==true}">
+                                        <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/rent.svg>Gehuurd
+
+                                    </c:if>
+
+                                    <c:if test="${eigenGebruikerBordspel.ishuur==false}">
+                                        <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/sale.svg>Gekocht
+
+                                    </c:if>
+
+
+                                </li>
+                                <li>
+
+                                    <img title="Aantal spelletjes gehuurd of gekocht" src=${pageContext.request.contextPath}/images/number.svg>${eigenGebruikerBordspel.aantal}
+
+
+
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class=card-flap>
-                    <div class=card-description>
-                        <ul class=task-list>
-                            <li>
-                                <img title="Afhaaldatum" src=${pageContext.request.contextPath}/images/datum.png>${eigenGebruikerBordspel.afhaaldatum}
-                            </li>
-                            <li>
-
-                               <c:if test="${eigenGebruikerBordspel.ishuur==true}">
-                                   <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/rent.svg>Gehuurd
-
-                               </c:if>
-
-                                <c:if test="${eigenGebruikerBordspel.ishuur==false}">
-                                    <img title="Gehuurd of gekocht spel" src=${pageContext.request.contextPath}/images/sale.svg>Gekocht
-
-                                </c:if>
-
-
-                            </li>
-                            <li>
-
-                                <img title="Aantal spelletjes gehuurd of gekocht" src=${pageContext.request.contextPath}/images/number.svg>${eigenGebruikerBordspel.aantal}
-
-
-
-                            </li>
-
-
-
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </c:forEach>
-    </div>
-
-
-
-
-
-            </div>
-<!--endregion-->
+            </c:forEach>
         </div>
+
+
+
+    </c:if>
+
+
+
+
+
+
+</div>
+<!--endregion-->
+</div>
 </div>
 <script>
     var zindex = 10;

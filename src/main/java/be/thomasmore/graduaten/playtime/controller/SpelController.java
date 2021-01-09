@@ -50,6 +50,8 @@ public class SpelController {
         model.addAttribute(Spel.GAME, spel);
         SpelError spelError = new SpelError();
         model.addAttribute(SpelError.GAME, spelError);
+
+
         List<Taal> talen = taalService.getTalen();
         model.addAttribute("talen", talen);
         List<Categorie> categorien = categorieService.getCategorien();
@@ -126,6 +128,8 @@ public class SpelController {
         validatieTaal(spel, spelError, request.getParameter(Spel.TAAL));
         validatieUitgever(spel, spelError, request.getParameter(Spel.UITGEVER));
 
+        spel.setFoto(locatieSpel);
+
 
         if (spelError.hasErrors){
             model.addAttribute(Spel.GAME, spel);
@@ -137,12 +141,15 @@ public class SpelController {
         }
     }
 
-
+String locatieSpel;
 
     @GetMapping("/updateForm")
     public String showFormForUpdate(@RequestParam("spelId") int id, Model model) {
         Spel spel = spelService.getSpelById((long) id);
         SpelError spelError = new SpelError();
+
+        locatieSpel=spel.getFoto();
+
         model.addAttribute(Spel.GAME, spel);
         model.addAttribute(SpelError.GAME, spelError);
         List<Taal> talen = taalService.getTalen();

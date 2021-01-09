@@ -72,7 +72,7 @@
 
 
                         <div class="form-group col-4">
-                            <!--afhaal datum-->
+
                             <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>
 
 
@@ -91,7 +91,7 @@
                                 }
                             %>
 
-                            <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+
                         </div>
 
                 </div>

@@ -5,6 +5,9 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.MyUserDetails" %>
 <%@ page import="javax.sql.RowSet" %>
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="org.springframework.security.core.authority.SimpleGrantedAuthority" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
@@ -38,6 +41,8 @@
 <%
     Gebruiker gebruiker = (Gebruiker)request.getAttribute(Gebruiker.NAME);
     UserError userError = (UserError) request.getAttribute(UserError.NAME);
+
+
 %>
 
 <div class="wrapper d-flex align-items-stretch">
@@ -146,6 +151,27 @@
                         <%out.print(userError.telefoon != null ? "<div class=\"invalid-feedback\">" + userError.telefoon + "</div>" : "");%>
                     </div>
 
+
+
+
+
+
+
+
+
+                    <%
+
+                    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                    if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                    {  %>
+
+
+                    <%
+
+                        if (gebruiker.getRol().equals("ROLE_ADMIN"))
+                        {  %>
+
+
                     <div class="form-group col-2">
                         <%out.print(userError.rol != null ? "<div class=\"invalid-feedback\">" + userError.rol + "</div>" : "");%>
                         <section >
@@ -162,10 +188,63 @@
                                    id="<%=Gebruiker.ROL%>"
                                    name="<%=Gebruiker.ROL%>"
                                    class="design"
+                                   checked
                                    value="ROLE_ADMIN">
                             <label class="form-control-label" for="<%=Gebruiker.ROL%>">Admin</label>
                         </section>
                     </div>
+
+
+
+                    <%}%>
+
+
+                    <%
+
+                        if (gebruiker.getRol().equals("ROLE_USER"))
+                        {  %>
+
+
+                    <div class="form-group col-2">
+                        <%out.print(userError.rol != null ? "<div class=\"invalid-feedback\">" + userError.rol + "</div>" : "");%>
+                        <section >
+                            <input type="radio"
+                                   id="<%=Gebruiker.ROL%>"
+                                   name="<%=Gebruiker.ROL%>"
+                                   class="design"
+                                   checked
+                                   value="ROLE_USER">
+                            <label class="form-control-label" for="<%=Gebruiker.ROL%>">Klant</label>
+                        </section>
+
+                        <section>
+                            <input type="radio"
+                                   id="<%=Gebruiker.ROL%>"
+                                   name="<%=Gebruiker.ROL%>"
+                                   class="design"
+                                   value="ROLE_ADMIN">
+                            <label class="form-control-label" for="<%=Gebruiker.ROL%>">Admin</label>
+                        </section>
+                    </div>
+
+
+
+                    <%}%>
+
+
+
+                    <%}%>
+
+
+
+
+
+
+
+
+
+
+
                 </div>
 
                 <div class="row col-md-12">

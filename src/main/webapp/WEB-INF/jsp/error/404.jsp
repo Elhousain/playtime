@@ -29,7 +29,7 @@
 
 <div class="error-content">
     Opgevraagde bestand niet aanwezig<br>
-    <a href="https://go.sygic.com/travel/place?id=region:23655">PlayTime</a>.
+    <a href="/">PlayTime</a>.
 </div>
 
 <a href="/" class="button-home">Home</a>

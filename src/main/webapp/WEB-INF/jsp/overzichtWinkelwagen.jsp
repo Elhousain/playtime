@@ -48,7 +48,7 @@
                             <td>Totaal</td>
                         </tr>
                         <c:if test="${cart.lineItemCount == 0}">
-                            <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
+                            <tr> <td colspan="4">- Winkelwagen is leeg -</td></tr>
                         </c:if>
                         <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
                             <form name="item" method="POST" action="${pageContext.request.contextPath}/gebruikerBordspel/shoppingCart">

@@ -1,27 +1,16 @@
 package be.thomasmore.graduaten.playtime.controller;
-
-import be.thomasmore.graduaten.playtime.entity.Gebruiker;
-import be.thomasmore.graduaten.playtime.entity.MyUserDetails;
-
-import be.thomasmore.graduaten.playtime.entity.UserError;
+import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
-
-
 import javax.servlet.http.HttpServletRequest;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -35,18 +24,17 @@ public class GebruikerController {
     GebruikerService gebruikerService;
 
     String oorspronkelijkeMail;
+    String oorspronkelijkeRol;
 
 
     @GetMapping("/list")
- public String lijstgebruikers (@AuthenticationPrincipal MyUserDetails userDetails,Model model){
+        public String lijstgebruikers (@AuthenticationPrincipal MyUserDetails userDetails,Model model){
         List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
         model.addAttribute("gebruikers", gebruikers);
-
 
         String mail= userDetails.getUsername();
         Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
         model.addAttribute("ingelogdeGebruiker", ingelogdeGebruiker);
-
         return "list-gebruikers";
     }
 
@@ -62,8 +50,10 @@ public class GebruikerController {
     }
 
 
+
+
     @GetMapping("showForm")
-    public String showFormForAdd(Model model, HttpServletRequest request){
+    public String showFormForAdd(@AuthenticationPrincipal MyUserDetails userDetails,Model model, HttpServletRequest request){
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
 
@@ -71,18 +61,18 @@ public class GebruikerController {
         model.addAttribute(UserError.NAME, userError);
 
         oorspronkelijkeMail = "";
+        oorspronkelijkeRol = "";
         return "gebruiker-form";
     }
 
 
 
+
+
     @PostMapping("/saveGebruiker")
     public String saveGebruiker(@AuthenticationPrincipal MyUserDetails userDetails,HttpServletRequest request, Model model)  {
-
         Gebruiker gebruiker = new Gebruiker();
         UserError userError = new UserError();
-
-
         String mail= userDetails.getUsername();
         Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
 
@@ -96,20 +86,29 @@ public class GebruikerController {
         validatiePostcode(gebruiker, userError, request.getParameter(Gebruiker.POSTCODE));
         validatieTelefoon(gebruiker, userError, request.getParameter(Gebruiker.TELEFOON));
         validatieEmail(gebruiker, userError, request.getParameter(Gebruiker.EMAIL));
-
-
         validatiePaswoord(gebruiker, userError, request.getParameter(Gebruiker.PASWOORD));
-        validatieRol(gebruiker, userError, request.getParameter(Gebruiker.ROL));
+
+        if (ingelogdeGebruiker.getRol().equals("ROLE_ADMIN"))
+        {
+            validatieRol(gebruiker, userError, request.getParameter(Gebruiker.ROL));
+        }
+        else
+        {
+            gebruiker.setRol("ROLE_USER");
+        }
 
         if (userError.hasErrors) {
+
+            model.addAttribute("ingelogdeGebruiker", ingelogdeGebruiker);
             model.addAttribute(Gebruiker.NAME, gebruiker);
             model.addAttribute(UserError.NAME, userError);
             return "gebruiker-form";
         } else {
             gebruikerService.addGebruiker(gebruiker);
             String nieuweMail=gebruiker.getEmail();
+            String nieuweRol=gebruiker.getRol();
             //CHECK 1: e-mailadres gewijzigd
-            if (!oorspronkelijkeMail.equals(nieuweMail))
+            if (!oorspronkelijkeMail.equals(nieuweMail) || !oorspronkelijkeRol.equals(nieuweRol))
             {
                 //CHECK 2: is ingelogde user zelfde als gewizjigde user
                 if (gebruiker.equals(ingelogdeGebruiker))
@@ -137,17 +136,53 @@ public class GebruikerController {
         }
     }
 
+
+
+
+
+
+
     @GetMapping("/updateForm")
-    public String showFormForUpdate(@RequestParam("gebruikerId") int id, Model model,HttpServletRequest request){
-        Gebruiker gebruiker = gebruikerService.getGebruikerById((long) id);
-        UserError userError = new UserError();
-        model.addAttribute(Gebruiker.NAME, gebruiker);
-        model.addAttribute(UserError.NAME, userError);
+    public String showFormForUpdate(@AuthenticationPrincipal MyUserDetails userDetails,@RequestParam("gebruikerId") int id, Model model,HttpServletRequest request){
+        //check of ik  admin ben,
+        String mail= userDetails.getUsername();
+        Gebruiker ingelogdeGebruiker = gebruikerService.getGebruikerByEmail(mail);
 
-        oorspronkelijkeMail = gebruiker.getEmail();
+        if (ingelogdeGebruiker.getRol().equals("ROLE_ADMIN"))
+        {
+            Gebruiker gebruiker = gebruikerService.getGebruikerById((long) id);
+            UserError userError = new UserError();
+            model.addAttribute(Gebruiker.NAME, gebruiker);
+            model.addAttribute(UserError.NAME, userError);
+            oorspronkelijkeMail = gebruiker.getEmail();
+            oorspronkelijkeRol=gebruiker.getRol();
+            return "gebruiker-form";
+        }
+        else
+        {
+            String idvaningelogdegebruiker=ingelogdeGebruiker.getId().toString();
+            String idvanaangepastegebruiker=String.valueOf(id);
 
-        return "gebruiker-form";
+            if (idvaningelogdegebruiker.equals(idvanaangepastegebruiker))
+            {
+                Gebruiker gebruiker = gebruikerService.getGebruikerById((long) id);
+                UserError userError = new UserError();
+                model.addAttribute(Gebruiker.NAME, gebruiker);
+                model.addAttribute(UserError.NAME, userError);
+                oorspronkelijkeMail = gebruiker.getEmail();
+                oorspronkelijkeRol = gebruiker.getRol();
+                return "gebruiker-form";
+            }
+            else
+            {
+                return "/error/403";
+            }
+        }
     }
+
+
+
+
 
     @GetMapping("/delete")
     public String deleteGebruiker(@RequestParam("gebruikerId") long id){
@@ -191,9 +226,11 @@ public class GebruikerController {
 
 
 
+
     //VALIDATIE ROL
     private void validatieRol(Gebruiker gebruiker, UserError userError, String rolString) {
-        gebruiker.setRol(rolString);
+            gebruiker.setRol(rolString);
+
         if (rolString==null) {
             userError.rol = "Gelieve het type user aan te duiden";
             userError.hasErrors = true;
@@ -213,6 +250,8 @@ public class GebruikerController {
         }
     }
 
+
+
     //VALIDATIE ACHTERNAAM
     private void validatieAchternaam(Gebruiker gebruiker, UserError userError, String achternaam) {
         gebruiker.setAchternaam(achternaam);
@@ -221,6 +260,8 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
+
+
 
 
     //VALIDATIE WOONPLAATS
@@ -233,6 +274,8 @@ public class GebruikerController {
     }
 
 
+
+
     //VALIDATIE HUISNUMMER
     private void validatieHuisnummer(Gebruiker gebruiker, UserError userError, String huisnummer) {
         gebruiker.setHuisnummer(huisnummer);
@@ -241,6 +284,9 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
+
+
+
 
     //VALIDATIE STRAAT
     private void validatieStraat(Gebruiker gebruiker, UserError userError, String straat) {
@@ -251,6 +297,9 @@ public class GebruikerController {
         }
     }
 
+
+
+
     //VALIDATIE POSTCODE
     private void validatiePostcode(Gebruiker gebruiker, UserError userError, String postcode) {
         gebruiker.setPostcode(postcode);
@@ -259,6 +308,8 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
+
+
 
 
     //VALIDATIE TELEFOON
@@ -288,9 +339,7 @@ public class GebruikerController {
                     userError.hasErrors = true;
             }
                 else{
-
                     List<Gebruiker> lijstGebruikers = gebruikerService.getGebruikers();
-
                     int count=0;
                     for (Gebruiker item : lijstGebruikers)
                     {
@@ -305,7 +354,6 @@ public class GebruikerController {
                             }
                         }
                     }
-
                     if (count>0)
                     {
                         userError.email = "Dit e-mailadres heeft al een PlayTime-account";
@@ -326,25 +374,4 @@ public class GebruikerController {
             userError.hasErrors = true;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

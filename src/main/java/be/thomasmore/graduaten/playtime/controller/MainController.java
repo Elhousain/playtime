@@ -112,7 +112,18 @@ System.out.println(eigenGebruikerBordspellen);
             }
         }
 
+        /*String geenBestellingen = "U heeft nog geen bestellingen geplaatst op PlayTime.";
 
+        if (eigenGebruikerBordspellen.size()==0)
+        {
+            model.addAttribute("geenBestellingen", geenBestellingen);
+        }
+        else
+        {
+
+            model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
+        }
+*/
         model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
         return "gebruikerbordspel-eigendata";
     }
