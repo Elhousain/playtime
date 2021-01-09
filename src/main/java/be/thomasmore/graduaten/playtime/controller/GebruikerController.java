@@ -319,6 +319,26 @@ public class GebruikerController {
             userError.telefoon = "Gelieve een telefoonnummer in te vullen";
             userError.hasErrors = true;
         }
+        else  {
+
+            int n = telefoon.length();
+            int aantalNietNummers=0;
+
+            for (int i = 0; i < n; i++) {
+
+                // Check if the sepecified
+                // character is a digit then
+                // return true,
+                // else return false
+                if (!Character.isDigit(telefoon.charAt(i))) {
+                    aantalNietNummers++;
+                }
+            }
+            if (aantalNietNummers>0) {
+                 userError.telefoon = "Het telefoonnummer mag enkel getallen bevatten [0-1-2-3-4-5-6-7-8-9]";
+                userError.hasErrors = true;
+            }
+        }
     }
 
 

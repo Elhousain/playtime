@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/gebruiker/eigendata").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/shoppingCart").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/eigenspellen").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/gebruikerBordspel/list").hasRole("ADMIN")
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/overzichtSpellen").permitAll()

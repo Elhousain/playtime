@@ -3,14 +3,24 @@ package be.thomasmore.graduaten.playtime.controller;
 
 import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.*;
+
+
+import org.apache.logging.log4j.status.StatusLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.management.remote.JMXAuthenticator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +36,10 @@ import java.util.*;
 
 @Controller
 public class MainController {
+
+
+    private static final StatusLogger LOGGER = StatusLogger.getLogger();
+
 
     @Autowired
     GebruikerService gebruikerService;
@@ -77,23 +91,6 @@ public class MainController {
 
 
 
-
-
-   /* @RequestMapping("/eigenspellen")
-    public String overzichtEigenSpellen(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
-        String mail= userDetails.getUsername();
-        Gebruiker gebruiker = gebruikerService.getGebruikerByEmail(mail);
-        Long id = gebruiker.getId();
-
-       List<GebruikerBordspel> eigenGebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellenPerGebruiker(id);
-System.out.println(eigenGebruikerBordspellen);
-
-
-        model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
-        return "gebruikerbordspel-eigendata";
-    }*/
-
-
     @RequestMapping("/eigenspellen")
     public String overzichtEigenSpellen(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
         String mail= userDetails.getUsername();
@@ -112,18 +109,7 @@ System.out.println(eigenGebruikerBordspellen);
             }
         }
 
-        /*String geenBestellingen = "U heeft nog geen bestellingen geplaatst op PlayTime.";
 
-        if (eigenGebruikerBordspellen.size()==0)
-        {
-            model.addAttribute("geenBestellingen", geenBestellingen);
-        }
-        else
-        {
-
-            model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
-        }
-*/
         model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
         return "gebruikerbordspel-eigendata";
     }
@@ -151,6 +137,9 @@ System.out.println(eigenGebruikerBordspellen);
 
         return "overzichtWinkelwagen";
     }
+
+
+
 
     @RequestMapping("/shoppingCart")
     public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model, @Param("keyword") String keyword) throws ServletException, IOException
@@ -181,6 +170,10 @@ System.out.println(eigenGebruikerBordspellen);
 
         return "overzichtWinkelwagen";
     }
+
+
+
+
     protected void deleteCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
@@ -195,6 +188,9 @@ System.out.println(eigenGebruikerBordspellen);
         }
         cartBean.deleteCart(iSTT);
     }
+
+
+
 
     protected void updateCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -212,6 +208,8 @@ System.out.println(eigenGebruikerBordspellen);
         }
         cartBean.updateCart(iSTT, iQuantity);
     }
+
+
 
     protected void addToCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -240,30 +238,46 @@ System.out.println(eigenGebruikerBordspellen);
 
 
 
-   /* @RequestMapping("/registratie")
-    public String registratie(){
-        return "registratie";
-    }*/
+
 
 
     @RequestMapping("/registratie")
-    public String navigateForm(Model model) {
-        HashMap<String, String> values = new HashMap<>();
-        HashMap<String, String> errors = new HashMap<>();
-        values.put(Gebruiker.VOORNAAM, "");
-        values.put(Gebruiker.ACHTERNAAM, "");
-        values.put(Gebruiker.EMAIL, "");
-        values.put(Gebruiker.TELEFOON, "");
-        values.put(Gebruiker.GEBOORTEDATUM, "");
-        values.put(Gebruiker.STRAAT, "");
-        values.put(Gebruiker.PASWOORD, "");
-        values.put(Gebruiker.POSTCODE, "");
-        values.put(Gebruiker.WOONPLAATS, "");
-        values.put(Gebruiker.HUISNUMMER, "");
-        model.addAttribute("values", values);
-        model.addAttribute("errors", errors);
-        return "registratie";
+    public String navigateForm(@AuthenticationPrincipal MyUserDetails userDetails,Model model) {
+
+        String  mail="";
+
+        try {
+            mail= userDetails.getUsername();
+        } catch (Exception e) {
+            //LOGGER.error("", e);
+        }
+
+
+
+        if (!mail.equals(null)) {
+            return "/error/403";
+        }
+        else  {
+            HashMap<String, String> values = new HashMap<>();
+            HashMap<String, String> errors = new HashMap<>();
+            values.put(Gebruiker.VOORNAAM, "");
+            values.put(Gebruiker.ACHTERNAAM, "");
+            values.put(Gebruiker.EMAIL, "");
+            values.put(Gebruiker.TELEFOON, "");
+            values.put(Gebruiker.GEBOORTEDATUM, "");
+            values.put(Gebruiker.STRAAT, "");
+            values.put(Gebruiker.PASWOORD, "");
+            values.put(Gebruiker.POSTCODE, "");
+            values.put(Gebruiker.WOONPLAATS, "");
+            values.put(Gebruiker.HUISNUMMER, "");
+            model.addAttribute("values", values);
+            model.addAttribute("errors", errors);
+            return "registratie";
+        }
+
+
     }
+
 
 
 
@@ -282,7 +296,7 @@ System.out.println(eigenGebruikerBordspellen);
         String achternaam = request.getParameter(Gebruiker.ACHTERNAAM);
         validatieAchternaam(values, errors , achternaam);
 
-
+        //set role as Klant bij registratie
         String rol = "ROLE_USER";
 
 
@@ -359,8 +373,17 @@ System.out.println(eigenGebruikerBordspellen);
 
             gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, date,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
 
+
+
+            try {
+                request.login(email, paswoord);
+            } catch (ServletException e) {
+                LOGGER.error("Error while login ", e);
+            }
+
+
             //Hier code toevoegen om in te loggen
-            return "overzichtSpellen";
+            return "redirect:/overzichtSpellen";
         } else {
             model.addAttribute("values", values);
             model.addAttribute("errors", errors);
@@ -436,6 +459,33 @@ System.out.println(eigenGebruikerBordspellen);
         if (telefoon.isEmpty()) {
             errors.put(Gebruiker.TELEFOON, "Gelieve het telefoonnummer in te vullen.");
         }
+       else  {
+            int n = telefoon.length();
+            int aantalNietNummers=0;
+
+            for (int i = 0; i < n; i++) {
+
+                // Check if the sepecified
+                // character is a digit then
+                // return true,
+                // else return false
+                if (!Character.isDigit(telefoon.charAt(i))) {
+                    aantalNietNummers++;
+                }
+            }
+            if (aantalNietNummers>0) {
+                errors.put(Gebruiker.TELEFOON, "Het telefoonnummer mag enkel getallen bevatten [0-1-2-3-4-5-6-7-8-9]");
+            }
+
+        }
+
+
+
+
+
+
+
+
     }
 
 
@@ -446,8 +496,6 @@ System.out.println(eigenGebruikerBordspellen);
             errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
         }
     }
-
-
 
 
 

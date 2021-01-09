@@ -50,7 +50,18 @@
 
 
     <c:if test="${eigenGebruikerBordspellen.size()==0}">
-        <p>U heeft geen bestellingen</p>
+
+        <h5>U heeft geen bestellingen geplaatst.
+        <br>
+        <br>
+
+
+
+                Klik op <a  href="/overzichtSpellen"><u><strong>PlayTime-Catalogus</strong></u></a> en ontdek de allerleukste spelletjes om te huren of te kopen !
+
+
+        </h5>
+
 
     </c:if>
 
