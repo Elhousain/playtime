@@ -12,6 +12,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="be.thomasmore.graduaten.playtime.entity.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,9 +36,7 @@
     GebruikerBordspel gebruikerBordspel = (GebruikerBordspel)request.getAttribute(GebruikerBordspel.NAME);
 %>
 <div class="wrapper d-flex align-items-stretch">
-
     <jsp:include page="my-header.jsp"/>
-
             <div class="containerMand" >
                 <div>
                     <h2>Winkelwagen</h2>
@@ -48,13 +47,6 @@
                             <td>Bestelling </td>
                             <td>Totaal</td>
                         </tr>
-
-
-
-                        <%
-                           // System.out.println(cart);
-                        %>
-
                         <c:if test="${cart.lineItemCount == 0}">
                             <tr> <td colspan="4">- Winkel wagen is leeg -</td></tr>
                         </c:if>
@@ -65,17 +57,26 @@
                                         <input class="delete cirkel wissenRow m-auto" type="submit" name="action" value="X">
                                     </td>
                                     <td>
-
                                         <img class="afb" src="${pageContext.request.contextPath}/${cartItem.afbeelding}" alt="picture">
                                     </td>
                                     <td class="langsElkaar">
                                         <div class="blocks" >
                                             <p>${cartItem.titel}</p>
                                             €<c:out value="${(cartItem.prijs)}"/>
-                                            <input style="width: 20%" type='number'  name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+
+                                            <c:forEach  var="selectSpel" items="${spellen}">
+                                                <c:if test="${cartItem.id==selectSpel.id}">
+                                                    <c:if test="${'huren'==cartItem.titel}">
+                                                        <input style="width: 20%" type='number' max="${selectSpel.voorraad_huur}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                                    </c:if>
+                                                    <c:if test="${'kopen'==cartItem.titel}">
+                                                        <input style="width: 20%" type='number' max="${selectSpel.voorraad_koop}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
                                     </td>
-                                    <td>€<c:out value="${cartItem.totaal}"/></td>
+                                    <td><fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
                                     <td>
                                         <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
                                         <input type="submit" name="action" value="Update">
@@ -87,7 +88,7 @@
                         <!--Total-->
                         <tr>
                             <td colspan="3"> </td>
-                            <td>Subtotaal: €<c:out value="${cart.total}"/></td>
+                            <td>Subtotaal: <fmt:formatNumber value="${cart.total}" type ="currency"/></td>
                         </tr>
 
                     </table>
@@ -108,7 +109,7 @@
                                     <div class="col-md-6 mx-auto">
                                         <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
 
-                                        <!-- Date Picker Input -->
+
                                         <!-- Date Picker Input -->
                                         <div class="form-group mb-4">
                                             <div class="datepicker date input-group p-0 shadow-sm">
@@ -122,7 +123,7 @@
 
                                                 <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
                                             </div>
-                                        </div><!-<!-- DEnd ate Picker Input -->
+                                        </div><!-- DEnd ate Picker Input -->
                                         <!-- For Demo Purpose -->
                                             <div class="text-center">
                                                 <p id="result-1">&nbsp;</p>
@@ -134,8 +135,6 @@
                                             <input type="hidden" id="datetm" name="datum">
                                         <input type="submit"  value="Bevestigen" >
                                         </form>
-
-                                        <a href="${pageContext.request.contextPath}/gebruikerBordspel/send-mail" >shopping car</a>
 
                                     </div>
                                 </div>

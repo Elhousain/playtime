@@ -58,6 +58,12 @@ public class MainController {
 
     }
 
+    @RequestMapping("/contact")
+    public String contact(){
+        return "/contact";
+
+    }
+
     @RequestMapping("/overzichtSpellen")
     public String overzichtSpellen(Model model, @Param("keyword") String keyword) {
         List<Spel> spellen = spelService.getSpellenActief(keyword);

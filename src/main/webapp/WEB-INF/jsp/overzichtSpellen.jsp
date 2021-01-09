@@ -57,7 +57,6 @@
     <div class="row dashboard-cards">
         <c:forEach  items="${spellen}" var="spel">
             <div class=card>
-
                 <div class=card-title>
                     <h5> ${spel.naam}</h5>
                     <img class=farah src="${spel.foto}">
