@@ -18,4 +18,5 @@ public class SpelError {
     public String status;
     public String voorraad_huur;
     public String voorraad_koop;
+    public String foto;
 }

@@ -41,6 +41,16 @@ public class SpelController {
         UitgeverError uitgeverError = new UitgeverError();
         model.addAttribute(UitgeverError.EDITOR, uitgeverError);
 
+        Categorie categorie = new Categorie();
+        model.addAttribute(Categorie.CATEGORIE, categorie);
+        CategorieError categorieError = new CategorieError();
+        model.addAttribute(CategorieError.CATEGORIE, categorieError);
+
+        Taal taal = new Taal();
+        model.addAttribute(Taal.TAAL, taal);
+        TaalError taalError = new TaalError();
+        model.addAttribute(TaalError.TAAL, taalError);
+
         return "list-spellen";
     }
 
@@ -60,6 +70,7 @@ public class SpelController {
         model.addAttribute("uitgevers", uitgevers);
         List<Status> statussen = statusService.getStatussen();
         model.addAttribute("statussen", statussen);
+        foto = "images/logo.png";
         return "spel-form";
     }
 
@@ -90,11 +101,30 @@ public class SpelController {
         validatieCategorieToevoegen(categorie, categorieError, request.getParameter(Categorie.BESCHRIJVING));
 
         if (categorieError.hasErrors){
-            model.addAttribute(Categorie.CATEGGORIE, categorie);
+            model.addAttribute(Categorie.CATEGORIE, categorie);
             model.addAttribute(CategorieError.CATEGORIE, categorieError);
             return "list-spellen";
         } else {
             categorieService.addCategorie(categorie);
+            return "redirect:/spel/list";
+        }
+
+    }
+
+    @PostMapping("/saveTaal")
+    public String saveTaal(HttpServletRequest request, Model model){
+        Taal taal = new Taal();
+        TaalError taalError = new TaalError();
+
+        validatieIdTaal(taal, request.getParameter(Categorie.ID));
+        validatieTaalToevoegen(taal, taalError, request.getParameter(Categorie.BESCHRIJVING));
+
+        if (taalError.hasErrors){
+            model.addAttribute(Taal.TAAL, taal);
+            model.addAttribute(TaalError.TAAL, taalError);
+            return "list-spellen";
+        } else {
+            taalService.addTaal(taal);
             return "redirect:/spel/list";
         }
 
@@ -119,7 +149,7 @@ public class SpelController {
         validatieBeschrijving(spel, spelError, request.getParameter(Spel.BESCHRIJVING));
         validatiePrijs(spel, spelError, request.getParameter(Spel.PRIJS));
         validatieMin_spelers(spel, spelError, request.getParameter(Spel.MIN_SPELERS));
-        validatieMax_spelers(spel, spelError, request.getParameter(Spel.MAX_SPELERS));
+        validatieMax_spelers(spel, spelError, request.getParameter(Spel.MAX_SPELERS), request.getParameter(Spel.MIN_SPELERS));
         validatieMin_leeftijd(spel, spelError, request.getParameter(Spel.MIN_LEEFTIJD));
         validatieVoorraad_huur(spel, spelError, request.getParameter(Spel.VOORRAAD_HUUR));
         validatieVoorraad_koop(spel, spelError, request.getParameter(Spel.VOORRAAD_KOOP));
@@ -127,6 +157,7 @@ public class SpelController {
         validatieStatus(spel, spelError, request.getParameter(Spel.STATUS));
         validatieTaal(spel, spelError, request.getParameter(Spel.TAAL));
         validatieUitgever(spel, spelError, request.getParameter(Spel.UITGEVER));
+        spel.setFoto(foto);
 
         spel.setFoto(locatieSpel);
 
@@ -160,6 +191,7 @@ String locatieSpel;
         model.addAttribute("uitgevers", uitgevers);
         List<Status> statussen = statusService.getStatussen();
         model.addAttribute("statussen", statussen);
+        foto = spel.getFoto();
         return "spel-form";
     }
 
@@ -196,11 +228,15 @@ String locatieSpel;
             spelError.hasErrors = true;
         } else {
             Double mijnPrijs = Double.parseDouble(prijs);
+            if (mijnPrijs<0){
+                spelError.prijs = "Gelieve een prijs, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            }
             spel.setPrijs(mijnPrijs);
         }
     }
 
-
+    String foto;
     //VALIDATIE BESCHRIJVING
     private void validatieBeschrijving(Spel spel, SpelError spelError, String beschrijving) {
         spel.setBeschrijving(beschrijving);
@@ -210,6 +246,7 @@ String locatieSpel;
         }
     }
 
+
     //VALIDATIE MIN_SPELERS
     private void validatieMin_spelers(Spel spel, SpelError spelError, String min_spelers){
         if (min_spelers.equals("")){
@@ -217,17 +254,29 @@ String locatieSpel;
             spelError.hasErrors = true;
         } else {
             int mijnMin_spelers = Integer.parseInt(min_spelers);
+            if (mijnMin_spelers<0){
+                spelError.min_spelers = "Gelieve een minimaal aantal spelers, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            }
             spel.setMin_spelers(mijnMin_spelers);
         }
     }
 
     //VALIDATIE MAX_SPELERS
-    private void validatieMax_spelers(Spel spel, SpelError spelError, String max_spelers){
+    private void validatieMax_spelers(Spel spel, SpelError spelError, String max_spelers, String min_spelers){
         if (max_spelers.equals("")){
             spelError.max_spelers = "Gelieve een maximum aantal spelers in te vullen";
             spelError.hasErrors = true;
         } else {
             int mijnMax_spelers = Integer.parseInt(max_spelers);
+            int mijnMin_spelers = Integer.parseInt(min_spelers);
+            if (mijnMax_spelers<0){
+                spelError.max_spelers = "Gelieve een maximum aantal spelers, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            } if (mijnMax_spelers<mijnMin_spelers){
+                spelError.max_spelers = "Het maximumum aantal spelers moet groter of gelijk zijn aan het minimum aantal spelers";
+                spelError.hasErrors = true;
+            }
             spel.setMax_spelers(mijnMax_spelers);
         }
     }
@@ -239,6 +288,10 @@ String locatieSpel;
             spelError.hasErrors = true;
         } else {
             int mijnMin_leeftijd = Integer.parseInt(min_leeftijd);
+            if (mijnMin_leeftijd<0){
+                spelError.min_leeftijd = "Gelieve een leeftijd, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            }
             spel.setMin_leeftijd(mijnMin_leeftijd);
         }
     }
@@ -249,8 +302,12 @@ String locatieSpel;
             spelError.voorraad_huur = "Gelieve de voorraad voor verhuur in te vullen";
             spelError.hasErrors = true;
         } else {
-            int mijnVoorraad_koop = Integer.parseInt(voorraad_huur);
-            spel.setVoorraad_huur(mijnVoorraad_koop);
+            int mijnVoorraad_huur = Integer.parseInt(voorraad_huur);
+            if (mijnVoorraad_huur<0){
+                spelError.voorraad_huur = "Gelieve een voorraad, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            }
+            spel.setVoorraad_huur(mijnVoorraad_huur);
         }
     }
 
@@ -261,6 +318,10 @@ String locatieSpel;
             spelError.hasErrors = true;
         } else {
             int mijnVoorraad_koop = Integer.parseInt(voorraad_koop);
+            if (mijnVoorraad_koop<0){
+                spelError.voorraad_koop = "Gelieve een voorraad, hoger dan 0 in te vullen";
+                spelError.hasErrors = true;
+            }
             spel.setVoorraad_koop(mijnVoorraad_koop);
         }
     }
@@ -346,7 +407,7 @@ String locatieSpel;
     private void validatieUitgeverToevoegen(Uitgever uitgever, UitgeverError uitgeverError, String beschrijving) {
         uitgever.setBeschrijving(beschrijving);
         if (beschrijving.isEmpty()) {
-            uitgeverError.beschrijving = "Gelieve een beschrijving in te vullen";
+            uitgeverError.beschrijving = "Gelieve een uitgever in te vullen";
             uitgeverError.hasErrors = true;
         }
     }
@@ -366,6 +427,24 @@ String locatieSpel;
         if (beschrijving.isEmpty()) {
             categorieError.beschrijving = "Gelieve een categorie in te vullen";
             categorieError.hasErrors = true;
+        }
+    }
+
+    //VALIDATIE ID TAAL
+    private void validatieIdTaal(Taal taal, String id) {
+
+        if (!id.equals("null"))
+        {
+            taal.setId(Long.parseLong(id));
+        }
+    }
+
+    //VALIDATIE BESCHRIJVING TAAL
+    private void validatieTaalToevoegen(Taal taal, TaalError taalError, String beschrijving) {
+        taal.setBeschrijving(beschrijving);
+        if (beschrijving.isEmpty()) {
+            taalError.beschrijving = "Gelieve een taal in te vullen";
+            taalError.hasErrors = true;
         }
     }
 

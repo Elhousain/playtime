@@ -21,6 +21,7 @@ public class Spel
     public static final String STATUS = "Status";
     public static final String VOORRAAD_HUUR = "Voorraad_huur";
     public static final String VOORRAAD_KOOP = "Voorraad_koop";
+    public static final String FOTO = "Foto";
 
 
 

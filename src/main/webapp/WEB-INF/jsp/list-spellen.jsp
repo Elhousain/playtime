@@ -100,71 +100,74 @@
 
         </div>
 
+<div class="row-col-md-12">
+
 <%
     Uitgever uitgever = (Uitgever) request.getAttribute(Uitgever.EDITOR);
     UitgeverError uitgeverError = (UitgeverError)request.getAttribute(UitgeverError.EDITOR);
 %>
-
+    <div class="form-group col-4">
 <form  class="needs-validation" action="/spel/saveUitgever" method="post" novalidate>
     <input type="hidden" id="<%=Uitgever.ID%>" name="<%=Uitgever.ID%>" value="<%=uitgever.getId()%>"/>
 
-    <div class="row col-md-12">
 
 
-        <div class="form-group col-4">
-
-            <label class="form-control-label" for="<%=Uitgever.BESCHRIJVING%>"><%=Uitgever.BESCHRIJVING%></label>
+            <label class="form-control-label" for="<%=Uitgever.BESCHRIJVING%>">Nieuwe Uitgever</label>
             <input class="form-control<%out.print(uitgeverError.beschrijving != null ? " is-invalid" : "");%>"
                    maxlength="20" type="text"
                    id="<%=Uitgever.BESCHRIJVING%>"
                    name="<%=Uitgever.BESCHRIJVING%>"
                    value="<%=uitgever.getBeschrijving() == null ? "" : uitgever.getBeschrijving()%>">
             <%out.print(uitgeverError.beschrijving != null ? "<div class=\"invalid-feedback\">" + uitgeverError.beschrijving + "</div>" : "");%>
-        </div>
 
-
-
-        <div class="row col-md-12">
-
-            <div  class="form-group col-6" >
                 <input type="submit" class="btn btn-primary" value="Opslaan">
-            </div>
-        </div>
-    </div>
-</form>
 
-<%--<%
-    Categorie categorie = (Categorie) request.getAttribute(Categorie.CATEGGORIE);
+</form>
+    </div>
+
+<%
+    Categorie categorie = (Categorie) request.getAttribute(Categorie.CATEGORIE);
     CategorieError categorieError = (CategorieError) request.getAttribute(CategorieError.CATEGORIE);
 %>
-
+    <div class="form-group col-4">
 <form  class="needs-validation" action="/spel/saveCategorie" method="post" novalidate>
     <input type="hidden" id="<%=Categorie.ID%>" name="<%=Categorie.ID%>" value="<%=categorie.getId()%>"/>
 
-    <div class="row col-md-12">
-
-
-        <div class="form-group col-4">
-
-            <label class="form-control-label" for="<%=Categorie.BESCHRIJVING%>"><%=Categorie.BESCHRIJVING%></label>
+            <label class="form-control-label" for="<%=Categorie.BESCHRIJVING%>">Nieuwe Categorie</label>
             <input class="form-control<%out.print(categorieError.beschrijving != null ? " is-invalid" : "");%>"
                    maxlength="20" type="text"
                    id="<%=Categorie.BESCHRIJVING%>"
                    name="<%=Categorie.BESCHRIJVING%>"
                    value="<%=categorie.getBeschrijving() == null ? "" : categorie.getBeschrijving()%>">
             <%out.print(categorieError.beschrijving != null ? "<div class=\"invalid-feedback\">" + categorieError.beschrijving + "</div>" : "");%>
-        </div>
 
-
-
-        <div class="row col-md-12">
-
-            <div  class="form-group col-6" >
                 <input type="submit" class="btn btn-primary" value="Opslaan">
-            </div>
-        </div>
+
+</form>
     </div>
-</form>--%>
+
+<%
+    Taal taal = (Taal) request.getAttribute(Taal.TAAL);
+    TaalError taalError = (TaalError) request.getAttribute(TaalError.TAAL);
+%>
+    <div class="form-group col-4">
+<form  class="needs-validation" action="/spel/saveTaal" method="post" novalidate>
+    <input type="hidden" id="<%=Taal.ID%>" name="<%=Taal.ID%>" value="<%=taal.getId()%>"/>
+
+            <label class="form-control-label" for="<%=Taal.BESCHRIJVING%>">Nieuwe Taal</label>
+            <input class="form-control<%out.print(categorieError.beschrijving != null ? " is-invalid" : "");%>"
+                   maxlength="20" type="text"
+                   id="<%=Taal.BESCHRIJVING%>"
+                   name="<%=Taal.BESCHRIJVING%>"
+                   value="<%=taal.getBeschrijving() == null ? "" : taal.getBeschrijving()%>">
+            <%out.print(taalError.beschrijving != null ? "<div class=\"invalid-feedback\">" + taalError.beschrijving + "</div>" : "");%>
+
+                <input type="submit" class="btn btn-primary" value="Opslaan">
+
+
+</form>
+    </div>
+</div>
 
         <!--endregion-->
     </div>

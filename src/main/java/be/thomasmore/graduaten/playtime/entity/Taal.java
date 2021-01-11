@@ -5,6 +5,10 @@ import java.sql.Date;
 
 @Entity
 public class Taal {
+    public static final String TAAL = "taal";
+    public static final String ID = "id";
+    public static final String BESCHRIJVING = "beschrijving";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

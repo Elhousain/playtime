@@ -47,6 +47,7 @@
                         <%out.print(spelError.naam != null ? "<div class=\"invalid-feedback\">" + spelError.naam + "</div>" : "");%>
                     </div>
 
+
                     <div class="form-group col-6">
                         <label class="form-control-label" for="<%=Spel.PRIJS%>"><%=Spel.PRIJS%></label>
                         <input class="form-control<%out.print(spelError.prijs != null ? " is-invalid" : "");%>"
