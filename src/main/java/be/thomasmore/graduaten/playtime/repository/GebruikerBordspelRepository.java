@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.playtime.repository;
 
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
-import be.thomasmore.graduaten.playtime.entity.Spel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +14,4 @@ public interface GebruikerBordspelRepository extends JpaRepository<GebruikerBord
     @Query(value = "SELECT g FROM GebruikerBordspel g WHERE g.verwerkt = false ")
     List<GebruikerBordspel> getGebruikerBordspellenNietVerwerkt();
 
-
-   // @Query(value = "SELECT g FROM GebruikerBordspel g WHERE g.id = Gebruiker .id")
-   // List<GebruikerBordspel> getGebruikerBordspellenPerGebruiker();
 }

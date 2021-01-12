@@ -4,7 +4,6 @@ import be.thomasmore.graduaten.playtime.entity.Status;
 import be.thomasmore.graduaten.playtime.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

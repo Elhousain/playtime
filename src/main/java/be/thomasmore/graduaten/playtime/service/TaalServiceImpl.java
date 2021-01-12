@@ -5,7 +5,6 @@ import be.thomasmore.graduaten.playtime.entity.Taal;
 import be.thomasmore.graduaten.playtime.repository.TaalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

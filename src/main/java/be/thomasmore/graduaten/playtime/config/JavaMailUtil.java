@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.playtime.config;
 
-import org.springframework.security.core.parameters.P;
-import org.springframework.stereotype.Service;
+
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

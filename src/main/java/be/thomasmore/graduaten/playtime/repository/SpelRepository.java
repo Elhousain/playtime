@@ -1,6 +1,5 @@
 package be.thomasmore.graduaten.playtime.repository;
 
-import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
 import be.thomasmore.graduaten.playtime.entity.Spel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

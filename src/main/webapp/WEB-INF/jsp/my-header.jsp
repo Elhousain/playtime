@@ -1,8 +1,6 @@
-<%@ page import="be.thomasmore.graduaten.playtime.entity.MyUserDetails" %>
 <%@ page import="org.springframework.security.core.userdetails.UserDetails" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
 <%@ page import="org.springframework.security.core.authority.SimpleGrantedAuthority" %><%--
   Created by IntelliJ IDEA.
   User: tomsc

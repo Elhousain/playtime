@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 public class Taal {

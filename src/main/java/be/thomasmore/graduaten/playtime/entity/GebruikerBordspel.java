@@ -1,8 +1,6 @@
 package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity

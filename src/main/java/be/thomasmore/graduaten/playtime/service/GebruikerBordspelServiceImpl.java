@@ -1,7 +1,6 @@
 package be.thomasmore.graduaten.playtime.service;
 
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
-import be.thomasmore.graduaten.playtime.entity.Spel;
 import be.thomasmore.graduaten.playtime.repository.GebruikerBordspelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
