@@ -69,8 +69,6 @@
 
                     </div>
 
-
-
                         <div class="form-group col-4">
 
                             <label class="form-control-label" for="<%=Gebruiker.GEBOORTEDATUM%>"><%=Gebruiker.GEBOORTEDATUM%></label>

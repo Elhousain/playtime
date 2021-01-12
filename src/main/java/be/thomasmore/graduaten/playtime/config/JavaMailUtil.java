@@ -45,7 +45,7 @@ public class JavaMailUtil
             Message message=new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
-            message.setSubject("PlatTime Support");
+            message.setSubject("PlayTime Support");
             String htmlCode="<div style=\"width: 70% ;align-content: center;margin: auto\">\n" +
                     "    <div style=\"background: #17a2b8; padding: 10px; color: white; height: 30%;text-align: center;\" >\n" +
                     "        <h2 style=\"color: white\">Uw bestelling</h2>\n" +

@@ -54,5 +54,5 @@ public class CartItemBean
         return Objects.hash(id, titel);
     }
 
-    // Deze classe is in orde ga verder ben Cartbean
+
 }
