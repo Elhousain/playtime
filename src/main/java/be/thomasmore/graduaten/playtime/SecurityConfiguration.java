@@ -27,16 +27,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/spel/*").hasRole("ADMIN")
                 .antMatchers("/gebruiker/list").hasRole("ADMIN")
+                .antMatchers("/gebruikerBordspel/list").hasRole("ADMIN")
+
                 .antMatchers("/gebruiker/*").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/gebruiker/eigendata").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/shoppingCart").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/eigenspellen").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/gebruikerBordspel/list").hasRole("ADMIN")
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/overzichtSpellen").permitAll()
                 .antMatchers("/registratie").permitAll()
                 .and().formLogin()
+                .loginPage("/login").permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
         http.authorizeRequests()
