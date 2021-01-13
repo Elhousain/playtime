@@ -1,6 +1,5 @@
 package be.thomasmore.graduaten.playtime;
 
-import be.thomasmore.graduaten.playtime.config.JavaMailUtil;
 import be.thomasmore.graduaten.playtime.repository.GebruikerRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

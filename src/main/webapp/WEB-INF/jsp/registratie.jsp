@@ -1,6 +1,7 @@
 <%@ page import="be.thomasmore.graduaten.playtime.entity.Gebruiker" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.List" %>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -68,8 +69,6 @@
 
 
                     </div>
-
-
 
                         <div class="form-group col-4">
 

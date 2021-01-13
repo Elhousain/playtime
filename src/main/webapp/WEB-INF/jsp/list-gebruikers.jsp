@@ -6,14 +6,9 @@
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %>
-<%@ page import="java.util.List" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Uitgever" %>
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Taal" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.*" %>
+
 
 
 <!doctype html>

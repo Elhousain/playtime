@@ -4,7 +4,6 @@ import be.thomasmore.graduaten.playtime.entity.Uitgever;
 import be.thomasmore.graduaten.playtime.repository.UitgeverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

@@ -1,9 +1,6 @@
 package be.thomasmore.graduaten.playtime.service;
 
-import be.thomasmore.graduaten.playtime.entity.Gebruiker;
 import be.thomasmore.graduaten.playtime.entity.GebruikerBordspel;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public interface GebruikerBordspelService
@@ -15,5 +12,5 @@ public interface GebruikerBordspelService
     GebruikerBordspel addGebruikerBordspel(GebruikerBordspel gebruikerBordspel);
     public void deleteGebruikerBordspel(Long id);
 
-  //  List<GebruikerBordspel> getGebruikerBordspellenPerGebruiker(Long id);
+
 }

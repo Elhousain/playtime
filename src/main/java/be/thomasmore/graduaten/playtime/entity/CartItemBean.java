@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.util.Objects;
+
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION,proxyMode = ScopedProxyMode.TARGET_CLASS)
 
@@ -54,5 +54,5 @@ public class CartItemBean
         return Objects.hash(id, titel);
     }
 
-    // Deze classe is in orde ga verder ben Cartbean
+
 }

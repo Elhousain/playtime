@@ -1,35 +1,20 @@
 package be.thomasmore.graduaten.playtime.controller;
 
-
 import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.*;
-
-
 import org.apache.logging.log4j.status.StatusLogger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.management.remote.JMXAuthenticator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -57,9 +42,8 @@ public class MainController {
     GebruikerBordspelService gebruikerBordspelService;
 
 
-
     @RequestMapping("/overzichtGebruikers")
-    public String overzichtGebruikers(Model model){
+    public String overzichtGebruikers(Model model) {
         List<Gebruiker> gebruikers = gebruikerService.getGebruikers();
         model.addAttribute("gebruikers", gebruikers);
         return "overzichtGebruikers";
@@ -67,13 +51,13 @@ public class MainController {
 
 
     @RequestMapping("/")
-    public String index(){
+    public String index() {
         return "index";
 
     }
 
     @RequestMapping("/contact")
-    public String contact(){
+    public String contact() {
         return "/contact";
 
     }
@@ -88,23 +72,18 @@ public class MainController {
     }
 
 
-
-
-
     @RequestMapping("/eigenspellen")
     public String overzichtEigenSpellen(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
-        String mail= userDetails.getUsername();
+        String mail = userDetails.getUsername();
         Gebruiker gebruiker = gebruikerService.getGebruikerByEmail(mail);
 
 
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
-        List<GebruikerBordspel> eigenGebruikerBordspellen= new ArrayList<GebruikerBordspel>();
+        List<GebruikerBordspel> eigenGebruikerBordspellen = new ArrayList<GebruikerBordspel>();
 
 
-        for (GebruikerBordspel gebruikerBordspel:gebruikerBordspellen)
-        {
-            if (gebruikerBordspel.getGebruiker().equals(gebruiker))
-            {
+        for (GebruikerBordspel gebruikerBordspel : gebruikerBordspellen) {
+            if (gebruikerBordspel.getGebruiker().equals(gebruiker)) {
                 eigenGebruikerBordspellen.add(gebruikerBordspel);
             }
         }
@@ -113,18 +92,6 @@ public class MainController {
         model.addAttribute("eigenGebruikerBordspellen", eigenGebruikerBordspellen);
         return "gebruikerbordspel-eigendata";
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping("/overzichtWinkelwagen")
@@ -139,11 +106,8 @@ public class MainController {
     }
 
 
-
-
     @RequestMapping("/shoppingCart")
-    public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model, @Param("keyword") String keyword) throws ServletException, IOException
-    {
+    public String shoppingCart(HttpServletRequest request, HttpServletResponse response, Model model, @Param("keyword") String keyword) throws ServletException, IOException {
         String iAction = request.getParameter("action");
 
         if (iAction != null && !iAction.equals("")) {
@@ -172,12 +136,10 @@ public class MainController {
     }
 
 
-
-
     protected void deleteCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        int iSTT =Integer.parseInt(request.getParameter("stt")) ;
+        int iSTT = Integer.parseInt(request.getParameter("stt"));
         CartBean cartBean = null;
 
         Object iObject = session.getAttribute("cart");
@@ -190,13 +152,11 @@ public class MainController {
     }
 
 
-
-
     protected void updateCart(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         String iQuantity = request.getParameter("aantal");
-        int iSTT =Integer.parseInt( request.getParameter("stt"));
+        int iSTT = Integer.parseInt(request.getParameter("stt"));
 
         CartBean cartBean = null;
 
@@ -208,7 +168,6 @@ public class MainController {
         }
         cartBean.updateCart(iSTT, iQuantity);
     }
-
 
 
     protected void addToCart(HttpServletRequest request) {
@@ -231,33 +190,27 @@ public class MainController {
             session.setAttribute("cart", cartBean);
         }
 
-        cartBean.addCart(iId,iAfbeelding, iPrijs, iAantal,iTitel);
+        cartBean.addCart(iId, iAfbeelding, iPrijs, iAantal, iTitel);
 
 
     }
 
 
-
-
-
-
     @RequestMapping("/registratie")
-    public String navigateForm(@AuthenticationPrincipal MyUserDetails userDetails,Model model) {
+    public String navigateForm(@AuthenticationPrincipal MyUserDetails userDetails, Model model) {
 
-        String  mail="";
+        String mail = "";
 
         try {
-            mail= userDetails.getUsername();
+            mail = userDetails.getUsername();
         } catch (Exception e) {
             //LOGGER.error("", e);
         }
 
 
-
-        if (!mail.equals(null)) {
+        if (!mail.equals("")) {
             return "/error/403";
-        }
-        else  {
+        } else {
             HashMap<String, String> values = new HashMap<>();
             HashMap<String, String> errors = new HashMap<>();
             values.put(Gebruiker.VOORNAAM, "");
@@ -279,8 +232,6 @@ public class MainController {
     }
 
 
-
-
     @RequestMapping("/data-add-gebruiker")
     public String dataAddGebruiker(HttpServletRequest request, Model model) {
         //Initializing maps of values and errors
@@ -289,12 +240,12 @@ public class MainController {
 
 
         String voornaam = request.getParameter(Gebruiker.VOORNAAM);
-        validatieVoornaam(values, errors , voornaam);
+        validatieVoornaam(values, errors, voornaam);
 
         //Validatie Achternaam
 
         String achternaam = request.getParameter(Gebruiker.ACHTERNAAM);
-        validatieAchternaam(values, errors , achternaam);
+        validatieAchternaam(values, errors, achternaam);
 
         //set role as Klant bij registratie
         String rol = "ROLE_USER";
@@ -313,57 +264,47 @@ public class MainController {
         } else {
             List<Gebruiker> lijstGebruikers = gebruikerService.getGebruikers();
 
-            int count=0;
-            for (Gebruiker item : lijstGebruikers)
-            {
-                    String itemString =item.getEmail();
-                    String gebruikerString = request.getParameter(Gebruiker.EMAIL);
+            int count = 0;
+            for (Gebruiker item : lijstGebruikers) {
+                String itemString = item.getEmail();
+                String gebruikerString = request.getParameter(Gebruiker.EMAIL);
 
-                    if (itemString.equals(gebruikerString))
-                    {
-                        count++;
-                    }
+                if (itemString.equals(gebruikerString)) {
+                    count++;
+                }
             }
-            if (count>0)
-            {
+            if (count > 0) {
                 errors.put(Gebruiker.EMAIL, "Dit e-mailadres heeft al een PlayTime-account");
             }
         }
 
 
-
         String paswoord = request.getParameter(Gebruiker.PASWOORD);
-        validatiePaswoord(values, errors , paswoord);
-
-
+        validatiePaswoord(values, errors, paswoord);
 
 
         String telefoon = request.getParameter(Gebruiker.TELEFOON);
-        validatieTelefoon(values, errors , telefoon);
+        validatieTelefoon(values, errors, telefoon);
 
 
         String woonplaats = request.getParameter(Gebruiker.WOONPLAATS);
-        validatieWoonplaats(values, errors , woonplaats);
-
+        validatieWoonplaats(values, errors, woonplaats);
 
 
         String postcode = request.getParameter(Gebruiker.POSTCODE);
-        validatiePostcode(values, errors , postcode);
-
+        validatiePostcode(values, errors, postcode);
 
 
         String straat = request.getParameter(Gebruiker.STRAAT);
-        validatieStraat(values, errors , straat);
-
-
+        validatieStraat(values, errors, straat);
 
 
         String huisnummer = request.getParameter(Gebruiker.HUISNUMMER);
-        validatieHuisnummer(values, errors , huisnummer);
+        validatieHuisnummer(values, errors, huisnummer);
 
 
         String geboortedatumString = request.getParameter(Gebruiker.GEBOORTEDATUM);
-        validatieGeboortedatum(values, errors , geboortedatumString);
+        validatieGeboortedatum(values, errors, geboortedatumString);
 
 
         //Navigate to correct page with correct actions
@@ -371,8 +312,7 @@ public class MainController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
             LocalDate date = LocalDate.parse(geboortedatumString, formatter);
 
-            gebruikerService.addGebruiker(new Gebruiker(voornaam,achternaam, rol, date,email,paswoord,telefoon,woonplaats, postcode,straat,huisnummer));
-
+            gebruikerService.addGebruiker(new Gebruiker(voornaam, achternaam, rol, date, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer));
 
 
             try {
@@ -392,9 +332,8 @@ public class MainController {
     }
 
 
-
     //VALIDATIE VOORNAAM
-    private void validatieVoornaam(HashMap values,   HashMap errors, String voornaam) {
+    private void validatieVoornaam(HashMap values, HashMap errors, String voornaam) {
         values.put(Gebruiker.VOORNAAM, voornaam);
         if (voornaam.isEmpty()) {
             errors.put(Gebruiker.VOORNAAM, "Gelieve de voornaam in te vullen.");
@@ -402,7 +341,7 @@ public class MainController {
     }
 
     //VALIDATIE ACHTERNAAM
-    private void validatieAchternaam(HashMap values,   HashMap errors, String achternaam) {
+    private void validatieAchternaam(HashMap values, HashMap errors, String achternaam) {
         values.put(Gebruiker.ACHTERNAAM, achternaam);
         if (achternaam.isEmpty()) {
             errors.put(Gebruiker.ACHTERNAAM, "Gelieve de achternaam in te vullen.");
@@ -411,7 +350,7 @@ public class MainController {
 
 
     //VALIDATIE PASWOORD
-    private void validatiePaswoord(HashMap values,   HashMap errors, String paswoord) {
+    private void validatiePaswoord(HashMap values, HashMap errors, String paswoord) {
         values.put(Gebruiker.PASWOORD, paswoord);
         if (paswoord.isEmpty()) {
             errors.put(Gebruiker.PASWOORD, "Gelieve het wachtwoord in te vullen.");
@@ -419,7 +358,7 @@ public class MainController {
     }
 
     //VALIDATIE WOONPLAATS
-    private void validatieWoonplaats(HashMap values,   HashMap errors, String woonplaats) {
+    private void validatieWoonplaats(HashMap values, HashMap errors, String woonplaats) {
         values.put(Gebruiker.WOONPLAATS, woonplaats);
         if (woonplaats.isEmpty()) {
             errors.put(Gebruiker.WOONPLAATS, "Gelieve de woonplaats in te vullen.");
@@ -427,7 +366,7 @@ public class MainController {
     }
 
     //VALIDATIE STRAAT
-    private void validatieStraat(HashMap values,   HashMap errors, String straat) {
+    private void validatieStraat(HashMap values, HashMap errors, String straat) {
         values.put(Gebruiker.STRAAT, straat);
         if (straat.isEmpty()) {
             errors.put(Gebruiker.STRAAT, "Gelieve de straat in te vullen.");
@@ -436,7 +375,7 @@ public class MainController {
 
 
     //VALIDATIE HUISNUMMER
-    private void validatieHuisnummer(HashMap values,   HashMap errors, String huisnummer) {
+    private void validatieHuisnummer(HashMap values, HashMap errors, String huisnummer) {
         values.put(Gebruiker.HUISNUMMER, huisnummer);
         if (huisnummer.isEmpty()) {
             errors.put(Gebruiker.HUISNUMMER, "Gelieve het huisnummer in te vullen.");
@@ -445,7 +384,7 @@ public class MainController {
 
 
     //VALIDATIE POSTCODE
-    private void validatiePostcode(HashMap values,   HashMap errors, String postcode) {
+    private void validatiePostcode(HashMap values, HashMap errors, String postcode) {
         values.put(Gebruiker.POSTCODE, postcode);
         if (postcode.isEmpty()) {
             errors.put(Gebruiker.POSTCODE, "Gelieve de postcode in te vullen.");
@@ -454,14 +393,13 @@ public class MainController {
 
 
     //VALIDATIE TELEFOON
-    private void validatieTelefoon(HashMap values,   HashMap errors, String telefoon) {
+    private void validatieTelefoon(HashMap values, HashMap errors, String telefoon) {
         values.put(Gebruiker.TELEFOON, telefoon);
         if (telefoon.isEmpty()) {
             errors.put(Gebruiker.TELEFOON, "Gelieve het telefoonnummer in te vullen.");
-        }
-       else  {
+        } else {
             int n = telefoon.length();
-            int aantalNietNummers=0;
+            int aantalNietNummers = 0;
 
             for (int i = 0; i < n; i++) {
 
@@ -473,31 +411,23 @@ public class MainController {
                     aantalNietNummers++;
                 }
             }
-            if (aantalNietNummers>0) {
+            if (aantalNietNummers > 0) {
                 errors.put(Gebruiker.TELEFOON, "Het telefoonnummer mag enkel getallen bevatten [0-1-2-3-4-5-6-7-8-9]");
             }
 
         }
 
 
-
-
-
-
-
-
     }
 
 
     //VALIDATIE GEBOORTEDATUM
-    private void validatieGeboortedatum(HashMap values,   HashMap errors, String geboortedatumString) {
+    private void validatieGeboortedatum(HashMap values, HashMap errors, String geboortedatumString) {
         values.put(Gebruiker.GEBOORTEDATUM, geboortedatumString);
         if (geboortedatumString.isEmpty()) {
             errors.put(Gebruiker.GEBOORTEDATUM, "Gelieve de geboortedatum in te vullen.");
         }
     }
-
-
 
 
 }

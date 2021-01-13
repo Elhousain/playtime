@@ -547,32 +547,3 @@ setTimeout(function() {
 });
 
 
-// // time
-// let hours = new Array(24).fill(1).map((v, i) => {
-//   return { value: i + 1, text: i + 1}
-// });
-// let minutes = new Array(60).fill(1).forEach((v, i) => {
-//   return { value: i + 1, text: i + 1}
-// });
-
-// let hourSelector = new IosSelector({
-// 	el: '#hour',
-// 	type: 'normal',
-// 	source: hours,
-// 	count: 20,
-// 	onChange: (selected) => {
-// 		currentDay = selected.value;
-// 		console.log(yearSelector.value, monthSelector.value, daySelector.value);
-// 	}
-// });
-
-// let minuteSelector = new IosSelector({
-// 	el: '#minute',
-// 	type: 'normal',
-// 	source: minutes,
-// 	count: 20,
-// 	onChange: (selected) => {
-// 		currentDay = selected.value;
-// 		console.log(yearSelector.value, monthSelector.value, daySelector.value);
-// 	}
-// });

@@ -1,9 +1,7 @@
 package be.thomasmore.graduaten.playtime.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -45,7 +43,7 @@ public class Gebruiker {
     }
 
     public Gebruiker(String voornaam, String achternaam, String rol, LocalDate geboortedatum, String email, String paswoord, String telefoon, String woonplaats, String postcode, String straat, String huisnummer) {
-        //this.id = id;
+
         this.voornaam = voornaam;
         this.achternaam = achternaam;
         this.rol=rol;
@@ -57,7 +55,7 @@ public class Gebruiker {
         this.postcode = postcode;
         this.straat = straat;
         this.huisnummer = huisnummer;
-    } //Elhousain: Hebben we deze constructor nodig? Ik had em toegevoegd, omda k denk dat we em nodig hebbe
+    }
 
     public void setId(Long id) {this.id = id;}
 
