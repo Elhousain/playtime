@@ -259,7 +259,7 @@
                                maxlength="40" type="password"
                                id="<%=Gebruiker.PASWOORD%>"
                                name="<%=Gebruiker.PASWOORD%>"
-                               value="<%=gebruiker.getPaswoord() == null ? "" : gebruiker.getPaswoord()%>">
+                               value="<%=gebruiker.getPaswoord() == null ? "" : "" %>">
                         <%out.print(userError.paswoord != null ? "<div class=\"invalid-feedback\">" + userError.paswoord + "</div>" : "");%>
                     </div>
                 </div>

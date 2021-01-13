@@ -3,6 +3,9 @@ import be.thomasmore.graduaten.playtime.entity.*;
 import be.thomasmore.graduaten.playtime.service.GebruikerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -21,8 +24,11 @@ public class GebruikerController {
     @Autowired
     GebruikerService gebruikerService;
 
+    @Autowired PasswordEncoder passwordEncoder;
+
     String oorspronkelijkeMail;
     String oorspronkelijkeRol;
+    String oorspronkelijkPaswoord;
 
 
     @GetMapping("/list")
@@ -60,6 +66,7 @@ public class GebruikerController {
 
         oorspronkelijkeMail = "";
         oorspronkelijkeRol = "";
+        oorspronkelijkPaswoord = "";
         return "gebruiker-form";
     }
 
@@ -154,6 +161,7 @@ public class GebruikerController {
             model.addAttribute(UserError.NAME, userError);
             oorspronkelijkeMail = gebruiker.getEmail();
             oorspronkelijkeRol=gebruiker.getRol();
+            oorspronkelijkPaswoord=gebruiker.getPaswoord();
             return "gebruiker-form";
         }
         else
@@ -169,6 +177,7 @@ public class GebruikerController {
                 model.addAttribute(UserError.NAME, userError);
                 oorspronkelijkeMail = gebruiker.getEmail();
                 oorspronkelijkeRol = gebruiker.getRol();
+                oorspronkelijkPaswoord = gebruiker.getPaswoord();
                 return "gebruiker-form";
             }
             else
@@ -386,10 +395,11 @@ public class GebruikerController {
 
     //VALIDATIE PASWOORD
     private void validatiePaswoord(Gebruiker gebruiker, UserError userError, String paswoord) {
-        gebruiker.setPaswoord(paswoord);
-        if (paswoord.isEmpty()) {
-            userError.paswoord = "Gelieve een wachtwoord in te vullen";
-            userError.hasErrors = true;
+        if (paswoord.isEmpty()){
+            gebruiker.setPaswoord(oorspronkelijkPaswoord);
+        } else {
+            String hashedPassword = passwordEncoder.encode(paswoord);
+            gebruiker.setPaswoord(hashedPassword);
         }
     }
 }

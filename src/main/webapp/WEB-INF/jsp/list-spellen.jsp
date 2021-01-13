@@ -92,11 +92,7 @@
             </div>
 
 
-
-
-        </div>
-
-<div class="row-col-md-12">
+<div class="row-col-md-12"style="display: flex">
 
 <%
     Uitgever uitgever = (Uitgever) request.getAttribute(Uitgever.EDITOR);
@@ -165,7 +161,7 @@
     </div>
 </div>
 
-        <!--endregion-->
+</div>   <!--endregion-->
     </div>
 </div>
 <script type="text/javascript">
