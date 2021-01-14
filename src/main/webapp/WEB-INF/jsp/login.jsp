@@ -1,4 +1,5 @@
-<%@ page import="be.thomasmore.graduaten.playtime.entity.Spel" %><%--
+
+<%--
   Created by IntelliJ IDEA.
   User: elhousain.farah
   Date: 19/10/2020
