@@ -64,7 +64,7 @@
                                 <input type="hidden" name="titel" value="kopen"><br/>
                                 <input type="hidden" name="aantal" value="1"><br/>
                                 <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs} €</p>
-                                <input type="submit" name="action" value="Kopen" class="btn-primary btn-block w-75 m-auto">
+                                <input type="submit" name="action" id="k${spel.id}" value="Kopen" class="btn-primary btn-block w-75 m-auto">
                             </form>
                         </div>
 
@@ -76,7 +76,7 @@
                                 <input type="hidden" name="titel" value="huren"><br/>
                                 <input type="hidden" name="aantal" value="1"><br/>
                                 <input type="hidden" name="prijs" value="${spel.prijs/5}"><p>${spel.prijs/5} €</p>
-                                <input type="submit" name="action" value="Huren" class="btn-info btn-block w-75 m-auto">
+                                <input type="submit" name="action" id="h${spel.id}" value="Huren" class="btn-info btn-block w-75 m-auto">
                             </form>
                         </div>
                         <a id=tonen class=m-auto> details</a>
@@ -110,13 +110,12 @@
     </div>
 
 
-    </form>
-
-
+</form>
 </div>
 <!--endregion-->
 </div>
 </div>
+
 <script type="text/javascript">
     function clearSearch() {
         window.location = "/overzichtSpellen";

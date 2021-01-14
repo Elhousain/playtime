@@ -105,27 +105,13 @@ public class GebruikerBordspelController {
     }
 
 
-
-
-
-
-/*
-    @RequestMapping("/overzichtWinkelwagen")
-    public String overzichtWinkelwagen(Model model, @Param("keyword") String keyword) {
-        List<Spel> spellen = spelService.getSpellen(keyword);
-        model.addAttribute("spellen", spellen);
-        List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
-        model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
-
-
-        return "overzichtWinkelwagen";
-    }
-
- */
-
     @RequestMapping("/shoppingCart")
     public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model, @Param("keyword") String keyword) throws ServletException, IOException
     {
+        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
+        model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+
+
         String iAction = request.getParameter("action");
 
         if (iAction != null && !iAction.equals("")) {
@@ -232,11 +218,31 @@ public class GebruikerBordspelController {
         Boolean verwerkt =false ;
         Boolean ishuur = false;
         Integer aantal =0;
+        String userName="";
         Spel spel = null;
+
+        HttpSession session = request.getSession();
+        CartBean cart=(CartBean)session.getAttribute("cart");//winkelwagen inhoud
+
+        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
+        if (cart.getList().size()==0)
+        {
+            gebruikerBordspelError.spel = "Gelieve tenminste één spel te selecteren";
+            gebruikerBordspelError.hasErrors = true;
+            System.out.println("winkelwagen is leeg");
+        }
+        if (gebruikerBordspelError.hasErrors) {
+            model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+            return "/shoppingCart";
+        }
+
+
+
+
         List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
         
-        HttpSession session = request.getSession();
+
 
         List<Gebruiker> gebruikerList = (List<Gebruiker>) request.getAttribute("gebruikerList");
         List<Gebruiker> gebruiker1 = gebruikerService.getGebruikers();
@@ -278,7 +284,7 @@ public class GebruikerBordspelController {
             model.addAttribute("cartBean",cartBean.getList());
            // model.addAttribute("cartItemBean",cartItemBean);
 
-            CartBean cart=(CartBean)session.getAttribute("cart");
+
             List<CartItemBean> c = cart.getList();
             
             
@@ -289,7 +295,7 @@ public class GebruikerBordspelController {
                     if (sp.getId().equals(product.getId()))
                     {
                         spel=sp;
-
+                        userName=spel.getNaam();
                     }
                 }
                 
@@ -311,15 +317,23 @@ public class GebruikerBordspelController {
                 gebruikerBordspelService.addGebruikerBordspel(gebruikerBordspel);
 
             }
+        String mail= userDetails.getUsername();
+        for (Gebruiker gebruiker:gebruiker1)
+        {
+            if (gebruiker.getEmail().equals(mail))
+            {
+                userName=gebruiker.getVoornaam()+" "+gebruiker.getAchternaam();
+            }
+        }
 
 
             System.out.println("Order(s)in databank");
             clearList(request);
             System.out.println("winkelmandje is leeg");
 
-            String mail= userDetails.getUsername();
 
-            JavaMailUtil.sendMail(mail,datum,"9h00");
+
+           JavaMailUtil.sendMail(mail,datum,String.valueOf(ordernr),userName);
 
             return "success";
     }

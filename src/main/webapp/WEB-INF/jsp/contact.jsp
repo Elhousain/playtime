@@ -106,7 +106,7 @@
                                                     <p class="text-black">PLAYTIME</p>
                                                     <p class="text-black">Playtimestraat 001</p>
                                                     <p class="text-black">1000 Brussel, Belgie</p>
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

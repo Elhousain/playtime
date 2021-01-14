@@ -31,6 +31,8 @@
 
 <%
     GebruikerBordspel gebruikerBordspel = (GebruikerBordspel)request.getAttribute(GebruikerBordspel.NAME);
+
+    GebruikerBordspelError gebruikerBordspelError = (GebruikerBordspelError) request.getAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL);
 %>
 <div class="wrapper d-flex align-items-stretch">
     <jsp:include page="my-header.jsp"/>
@@ -73,7 +75,7 @@
                                             </c:forEach>
                                         </div>
                                     </td>
-                                    <td><fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
+                                    <td>€<fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
                                     <td>
                                         <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
                                         <input type="submit" name="action" value="Update">
@@ -81,18 +83,30 @@
                                 </tr>
 
                             </form>
+
                         </c:forEach>
                         <!--Total-->
                         <tr>
                             <td colspan="3"> </td>
-                            <td>Subtotaal: <fmt:formatNumber value="${cart.total}" type ="currency"/></td>
+                            <td>Subtotaal: € <fmt:formatNumber value="${cart.total}" type ="currency"/></td>
                         </tr>
 
                     </table>
+
+
+
+
                     <div class="keuze mt-5" >
                     <a   class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
-                    <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
-                    <div id="demo" class="collapse">
+
+                     <c:if test="${cart.list.size()>0}">
+                         <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
+                     </c:if>
+
+
+
+
+                        <div id="demo" class="collapse">
                         <!-- For Demo Purpose -->
                         <div class="container py-3">
                             <header class="text-center">
@@ -130,7 +144,11 @@
                                         <%%>
                                             <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
                                             <input type="hidden" id="datetm" name="datum">
-                                        <input type="submit"  value="Bevestigen" >
+
+                                        <c:if test="${cart.list.size()>0}">
+                                            <input id="test" type="submit"  value="Bevestigen" >
+                                        </c:if>
+
                                         </form>
 
                                     </div>
@@ -144,7 +162,22 @@
     </div>
 </div>
 
-
+<script>
+    $(document).ready(function()
+    {
+        $('#content').click(function ()
+            {
+                var x = document.getElementById("<%=GebruikerBordspel.AFHAALDATUM%>").value;
+                document.getElementById("pickedDate").innerHTML = x;
+                document.getElementById("datetm").value = x;
+                if (x.length =="") {
+                    document.getElementById("test").style.display = 'none';
+                } else {
+                    document.getElementById("test").style.display = 'block';
+                }
+            });
+    });
+</script>
 
 
 <script>
@@ -155,6 +188,8 @@
             var x = document.getElementById("<%=GebruikerBordspel.AFHAALDATUM%>").value;
             document.getElementById("pickedDate").innerHTML = x;
             document.getElementById("datetm").value =x;
+
+
         });
 
         $('#laden').click(function()
@@ -185,7 +220,7 @@
         autoclose: true,
         format: "yyyy-mm-dd",
         maxViewMode: 0,
-        startDate: "now"
+        startDate: 'now'
     }).on('change', function() {
         var start = $.format.date(dateDepart.datepicker('getDate'), spanDateFormat);
         var end = $.format.date(dateReturn.datepicker('getDate'), spanDateFormat);

@@ -9,10 +9,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+//mail,datum,ordernr,userName
 public class JavaMailUtil
 {
-    public static void sendMail(String recepient,String datum,String uur) throws MessagingException {
+    public static void sendMail(String recepient,String datum,String ordernr,String username) throws MessagingException {
         System.out.println("Preparing to send email");
         Properties properties =new Properties();
 
@@ -30,7 +30,7 @@ public class JavaMailUtil
                 return new PasswordAuthentication(myAccountEmail,password);
             }
         });
-        Message message=prepareMessage(session,myAccountEmail,recepient,datum,uur);
+        Message message=prepareMessage(session,myAccountEmail,recepient,datum,ordernr,username);
 
         Transport.send(message);
         System.out.println("Message sent succesfully");
@@ -39,7 +39,7 @@ public class JavaMailUtil
 
 
 
-    private static Message prepareMessage(Session session, String myAccountEmail, String recepient, String datum, String uur){
+    private static Message prepareMessage(Session session, String myAccountEmail, String recepient, String datum, String ordernr,String username){
         try {
             Message message=new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
@@ -47,11 +47,12 @@ public class JavaMailUtil
             message.setSubject("PlayTime Support");
             String htmlCode="<div style=\"width: 70% ;align-content: center;margin: auto\">\n" +
                     "    <div style=\"background: #17a2b8; padding: 10px; color: white; height: 30%;text-align: center;\" >\n" +
-                    "        <h2 style=\"color: white\">Uw bestelling</h2>\n" +
-                    "        <p>Bulent Arslan</p>\n" +
+                    "        <h2 style=\"color: white\">Bevestiging ordernr </h2>\n" +
+                    "        <p>"+ordernr+"</p>\n" +
+                    "        <p>"+username+"</p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 40%\">\n" +
-                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen afhalen op <strong>"+datum+"</strong>  vanaf <strong>"+uur+"</strong> </p>\n" +
+                    "<p style=\"padding-top: 60px; padding-bottom: 60px\">Beste, <br> <br>U mag je bestellen komen afhalen op <strong>"+datum+"</strong>  vanaf <strong>9u00</strong> </p>\n" +
                     "    </div>\n" +
                     "    <div style=\"height: 30%\">\n" +
                     "<p>Vragen over jouw bestelling?<br><br>\n" +
