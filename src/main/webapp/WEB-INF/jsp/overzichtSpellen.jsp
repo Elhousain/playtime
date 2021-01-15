@@ -58,7 +58,7 @@
                 <div class=achtergrond>
                     <div class=row>
                         <div class=col-sm-6>
-                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
+                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/gebruikerBordspel/shoppingCart">
                                 <input type="hidden" name="id" value="${spel.id}"><br/>
                                 <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
                                 <input type="hidden" name="titel" value="kopen"><br/>
@@ -70,7 +70,7 @@
 
 
                         <div class=col-sm-6>
-                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/shoppingCart">
+                            <form   style=z-index:10 method="POST" action="${pageContext.request.contextPath}/gebruikerBordspel/shoppingCart">
                                 <input type="hidden" name="id" value="${spel.id}"><br/>
                                 <input type="hidden" name="afbeelding" value="${spel.foto}"><br/>
                                 <input type="hidden" name="titel" value="huren"><br/>

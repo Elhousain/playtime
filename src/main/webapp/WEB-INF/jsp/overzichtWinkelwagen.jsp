@@ -31,9 +31,11 @@
 
 <%
     GebruikerBordspel gebruikerBordspel = (GebruikerBordspel)request.getAttribute(GebruikerBordspel.NAME);
-
     GebruikerBordspelError gebruikerBordspelError = (GebruikerBordspelError) request.getAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL);
+
 %>
+
+
 <div class="wrapper d-flex align-items-stretch">
     <jsp:include page="my-header.jsp"/>
             <div class="containerMand" >
@@ -46,9 +48,11 @@
                             <td>Bestelling </td>
                             <td>Totaal</td>
                         </tr>
+
                         <c:if test="${cart.lineItemCount == 0}">
                             <tr> <td colspan="4">- Winkelwagen is leeg -</td></tr>
                         </c:if>
+
                         <c:forEach var="cartItem" items="${cart.list}" varStatus="counter">
                             <form name="item" method="POST" action="${pageContext.request.contextPath}/gebruikerBordspel/shoppingCart">
                                 <tr>
@@ -62,7 +66,6 @@
                                         <div class="blocks" >
                                             <p>${cartItem.titel}</p>
                                             €<c:out value="${(cartItem.prijs)}"/>
-
                                             <c:forEach  var="selectSpel" items="${spellen}">
                                                 <c:if test="${cartItem.id==selectSpel.id}">
                                                     <c:if test="${'huren'==cartItem.titel}">
@@ -81,7 +84,6 @@
                                         <input type="submit" name="action" value="Update">
                                     </td>
                                 </tr>
-
                             </form>
 
                         </c:forEach>
@@ -95,13 +97,12 @@
 
 
 
-
                     <div class="keuze mt-5" >
                     <a   class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
 
-                     <c:if test="${cart.list.size()>0}">
+
                          <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
-                     </c:if>
+
 
 
 
@@ -114,7 +115,7 @@
                             </header>
                         </div>
                         <div class="container">
-                            <form action="${pageContext.request.contextPath}/gebruikerBordspel/saveOrder" id="form_invoegen"  method="post">
+                            <form class="needs-validation" action="${pageContext.request.contextPath}/gebruikerBordspel/saveOrder" id="form_invoegen"  method="post" novalidate>
                             <div class="row">
 
                                     <div class="col-md-6 mx-auto">
@@ -132,6 +133,7 @@
                                                        placeholder="Afhaal datum"
                                                        class="form-control py-4 px-4"  >
 
+                                                <%out.print(gebruikerBordspelError.spel != null ? "<div class=\"invalid-feedback\">" + gebruikerBordspelError.spel + "</div>" : "");%>
                                                 <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
                                             </div>
                                         </div><!-- DEnd ate Picker Input -->
@@ -144,10 +146,8 @@
                                         <%%>
                                             <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
                                             <input type="hidden" id="datetm" name="datum">
+                                             <input id="test" type="submit"  value="Bevestigen" >
 
-                                        <c:if test="${cart.list.size()>0}">
-                                            <input id="test" type="submit"  value="Bevestigen" >
-                                        </c:if>
 
                                         </form>
 
@@ -165,7 +165,7 @@
 <script>
     $(document).ready(function()
     {
-        $('#content').click(function ()
+        $('#contnt').click(function ()
             {
                 var x = document.getElementById("<%=GebruikerBordspel.AFHAALDATUM%>").value;
                 document.getElementById("pickedDate").innerHTML = x;

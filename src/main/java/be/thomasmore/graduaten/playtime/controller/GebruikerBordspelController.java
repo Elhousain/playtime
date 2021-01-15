@@ -108,35 +108,49 @@ public class GebruikerBordspelController {
     @RequestMapping("/shoppingCart")
     public String shoppingCart( HttpServletRequest request, HttpServletResponse response,Model model, @Param("keyword") String keyword) throws ServletException, IOException
     {
-        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
-        model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+        HttpSession session = request.getSession();
+        CartBean cart=(CartBean)session.getAttribute("cart");
 
-
-        String iAction = request.getParameter("action");
-
-        if (iAction != null && !iAction.equals("")) {
-            switch (iAction) {
-                case "Kopen":
-                    addToCart(request);
-                    break;
-                case "Huren":
-                    addToCart(request);
-                    break;
-                case "Update":
-                    updateCart(request);
-                    break;
-                case "X":
-                    deleteCart(request);
-                    break;
-            }
-        }
         List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
 
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
 
+        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
+        model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+
+        String iAction = request.getParameter("action");
+        if (iAction == null && cart==null)
+        {
+            return "redirect:/";
+        }
+
+            if (iAction != null && !iAction.equals("")) {
+                switch (iAction)
+                {
+                    case "Kopen":
+                        addToCart(request);
+                        break;
+                    case "Huren":
+                        addToCart(request);
+                        break;
+                    case "Update":
+                        updateCart(request);
+                        break;
+                    case "X":
+                        deleteCart(request);
+                        break;
+
+                }
+
+
+            }
         return "overzichtWinkelwagen";
+
+
+
+
     }
 
     protected void updateCart(HttpServletRequest request) {
@@ -209,10 +223,6 @@ public class GebruikerBordspelController {
             cartBean.listClear();
     }
 
-
-
-
-
     @PostMapping("/saveOrder")
     public String saveOrder(@AuthenticationPrincipal MyUserDetails userDetails,HttpServletRequest request,HttpServletResponse httpServletResponse, Model model, @Param("keyword") String keyword) throws MessagingException {
         Boolean verwerkt =false ;
@@ -223,17 +233,22 @@ public class GebruikerBordspelController {
 
         HttpSession session = request.getSession();
         CartBean cart=(CartBean)session.getAttribute("cart");//winkelwagen inhoud
+        Integer x = cart.getLineItemCount();
 
         GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
-        if (cart.getList().size()==0)
+
+
+        if (x==0)
         {
-            gebruikerBordspelError.spel = "Gelieve tenminste één spel te selecteren";
+
+            gebruikerBordspelError.afhaaldatum = "Gelieve tenminste één spel te selecteren";
             gebruikerBordspelError.hasErrors = true;
             System.out.println("winkelwagen is leeg");
         }
         if (gebruikerBordspelError.hasErrors) {
+
             model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
-            return "/shoppingCart";
+            return "redirect:/gebruikerBordspel/shoppingCart";
         }
 
 
@@ -241,7 +256,7 @@ public class GebruikerBordspelController {
 
         List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
-        
+
 
 
         List<Gebruiker> gebruikerList = (List<Gebruiker>) request.getAttribute("gebruikerList");

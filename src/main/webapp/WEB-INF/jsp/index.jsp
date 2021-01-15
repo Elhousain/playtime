@@ -55,7 +55,7 @@
         }
 
         .carousel {
-            padding: 70px;
+            padding:0;
         }
 
         .carousel .carousel-item {
@@ -64,7 +64,7 @@
             text-align: center;
             overflow: hidden;
             min-height: 200px;
-            padding: 100px;
+            padding: 20px;
         }
 
         .carousel .carousel-item .img-box {
@@ -143,8 +143,8 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h2>Spellen in de kijker!</h2>
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <h2 class="mb-0">Spellen in de kijker!</h2>
+                <div id="myCarousel" class="carousel slide mt-0" data-ride="carousel">
                     <!-- Carousel indicators -->
                     <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -153,15 +153,19 @@
                     </ol>
                     <!-- Wrapper for carousel items -->
                     <div class="carousel-inner">
+
                         <div class="carousel-item active">
-                            <div class="img-box"><img src="images/catan.jpg" /></div>
+
+                            <a href="${pageContext.request.contextPath}/overzichtSpellen"><div class="img-box"><img src="images/catan.jpg" /></div></a>
                         </div>
                         <div class="carousel-item">
-                            <div class="img-box"><img src="images/smallworld.jpg" /></div>
+
+                            <a href="${pageContext.request.contextPath}/overzichtSpellen"><div class="img-box"><img src="images/smallworld.jpg" /></div></a>
                         </div>
                         <div class="carousel-item">
                             <div class="img-box">
-                                <img src="images/clever.jpg" />
+
+                                <a href="${pageContext.request.contextPath}/overzichtSpellen"><img src="images/clever.jpg" /></a>
                             </div>
                         </div>
                     </div>

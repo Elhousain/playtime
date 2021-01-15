@@ -48,6 +48,7 @@ public class SpelController {
     public String showFormForAdd(Model model){
         Spel spel = new Spel();
         model.addAttribute(Spel.GAME, spel);
+
         SpelError spelError = new SpelError();
         model.addAttribute(SpelError.GAME, spelError);
 
