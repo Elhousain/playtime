@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/card.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.js'>
     </script><script  src="./script.js"></script>
@@ -46,7 +46,8 @@
                     <td>Bestelling </td>
                     <td>Totaal</td>
                 </tr>
-                <strong style="color: red">${_spel} </strong>
+                <p style="color: red">${_spel} </p>
+                <p style="color: red">${_datum} </p>
                 <%//out.print(gebruikerBordspelError.spel != null ? "<div class=\"invalid-feedback\">" + gebruikerBordspelError.spel + "</div>" : "");%>
                 <%//out.print(gebruikerBordspelError.afhaaldatum != null ? "<div class=\"invalid-feedback\">" + gebruikerBordspelError.afhaaldatum  + "</div>" : "");%>
 
@@ -81,10 +82,10 @@
                                     </c:forEach>
                                 </div>
                             </td>
-                            <td>€<fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
+                            <td><fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
                             <td>
                                 <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
-                                <input type="submit" name="action" value="Update">
+                                <input type="submit" name="action" value="Update" class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm">
                             </td>
                         </tr>
                     </form>
@@ -93,12 +94,12 @@
                 <!--Total-->
                 <tr>
                     <td colspan="3"> </td>
-                    <td>Subtotaal: € <fmt:formatNumber value="${cart.total}" type ="currency"/></td>
+                    <td>Subtotaal: <fmt:formatNumber value="${cart.total}" type ="currency"/></td>
                 </tr>
             </table>
             <div class="keuze mt-5" >
-                <a   class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
-                <a   class="btn btn-info btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
+                <a   class="btn btn-primary btn-sm px-4  text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
+                <a   class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
                 <div id="demo" class="collapse">
                     <!-- For Demo Purpose -->
                     <div class="container py-3">
@@ -131,14 +132,14 @@
                                     <!-- For Demo Purpose -->
                                     <div class="text-center">
                                         <p id="result-1">&nbsp;</p>
-                                        <strong style="color: red">${_datum} </strong>
+
                                         <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
                                     </div>
 
                                         <%%>
                                     <h4 id="pickedDate" class="font-weight-bold text-uppercase mb-3">Not set yet</h4>
                                     <input type="hidden" id="datetm" name="datum">
-                                    <input id="test" type="submit"  value="Bevestigen" >
+                                    <input id="test" type="submit"  value="Bevestigen" class="btn btn-success btn-sm px-4  text-uppercase font-weight-bold shadow-sm" >
 
 
                         </form>

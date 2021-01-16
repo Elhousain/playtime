@@ -52,6 +52,7 @@ public class MainController {
 
     @RequestMapping("/")
     public String index() {
+
         return "index";
 
     }
@@ -61,6 +62,7 @@ public class MainController {
         return "/contact";
 
     }
+
 
     @RequestMapping("/overzichtSpellen")
     public String overzichtSpellen(Model model, @Param("keyword") String keyword) {

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-
+    <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
@@ -42,14 +42,14 @@
 
                     <input type="button" value="Add Spel"
                            onclick="window.location.href='showForm'; return false;"
-                           class="btn-info" /> <br />
+                           class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm"/> <br />
                     <br />
                     <form th:action="@{/}">
                         Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
                         &nbsp;
-                        <input type="submit" value="Search" />
+                        <input type="submit" value="Search" class="btn btn-primary btn-sm px-4 text-uppercase font-weight-bold shadow-sm" />
                         &nbsp;
-                        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+                        <input type="button" value="Clear" id="btnClear" class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm" onclick="clearSearch()" />
                     </form>
                     <div class="heading-section">Spel List</div>
 
@@ -112,7 +112,7 @@
                    value="<%=uitgever.getBeschrijving() == null ? "" : uitgever.getBeschrijving()%>">
             <%out.print(uitgeverError.beschrijving != null ? "<div class=\"invalid-feedback\">" + uitgeverError.beschrijving + "</div>" : "");%>
 
-                <input type="submit" class="btn btn-primary" value="Opslaan">
+                <input type="submit" class="btn btn-success btn-sm px-4 text-uppercase font-weight-bold shadow-sm mt-2" value="Opslaan">
 
 </form>
     </div>
@@ -133,7 +133,7 @@
                    value="<%=categorie.getBeschrijving() == null ? "" : categorie.getBeschrijving()%>">
             <%out.print(categorieError.beschrijving != null ? "<div class=\"invalid-feedback\">" + categorieError.beschrijving + "</div>" : "");%>
 
-                <input type="submit" class="btn btn-primary" value="Opslaan">
+                <input type="submit" class="btn btn-success btn-sm px-4 text-uppercase font-weight-bold shadow-sm mt-2" value="Opslaan">
 
 </form>
     </div>
@@ -154,7 +154,7 @@
                    value="<%=taal.getBeschrijving() == null ? "" : taal.getBeschrijving()%>">
             <%out.print(taalError.beschrijving != null ? "<div class=\"invalid-feedback\">" + taalError.beschrijving + "</div>" : "");%>
 
-                <input type="submit" class="btn btn-primary" value="Opslaan">
+                <input type="submit" class="btn btn-success btn-sm px-4 text-uppercase font-weight-bold shadow-sm mt-2" value="Opslaan">
 
 
 </form>

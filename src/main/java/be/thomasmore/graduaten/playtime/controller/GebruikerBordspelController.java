@@ -116,8 +116,7 @@ public class GebruikerBordspelController {
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
 
-        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
-        model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+
 
 
         String iAction = request.getParameter("action");
@@ -237,30 +236,28 @@ public class GebruikerBordspelController {
 
         // afhaaldatum
         String datum = request.getParameter(GebruikerBordspel.AFHAALDATUM);
-        GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
 
-        if (datum.isEmpty())
-        {
-
-            gebruikerBordspelError.afhaaldatum = "Gelieve datum te selecteren";
-            gebruikerBordspelError.hasErrors = true;
-        }
-        if (gebruikerBordspelError.hasErrors) {
+        if (datum.isEmpty()&&x==0) {
             model.addAttribute("_datum", "Gelieve datum te selecteren");
-            System.out.println(gebruikerBordspelError.afhaaldatum);
+            model.addAttribute("_spel", "Gelieve tenminste één spel te selecteren");
             return "shoppingCart";
         }
 
-        if (x==0)
-        {
-            gebruikerBordspelError.spel = "Gelieve tenminste één spel te selecteren";
-            gebruikerBordspelError.hasErrors = true;
-        }
-        if (gebruikerBordspelError.hasErrors) {
-            model.addAttribute("_spel", "Gelieve tenminste één spel te selecteren");
-            System.out.println(gebruikerBordspelError.spel);
-            return "shoppingCart";
-        }
+        else
+            {
+                if (datum.isEmpty()) {
+                    model.addAttribute("_datum", "Gelieve datum te selecteren");
+                    return "shoppingCart";
+                }
+
+
+                if (x==0) {
+                    model.addAttribute("_spel", "Gelieve tenminste één spel te selecteren");
+                    return "shoppingCart";
+                }
+            }
+
+
 
         if (x>0 && !datum.isEmpty() )
         {

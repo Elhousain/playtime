@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/your-path-to-fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-
+    <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
@@ -40,12 +40,16 @@
         Overzicht spellen
     </h1>
 
+
     <form th:action="@{/}">
-        Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
-        &nbsp;
-        <input type="submit" value="Search" />
-        &nbsp;
-        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+        <div style="display: inline-flex">
+            Search: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+            &nbsp;
+            <input  class="btn btn-primary btn-sm px-4  text-uppercase font-weight-bold shadow-sm"  type="submit" value="Search" />
+            &nbsp;
+            <input class="btn btn-info btn-sm px-4  text-uppercase font-weight-bold shadow-sm"  type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+        </div>
+
     </form>
 
     <div class="row dashboard-cards">
@@ -64,7 +68,7 @@
                                 <input type="hidden" name="titel" value="kopen"><br/>
                                 <input type="hidden" name="aantal" value="1"><br/>
                                 <input type="hidden" name="prijs" value="${spel.prijs}"><p>${spel.prijs} €</p>
-                                <input type="submit" name="action" id="k${spel.id}" value="Kopen" class="btn-primary btn-block w-75 m-auto">
+                                <input type="submit" name="action" id="k${spel.id}" value="Kopen" class="btn btn-info btn-sm px-4  text-uppercase font-weight-bold shadow-sm">
                             </form>
                         </div>
 
@@ -76,7 +80,7 @@
                                 <input type="hidden" name="titel" value="huren"><br/>
                                 <input type="hidden" name="aantal" value="1"><br/>
                                 <input type="hidden" name="prijs" value="${spel.prijs/5}"><p>${spel.prijs/5} €</p>
-                                <input type="submit" name="action" id="h${spel.id}" value="Huren" class="btn-info btn-block w-75 m-auto">
+                                <input type="submit" name="action" id="h${spel.id}" value="Huren" class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm">
                             </form>
                         </div>
                         <a id=tonen class=m-auto> details</a>

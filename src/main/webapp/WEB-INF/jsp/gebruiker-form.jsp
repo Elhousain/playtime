@@ -267,7 +267,7 @@
                 </div>
                 <div class="row col-md-12">
                     <div  class="form-group col-6" >
-                    <input type="submit" class="btn btn-primary" value="Opslaan">
+                    <input type="submit" class="btn btn-success btn-sm px-4 text-uppercase font-weight-bold shadow-sm" value="Opslaan">
                     </div>
                 </div>
             </form>

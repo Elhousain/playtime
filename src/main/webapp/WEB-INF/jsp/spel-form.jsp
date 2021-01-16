@@ -18,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -202,7 +203,7 @@
 
                 <div class="row col-md-12">
                     <div  class="form-group col-6" >
-                        <input type="submit" class="btn btn-primary" value="Opslaan">
+                        <input type="submit" class="btn btn-success btn-sm px-4 text-uppercase font-weight-bold shadow-sm" value="Opslaan">
                     </div>
                 </div>
 
