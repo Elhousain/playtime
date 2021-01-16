@@ -113,12 +113,12 @@ public class GebruikerBordspelController {
 
         List<Spel> spellen = spelService.getSpellen(keyword);
         model.addAttribute("spellen", spellen);
-
         List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
         model.addAttribute("gebruikerBordspellen", gebruikerBordspellen);
 
         GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
         model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
+
 
         String iAction = request.getParameter("action");
         if (iAction == null && cart==null)
@@ -146,7 +146,7 @@ public class GebruikerBordspelController {
 
 
             }
-        return "overzichtWinkelwagen";
+        return "shoppingCart";
 
 
 
@@ -156,8 +156,6 @@ public class GebruikerBordspelController {
     protected void updateCart(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-
-
         String iQuantity = request.getParameter("aantal");
         int iSTT = Integer.parseInt(request.getParameter("stt"));
 
@@ -223,50 +221,60 @@ public class GebruikerBordspelController {
             cartBean.listClear();
     }
 
-    @PostMapping("/saveOrder")
+    @RequestMapping("/saveOrder")
     public String saveOrder(@AuthenticationPrincipal MyUserDetails userDetails,HttpServletRequest request,HttpServletResponse httpServletResponse, Model model, @Param("keyword") String keyword) throws MessagingException {
+
+        //winkelwagen inhoud
+        HttpSession session = request.getSession();
+        CartBean cart=(CartBean)session.getAttribute("cart");
+
         Boolean verwerkt =false ;
         Boolean ishuur = false;
         Integer aantal =0;
         String userName="";
         Spel spel = null;
-
-        HttpSession session = request.getSession();
-        CartBean cart=(CartBean)session.getAttribute("cart");//winkelwagen inhoud
         Integer x = cart.getLineItemCount();
 
+        // afhaaldatum
+        String datum = request.getParameter(GebruikerBordspel.AFHAALDATUM);
         GebruikerBordspelError gebruikerBordspelError = new GebruikerBordspelError();
 
+        if (datum.isEmpty())
+        {
+
+            gebruikerBordspelError.afhaaldatum = "Gelieve datum te selecteren";
+            gebruikerBordspelError.hasErrors = true;
+        }
+        if (gebruikerBordspelError.hasErrors) {
+            model.addAttribute("_datum", "Gelieve datum te selecteren");
+            System.out.println(gebruikerBordspelError.afhaaldatum);
+            return "shoppingCart";
+        }
 
         if (x==0)
         {
-
-            gebruikerBordspelError.afhaaldatum = "Gelieve tenminste één spel te selecteren";
+            gebruikerBordspelError.spel = "Gelieve tenminste één spel te selecteren";
             gebruikerBordspelError.hasErrors = true;
-            System.out.println("winkelwagen is leeg");
         }
         if (gebruikerBordspelError.hasErrors) {
-
-            model.addAttribute(GebruikerBordspelError.GEBRUIKERBORDSPEL, gebruikerBordspelError);
-            return "redirect:/gebruikerBordspel/shoppingCart";
+            model.addAttribute("_spel", "Gelieve tenminste één spel te selecteren");
+            System.out.println(gebruikerBordspelError.spel);
+            return "shoppingCart";
         }
 
-
-
-
-        List<Spel> spellen = spelService.getSpellen(keyword);
-        model.addAttribute("spellen", spellen);
-
-
-
-        List<Gebruiker> gebruikerList = (List<Gebruiker>) request.getAttribute("gebruikerList");
-        List<Gebruiker> gebruiker1 = gebruikerService.getGebruikers();
-
-        // afhaaldatum
-            String datum = request.getParameter(GebruikerBordspel.AFHAALDATUM);
+        if (x>0 && !datum.isEmpty() )
+        {
             LocalDate afhaalDatum = LocalDate.parse(datum);
 
-        // ingelogde gebruiker id (werkt)
+            List<Spel> spellen = spelService.getSpellen(keyword);
+            model.addAttribute("spellen", spellen);
+
+            List<Gebruiker> gebruikerList = (List<Gebruiker>) request.getAttribute("gebruikerList");
+            List<Gebruiker> gebruiker1 = gebruikerService.getGebruikers();
+
+
+
+            // ingelogde gebruiker id
             Gebruiker aangelogdeGebruiker=null;
             String ingelogdeUser = userDetails.getUsername();
 
@@ -279,7 +287,7 @@ public class GebruikerBordspelController {
                 }
             }
 
-        // laatste ordernr(werkt)
+            // laatste ordernr
             Integer getal=0;
             List<GebruikerBordspel> gebruikerBordspellen = gebruikerBordspelService.getGebruikerBordspellen();
             ArrayList<Integer> lijstOrderNummers = new ArrayList<>();
@@ -295,14 +303,12 @@ public class GebruikerBordspelController {
             Integer nieuwOrderNr =getal+1;
             Integer ordernr = nieuwOrderNr ;
 
-        //winkelmandje data opvragen
+            //winkelmandje data opvragen
             model.addAttribute("cartBean",cartBean.getList());
-           // model.addAttribute("cartItemBean",cartItemBean);
 
-
+            // model.addAttribute("cartItemBean",cartItemBean);
             List<CartItemBean> c = cart.getList();
-            
-            
+
             for (CartItemBean product:c)
             {
                 for (Spel sp:spellen)
@@ -313,8 +319,8 @@ public class GebruikerBordspelController {
                         userName=spel.getNaam();
                     }
                 }
-                
-                    aantal = product.getAantal();
+
+                aantal = product.getAantal();
                 if (product.getTitel().equals("huren"))
                 {
                     ishuur = true;
@@ -322,35 +328,37 @@ public class GebruikerBordspelController {
                     spel.setVoorraad_huur(huidigeVoorraad-1);
                 }
                 else
-                    {
-                        ishuur = false;
-                        Integer huidigeVoorraad= spel.getVoorraad_koop();
-                        spel.setVoorraad_koop(huidigeVoorraad-1);
-                    }
+                {
+                    ishuur = false;
+                    Integer huidigeVoorraad= spel.getVoorraad_koop();
+                    spel.setVoorraad_koop(huidigeVoorraad-1);
+                }
 
                 GebruikerBordspel gebruikerBordspel = new GebruikerBordspel(ordernr,spel,aangelogdeGebruiker,afhaalDatum,verwerkt,ishuur,aantal);
                 gebruikerBordspelService.addGebruikerBordspel(gebruikerBordspel);
 
             }
-        String mail= userDetails.getUsername();
-        for (Gebruiker gebruiker:gebruiker1)
-        {
-            if (gebruiker.getEmail().equals(mail))
-            {
-                userName=gebruiker.getVoornaam()+" "+gebruiker.getAchternaam();
-            }
-        }
 
+            String mail= userDetails.getUsername();
+            for (Gebruiker gebruiker:gebruiker1)
+            {
+                if (gebruiker.getEmail().equals(mail))
+                {
+                    userName=gebruiker.getVoornaam()+" "+gebruiker.getAchternaam();
+                }
+            }
 
             System.out.println("Order(s)in databank");
             clearList(request);
             System.out.println("winkelmandje is leeg");
 
-
-
-           JavaMailUtil.sendMail(mail,datum,String.valueOf(ordernr),userName);
+            JavaMailUtil.sendMail(mail,datum,String.valueOf(ordernr),userName);
 
             return "success";
+        }
+        return "redirect:/gebruikerBordspel/shoppingCart";
+
+
     }
 
 

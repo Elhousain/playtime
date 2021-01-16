@@ -162,8 +162,7 @@ public class SpelController {
             return "redirect:/spel/list";
         }
     }
-
-String locatieSpel;
+    String locatieSpel;
 
     @GetMapping("/updateForm")
     public String showFormForUpdate(@RequestParam("spelId") int id, Model model) {
