@@ -64,6 +64,8 @@ public class GebruikerController {
         model.addAttribute(Gebruiker.NAME, gebruiker);
         model.addAttribute(UserError.NAME, userError);
 
+        gebruiker.setRol("ROLE_USER");
+
         oorspronkelijkeMail = "";
         oorspronkelijkeRol = "";
         oorspronkelijkPaswoord = "";
@@ -396,8 +398,13 @@ public class GebruikerController {
     //VALIDATIE PASWOORD
     private void validatiePaswoord(Gebruiker gebruiker, UserError userError, String paswoord) {
         if (paswoord.isEmpty()){
-            gebruiker.setPaswoord(oorspronkelijkPaswoord);
+            if (oorspronkelijkPaswoord==""){
+                userError.paswoord = "Gelieve een wachtwoord in te vullen";
+                userError.hasErrors = true;
+            } else {
+            gebruiker.setPaswoord(oorspronkelijkPaswoord);}
         } else {
+
             String hashedPassword = passwordEncoder.encode(paswoord);
             gebruiker.setPaswoord(hashedPassword);
         }

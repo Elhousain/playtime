@@ -100,22 +100,40 @@ public class MainController {
     }
 
     @RequestMapping("/registratie")
-    public String navigateForm(Model model) {
-        HashMap<String, String> values = new HashMap<>();
-        HashMap<String, String> errors = new HashMap<>();
-        values.put(Gebruiker.VOORNAAM, "");
-        values.put(Gebruiker.ACHTERNAAM, "");
-        values.put(Gebruiker.EMAIL, "");
-        values.put(Gebruiker.TELEFOON, "");
-        values.put(Gebruiker.GEBOORTEDATUM, "");
-        values.put(Gebruiker.STRAAT, "");
-        values.put(Gebruiker.PASWOORD, "");
-        values.put(Gebruiker.POSTCODE, "");
-        values.put(Gebruiker.WOONPLAATS, "");
-        values.put(Gebruiker.HUISNUMMER, "");
-        model.addAttribute("values", values);
-        model.addAttribute("errors", errors);
-        return "registratie";
+    public String navigateForm(@AuthenticationPrincipal MyUserDetails userDetails,Model model) {
+
+        String  mail="";
+
+        try {
+            mail= userDetails.getUsername();
+        } catch (Exception e) {
+            //LOGGER.error("", e);
+        }
+
+
+
+        if (!mail.equals("")) {
+            return "/error/403";
+        }
+        else  {
+            HashMap<String, String> values = new HashMap<>();
+            HashMap<String, String> errors = new HashMap<>();
+            values.put(Gebruiker.VOORNAAM, "");
+            values.put(Gebruiker.ACHTERNAAM, "");
+            values.put(Gebruiker.EMAIL, "");
+            values.put(Gebruiker.TELEFOON, "");
+            values.put(Gebruiker.GEBOORTEDATUM, "");
+            values.put(Gebruiker.STRAAT, "");
+            values.put(Gebruiker.PASWOORD, "");
+            values.put(Gebruiker.POSTCODE, "");
+            values.put(Gebruiker.WOONPLAATS, "");
+            values.put(Gebruiker.HUISNUMMER, "");
+            model.addAttribute("values", values);
+            model.addAttribute("errors", errors);
+            return "registratie";
+        }
+
+
     }
 
     @RequestMapping("/data-add-gebruiker")
@@ -167,6 +185,7 @@ public class MainController {
 
         String paswoord = request.getParameter(Gebruiker.PASWOORD);
         validatiePaswoord(values, errors, paswoord);
+        String hashedPassword = passwordEncoder.encode(paswoord);
 
 
         String telefoon = request.getParameter(Gebruiker.TELEFOON);
@@ -198,7 +217,7 @@ public class MainController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
             LocalDate date = LocalDate.parse(geboortedatumString, formatter);
 
-            gebruikerService.addGebruiker(new Gebruiker(voornaam, achternaam, rol, date, email, paswoord, telefoon, woonplaats, postcode, straat, huisnummer));
+            gebruikerService.addGebruiker(new Gebruiker(voornaam, achternaam, rol, date, email, hashedPassword, telefoon, woonplaats, postcode, straat, huisnummer));
 
 
             try {
@@ -211,6 +230,7 @@ public class MainController {
             //Hier code toevoegen om in te loggen
             return "redirect:/overzichtSpellen";
         } else {
+            values.put(Gebruiker.PASWOORD, "");
             model.addAttribute("values", values);
             model.addAttribute("errors", errors);
             return "registratie";
@@ -240,9 +260,6 @@ public class MainController {
         values.put(Gebruiker.PASWOORD, paswoord);
         if (paswoord.isEmpty()) {
             errors.put(Gebruiker.PASWOORD, "Gelieve het wachtwoord in te vullen.");
-        } else {
-            String hashedPassword = passwordEncoder.encode(paswoord);
-            values.put(Gebruiker.PASWOORD, hashedPassword);
         }
     }
 

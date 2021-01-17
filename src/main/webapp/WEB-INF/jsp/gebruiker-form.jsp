@@ -36,8 +36,6 @@
 <%
     Gebruiker gebruiker = (Gebruiker)request.getAttribute(Gebruiker.NAME);
     UserError userError = (UserError) request.getAttribute(UserError.NAME);
-
-
 %>
 
 
