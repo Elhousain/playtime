@@ -6,6 +6,7 @@ import org.apache.logging.log4j.status.StatusLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,9 @@ public class MainController {
 
     @Autowired
     GebruikerBordspelService gebruikerBordspelService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @RequestMapping("/overzichtGebruikers")
@@ -95,7 +99,24 @@ public class MainController {
         return "gebruikerbordspel-eigendata";
     }
 
-
+    @RequestMapping("/registratie")
+    public String navigateForm(Model model) {
+        HashMap<String, String> values = new HashMap<>();
+        HashMap<String, String> errors = new HashMap<>();
+        values.put(Gebruiker.VOORNAAM, "");
+        values.put(Gebruiker.ACHTERNAAM, "");
+        values.put(Gebruiker.EMAIL, "");
+        values.put(Gebruiker.TELEFOON, "");
+        values.put(Gebruiker.GEBOORTEDATUM, "");
+        values.put(Gebruiker.STRAAT, "");
+        values.put(Gebruiker.PASWOORD, "");
+        values.put(Gebruiker.POSTCODE, "");
+        values.put(Gebruiker.WOONPLAATS, "");
+        values.put(Gebruiker.HUISNUMMER, "");
+        model.addAttribute("values", values);
+        model.addAttribute("errors", errors);
+        return "registratie";
+    }
 
     @RequestMapping("/data-add-gebruiker")
     public String dataAddGebruiker(HttpServletRequest request, Model model) {
@@ -219,6 +240,9 @@ public class MainController {
         values.put(Gebruiker.PASWOORD, paswoord);
         if (paswoord.isEmpty()) {
             errors.put(Gebruiker.PASWOORD, "Gelieve het wachtwoord in te vullen.");
+        } else {
+            String hashedPassword = passwordEncoder.encode(paswoord);
+            values.put(Gebruiker.PASWOORD, hashedPassword);
         }
     }
 
