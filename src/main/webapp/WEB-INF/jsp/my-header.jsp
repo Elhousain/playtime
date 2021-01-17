@@ -55,7 +55,7 @@
                     <br>
                     Elhousain | Tom  | Bulent
                     <i class="icon-heart" aria-hidden="true"></i>
-                    <a href="#" target="_blank">
+                    <a href="/">
                         www.playtime.be
                     </a>
                 </p>
