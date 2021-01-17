@@ -134,7 +134,7 @@ public class GebruikerBordspelController {
                     case "Huren":
                         addToCart(request);
                         break;
-                    case "i":
+                    case "update":
                         updateCart(request);
                         break;
                     case "X":
