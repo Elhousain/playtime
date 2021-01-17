@@ -45,7 +45,9 @@
     <jsp:include page="my-header.jsp"/>
 
         <div class="container">
+
             <form  class="needs-validation" action="saveGebruiker" method="post" novalidate>
+
                 <input type="hidden" id="<%=Gebruiker.ID%>" name="<%=Gebruiker.ID%>" value="<%=gebruiker.getId()%>"/>
 
                 <div class="row col-md-12">
@@ -66,7 +68,7 @@
                                id="<%=Gebruiker.ACHTERNAAM%>"
                                name="<%=Gebruiker.ACHTERNAAM%>"
                                value="<%=gebruiker.getAchternaam() == null ? "" : gebruiker.getAchternaam()%>">
-                        <%out.print(userError.achternaam != null ? "<div class=\"invalid-feedback\">" + userError.achternaam + "</div>" : "");%>
+
                     </div>
 
 

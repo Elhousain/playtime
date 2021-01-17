@@ -104,7 +104,7 @@
                     <!-- For Demo Purpose -->
                     <div class="container py-3">
                         <header class="text-center">
-                            <h2 class="font-weight-bold">AFHAAL DATUM</h2>
+                            <h2 class="font-weight-bold">AFHAALDATUM</h2>
                         </header>
                     </div>
 
@@ -133,7 +133,7 @@
                                     <div class="text-center">
                                         <p id="result-1">&nbsp;</p>
 
-                                        <p class="font-italic text-muted mb-0">Uw afhaal datum is</p>
+                                        <p class="font-italic text-muted mb-0">Uw afhaaldatum is</p>
                                     </div>
 
                                         <%%>
