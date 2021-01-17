@@ -48,8 +48,7 @@
                 </tr>
                 <p style="color: red">${_spel} </p>
                 <p style="color: red">${_datum} </p>
-                <%//out.print(gebruikerBordspelError.spel != null ? "<div class=\"invalid-feedback\">" + gebruikerBordspelError.spel + "</div>" : "");%>
-                <%//out.print(gebruikerBordspelError.afhaaldatum != null ? "<div class=\"invalid-feedback\">" + gebruikerBordspelError.afhaaldatum  + "</div>" : "");%>
+
 
                 <c:if test="${cart.lineItemCount == 0}">
                     <tr> <td colspan="4">- Winkelwagen is leeg -</td></tr>
@@ -73,20 +72,28 @@
                                     <c:forEach  var="selectSpel" items="${spellen}">
                                         <c:if test="${cartItem.id==selectSpel.id}">
                                             <c:if test="${'huren'==cartItem.titel}">
-                                                <input style="width: 20%" type='number' max="${selectSpel.voorraad_huur}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                                <input style="width: 40%" type='number' max="${selectSpel.voorraad_huur}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
                                             </c:if>
                                             <c:if test="${'kopen'==cartItem.titel}">
-                                                <input style="width: 20%" type='number' max="${selectSpel.voorraad_koop}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
+                                                <input style="width: 40%" type='number' max="${selectSpel.voorraad_koop}" name="aantal" value='<c:out value="${cartItem.aantal}"/>'>
                                             </c:if>
                                         </c:if>
                                     </c:forEach>
                                 </div>
                             </td>
-                            <td><fmt:formatNumber value="${cartItem.totaal}" type ="currency"/>
-                            <td>
+                            <td><fmt:formatNumber value="${cartItem.totaal}" type ="currency"></fmt:formatNumber>
+
                                 <input type='hidden' name='stt' value='<c:out value="${counter.count}"/>'>
-                                <input type="submit" name="action" value="Update" class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm">
-                            </td>
+
+
+
+                                    <input type="submit" name="action" value="i" class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm mr-2 "><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                                    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                                </svg>
+
+
+
                         </tr>
                     </form>
 
@@ -98,8 +105,8 @@
                 </tr>
             </table>
             <div class="keuze mt-5" >
-                <a   class="btn btn-primary btn-sm px-4  text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
-                <a   class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
+                <a   class="btn btn-primary btn-sm px-4  text-uppercase font-weight-bold shadow-sm mb-2" href="${pageContext.request.contextPath }/overzichtSpellen" >Verder winkelen</a>
+                <a   class="btn btn-info btn-sm px-4 text-uppercase font-weight-bold shadow-sm mb-2" href="${pageContext.request.contextPath }/overzichtSpellen" data-toggle="collapse" data-target="#demo" aria-expanded="false" aria-controls="collapseExample" >Doorgaan bestelling</a>
                 <div id="demo" class="collapse">
                     <!-- For Demo Purpose -->
                     <div class="container py-3">
